@@ -1,0 +1,15 @@
+<article class="main-content page-page">
+    <!--<div class="post-header">
+        <h1 class="post-title" itemprop="name headline"><{$title}></h1>
+    </div>-->
+    <div id="post-content" class="post-content">
+        <{if $count==0}>
+        <p style='text-align: center;margin-top: 40px;font-size: 40px;text-indent: 0;'>暂无友链，申请添加请联系站长！</p>
+        <{else}>
+        <{foreach $data as $v}>
+        <h4><a class="link link--primary" href="//<{$v.siteurl}>" target="_blank"><{$v.sitename}></a></h4>
+        <p><{$v.description}></p>
+        <{/foreach}>
+        <{/if}>
+    </div>
+</article>

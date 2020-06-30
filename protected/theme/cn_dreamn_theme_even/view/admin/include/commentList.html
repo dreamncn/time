@@ -1,0 +1,162 @@
+<style>
+    .layui-input {
+        height: 38px!important;
+        border-radius: 0!important;
+    }
+</style>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <!-- 表格工具栏 -->
+        <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form layui-form-pane">
+            <div class="layui-inline">
+                <label class="layui-form-label">文章选择</label>
+                <div class="layui-input-inline">
+                    <select id="comment_name" lay-filter="comment_name" lay-verify="required">
+                        <option value="">不限制</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">回复者</label>
+                <div class="layui-input-inline">
+                    <select id="comment_author" lay-filter="comment_author" lay-verify="required">
+                        <option value="">不限制</option>
+                        <option value="1">作者</option>
+                        <option value="0">非作者</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        </blockquote>
+        <!-- 数据表格 -->
+        <table id="newsList" lay-filter="newsList"></table>
+        <!--操作-->
+        <script id="newsListBar" type="text/html">
+            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="reply">回复</a>
+        </script>
+    </div>
+</div>
+<script>
+    var tableGet= '<{url c="Api/Comment" a="get"}>';
+    var setOpt= '<{url c="Api/Comment" a="SetOption"}>';
+    var comment= '<{url c="admin/main" a="page" page="commentEdit"}>';
+    var delComment= '<{url c="Api/Comment" a="Del" id=""}>';
+    var getTitle='<{url c="api/comment" a="GetTitles"}>';
+</script>
+<!--include_start-->
+<script>
+    layui.use(['layer', 'form', 'table'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var tableIns = table.render({
+            elem: '#newsList',
+            url: tableGet,
+            cellMinWidth: 95,
+            page: true,
+            height: "full-125",
+            limit: 12,
+            where:{name:$("#comment_name").val(),author:$("#comment_author").val()},
+            id: "newsListTable",
+            loading: true,
+            cols: [[
+                {field: 'cid', title: 'ID', width: 60, align: "center"},
+                {field: 'comment', title: '评论内容'},
+                {field: 'date', title: '评论时间', width: 210},
+                {field: 'title', title: '评论文章', width: 210},
+                {field: 'yname', title: '评论者', width: 100},
+                {field: 'qq', title: 'QQ', width: 120},
+                {
+                    field: 'hide', title: '是否隐藏', align: 'center',fixed: "right", width: 110, templet: function (d) {
+                        return '<input type="checkbox" name="hide"  value="' + d.cid + '"   lay-filter="hide" lay-skin="switch" lay-text="隐藏|不隐藏" ' + (parseInt(d.hide) === 0 ? '' : 'checked') + '>'
+                    }
+                },
+                {title: '操作', width: 170, templet: '#newsListBar', fixed: "right", align: "center"}
+            ]]
+        });
+        $.ajax({
+            url:getTitle,
+            dataType:'json',
+            success:function (data) {
+                if(data.code===0){
+                   for(var i=0;i<data.count;i++){
+                       var html=' <option value="'+data.data[i].gid+'">'+data.data[i].title+'</option>' ;
+                       $("#comment_name").append(html);
+
+                   }
+                   form.render('select');
+                }
+            }
+        });
+        form.on('select(comment_name)', function () {
+            tableIns.reload({
+                where:{name:$("#comment_name").val(),author:$("#comment_author").val()}
+            });
+        });
+        form.on('select(comment_author)', function (data) {
+            tableIns.reload({
+                where:{name:$("#comment_name").val(),author:$("#comment_author").val()}
+            });
+        });
+        //是否隐藏
+        form.on('switch(hide)', function (obj) {
+
+            var data ={id: this.value, opt: this.name, val: obj.elem.checked ? '1' : '0'};
+            //向后台setoption
+            saveChange(setOpt, data, "设置中...",function (json) {
+                notice.msg('设置成功', {icon: 1});
+            });
+
+        });
+
+
+        //添加文章
+        function addNews(edit) {
+            var index = layui.layer.open({
+                title: "回复评论《" + edit.title + "》",
+                type: 2,
+                content: comment,
+                success: function (layero, index) {
+                    var body = layui.layer.getChildFrame('body', index);
+                    body.find(".comment").append('@'+edit.yname+'<br>'+edit.comment);
+                    body.find(".gid").val(edit.gid);
+                    body.find(".pid").val(edit.cid);
+                    body.find(".yname").val(edit.yname);
+                },
+                end:function () {
+                    tableIns.reload({
+                        where: {name:$("#name").val()}
+                    });
+                }
+            });
+            layui.layer.full(index);
+            
+        }
+        //列表操作
+        table.on('tool(newsList)', function (obj) {
+            var layEvent = obj.event,
+                data = obj.data;
+
+            if (layEvent === 'reply') { //编辑
+                addNews(data);
+            } else if (layEvent === 'del') { //删除
+                layer.confirm('确定删除此评论？', {icon: 3, title: '提示信息'}, function (index) {
+                    $.get(delComment+ data.cid, function (data) {
+                        if (data.err) notice.msg('删除失败.' + data.msg, {icon: 2});
+                        else {
+                            notice.msg('删除成功', {icon: 1});
+                            tableIns.reload();
+
+                        }
+                        layer.close(index);
+                    }, 'json')
+                });
+            }
+        });
+
+    });
+</script>
+<!--include_end-->

@@ -1,0 +1,256 @@
+
+<style>
+    .layui-form-label{
+        height: 36px!important;
+        border-radius: 5px!important;
+    }
+</style>
+<div class="layui-card">
+    <div class="layui-card-body">
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title">
+        <li class="layui-this">分类导航</li>
+        <li class="">页面导航</li>
+        <li class="">自定义导航</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--分类导航-->
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">导航名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="nname" placeholder="请输入导航名称"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="pid" placeholder="请输入序号"
+                               type="text" value="0">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择分类</label>
+                    <div class="layui-input-block">
+                        <select id="chooseSort" lay-verify="required" name="url">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级导航</label>
+                    <div class="layui-input-block">
+                        <select id="chooseNav1" lay-verify="required" name="lastest">
+                            <option value="0">没有上级</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input checked="" lay-filter="hide1" lay-skin="switch" lay-text="显示|隐藏" name="hide"
+                               type="checkbox">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="navAssort" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+        <!--页面导航-->
+        <div class="layui-tab-item ">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">导航名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="nname" placeholder="请输入导航名称"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="pid" placeholder="请输入序号"
+                               type="text" value="0">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择页面</label>
+                    <div class="layui-input-block">
+                        <select id="choosePage" lay-verify="required" name="url">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级导航</label>
+                    <div class="layui-input-block">
+                        <select id="chooseNav2" lay-verify="required" name="lastest">
+                            <option value="0">没有上级</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input checked="" lay-filter="hide2" lay-skin="switch" lay-text="显示|隐藏" name="hide"
+                               type="checkbox">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="navPage" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+        <!--自定义导航-->
+        <div class="layui-tab-item ">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">导航名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="nname" placeholder="请输入导航名称"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="pid" placeholder="请输入序号"
+                               type="text" value="0">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">自定义链接</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="url" placeholder="请输入自定义链接"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级导航</label>
+                    <div class="layui-input-block">
+                        <select id="chooseNav3" lay-verify="required" name="lastest">
+                            <option value="0">没有上级</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input checked="" lay-filter="hide3" lay-skin="switch" lay-text="显示|隐藏" name="hide"
+                               type="checkbox">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="navCustom" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+    </div>
+</div>
+<script>
+    var getDataUrl = '<{url c="api/nav" a="getData" }>';
+    var SortUrl = '/category/';
+    var setData = '<{url c="api/nav" a="set" }>';
+</script>
+<!--include_start-->
+<script>
+    //Demo
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        getData();
+        form.render();
+        //监听信息提交
+        form.on('submit(navAssort)', function (data) {
+            data.field.hide = $("input[lay-filter='hide1']").val() === "on" ? '0' : '1';
+            data.field.stype = "1";
+            SubmitData(data);
+            return false;
+        });
+        form.on('submit(navPage)', function (data) {
+            data.field.hide = $("input[lay-filter='hide2']").val() === "on" ? '0' : '1';
+            data.field.stype = "2";
+            SubmitData(data);
+            return false;
+        });
+        form.on('submit(navCustom)', function (data) {
+            data.field.hide = $("input[lay-filter='hide3']").val() === "on" ? '0' : '1';
+            data.field.stype = "3";
+            SubmitData(data);
+            return false;
+        });
+        form.on('switch(hide1)', function (data) {
+            return doSwitch(data);
+        });
+        form.on('switch(hide2)', function (data) {
+            return doSwitch(data);
+        });
+        form.on('switch(hide3)', function (data) {
+            return doSwitch(data);
+        });
+
+        function doSwitch(data) {
+            var x = data.elem.checked;
+            data.elem.value = x ? 'on' : "off";
+            form.render('checkbox');
+            return false;
+        }
+
+        function SubmitData(data) {
+            saveChange(setData, data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                    parent.layer.closeAll();
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+        })
+        }
+
+        function getData() {
+            $.get(getDataUrl, function (data) {
+                if (data.code!==0) {
+                    layer.msg('数据获取失败！');
+                } else {
+
+                    $.each(data.data.type, function (i, v) {
+                        $("#chooseSort").append('<option value="' + SortUrl + v.sname + '">' + v.sname + '</option>')
+                    });
+                    $.each(data.data.page, function (i, v) {
+                        var vv;
+                        vv = '/posts/' + v.alians;
+                        $("#choosePage").append('<option value="' + vv + '">' + v.title + '</option>')
+                    });
+                    $.each(data.data.nav, function (i, v) {
+                        $("#chooseNav1").append('<option value="' + v.id + '">' + v.nname + '</option>');
+                        $("#chooseNav2").append('<option value="' + v.id + '">' + v.nname + '</option>');
+                        $("#chooseNav3").append('<option value="' + v.id + '">' + v.nname + '</option>');
+                    });
+                    form.render('select');
+
+                }
+
+
+            }, 'json');
+        }
+
+
+    });
+
+</script>
+<!--include_end-->

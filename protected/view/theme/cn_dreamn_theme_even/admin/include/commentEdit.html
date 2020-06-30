@@ -1,0 +1,75 @@
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content .layui-card-body {
+        text-align: center;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .content .layui-card-body img {
+        width: 112px;
+        height: 100%;
+    }
+    .form-group-bottom {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .05);
+    }
+</style>
+<div class="layui-tab page-content-wrap" >
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 4px;">
+                <div class="layui-form-item layui-form-text">
+                    <blockquote class="layui-elem-quote comment"></blockquote>
+                </div>
+                <input class="layui-input gid" name="gid" style="display: none" type="text">
+                <input class="layui-input pid" name="pid" style="display: none" type="text">
+                <input class="layui-input yname" name="yname" style="display: none" type="text">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">回复内容</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea abstract" lay-filter="info" name="comment"
+                                  placeholder="请输入回复内容"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="ThingSave" lay-submit="">回复</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+    var setData = '<{url c="api/Comment" a="set" }>';
+</script>
+<!--include_start-->
+<script>
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.render();
+        //监听信息提交
+        form.on('submit(ThingSave)', function (data) {
+
+            saveChange(setData, data.field,'回复中...',function (data) {
+                notice.msg('回复成功！', {icon: 1});
+                parent.layer.closeAll();
+            });
+
+            return false;
+        });
+
+
+    });
+</script>
+<!--include_end-->

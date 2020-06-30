@@ -1,0 +1,40 @@
+<link href="<{$i}>/../edit/editormd/css/editormd.min.css" rel="stylesheet" type="text/css"/>
+<div class="row">
+    <div class="panel-primary">
+        <div class="panel-body">
+            <div class="row">
+                <div id="editormd" style="z-index: 100000;">
+                    <textarea lay-filter="content" name="content" style="display:none;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="<{$i}>/../edit/editormd/jquery.min.js"></script>
+<script src="<{$i}>/../edit/editormd/editormd.min.js"></script>
+<script type="text/javascript">
+    var uploadUrl='<{url c="api/article" a="upload" type="markdown"}>';
+    //初始化编辑器
+    var testEditor;
+    //获取编辑器内容
+    $(function() {
+        testEditor = editormd("editormd", {
+            height  : 545,
+            syncScrolling : "single",
+            path    : "<{$i}>/../edit/editormd/lib/",
+            codeFold: true,
+            autoFocus: false,
+            saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
+            searchReplace: true,
+            emoji: true,
+            taskList: true,
+            tex: true,
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: uploadUrl,
+        });
+
+    });
+
+</script>

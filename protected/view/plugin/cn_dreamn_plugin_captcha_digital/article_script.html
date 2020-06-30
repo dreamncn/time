@@ -1,0 +1,6 @@
+<script>
+    $(document).on('submit', 'form[data-pjax]', function(event) {
+        $.pjax.submit(event, '#pjax-content');
+        return false;
+    })
+</script>

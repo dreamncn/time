@@ -1,0 +1,12 @@
+{
+  "name":"腾讯验证码",
+  "appName": "cn_dreamn_plugin_captcha_tencent",
+  "version":"1.0.0",
+  "author":"Dreamn",
+  "description":"腾讯验证码插件，用于与替换系统的验证码",
+  "update":"",
+  "menu":true,
+  "date":"2020-05-11 10:38",
+  "publicKey":"your publicKey",
+  "sign":"your sign"
+}

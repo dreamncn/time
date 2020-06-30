@@ -1,0 +1,20 @@
+<div id="content">
+    <div id="title" class="list_title"><{$title}></div>
+    <div id="primary" class="home">
+
+        <div id="articleList"></div>
+        <nav class="pagination">
+            <{include file='page'}>
+        </nav>
+    </div>
+    <div id="secondary">
+        <{foreach $sidebar as $v}>
+        <{$v nofilter}>
+        <{/foreach}>
+    </div>
+</div>
+<script>
+    var getSortUrl='<{url m="index" c="api" a="Category"}>';
+    var sortName='<{$sort}>';
+</script>
+<script src="<{$i}>/js/sort.js"></script>

@@ -1,0 +1,21 @@
+<div id="content">
+<div id="primary" class="home">
+    <div id="articleList"></div>
+    <nav class="pagination">
+        <{include file='page'}>
+    </nav>
+</div>
+<div id="secondary">
+    <{foreach $sidebar as $v}>
+    <{$v nofilter}>
+    <{/foreach}>
+</div>
+</div>
+<script>
+    var getArticleUrl='<{url m="index" c="api" a="GetArticleList"}>';
+</script>
+<script>
+    getScripts([
+        "<{$i}>/js/index.js"
+    ]);
+</script>

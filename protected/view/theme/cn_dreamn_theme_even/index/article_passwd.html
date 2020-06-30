@@ -1,0 +1,36 @@
+<article class="main-content page-page" itemscope="" itemtype="http://schema.org/Article">
+    <div class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            此内容被密码保护 </h1>
+    </div>
+    <div id="post-content" class="post-content" itemprop="articleBody">
+        <p class="post-tags"> 
+        </p>
+        <form class="protected" id="article_content" action="<{url m='index' c='article' a='get' alian=$alian}>" method="post" data-pjax="#pjax-content" onsubmit="return false;">
+            <p class="word">
+                <span>请输入密码访问</span>
+            </p>
+
+            <p>
+                <input type="password" class="text input" name="passwd" placeholder="请输入密码">
+                <{if !$captcha_is_open}>
+                <button id="submit" class="submit" >提交</button>
+                <{else}>
+                <{$tpl nofilter}>
+                <{/if}>
+            </p>
+        </form>
+    </div>
+</article>
+
+<{if !$captcha_is_open}>
+<script>
+
+    $(document).on('submit', 'form[data-pjax]', function(event) {
+        $.pjax.submit(event, '#pjax-content');
+        return false;
+    })
+</script>
+<{else}>
+<{$script nofilter}>
+<{/if}>

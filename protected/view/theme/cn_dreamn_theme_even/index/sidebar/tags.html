@@ -1,0 +1,9 @@
+<section id="tags" class="widget-area widget_tags">
+    <h3 class="widget-title"><{$bar_title}></h3>
+    <ul class="tag-list">
+        <{foreach $tag as $k => $v}>
+        <li class="tag-list-item"><a class="tag-list-link" href="<{url m='index' c='article' a='tag' tag=$k}>"><{$k}></a><span class="tag-list-count"><{$v}></span></li>
+        <{/foreach}>
+    </ul>
+</section>
+

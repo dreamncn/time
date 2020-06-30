@@ -1,0 +1,434 @@
+<style>
+    /** 应用快捷块样式 */
+    .console-app-group {
+        padding: 16px;
+        border-radius: 4px;
+        text-align: center;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    .console-app-group .console-app-icon {
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        margin-bottom: 6px;
+        display: inline-block;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        font-size: 32px;
+        color: #69c0ff;
+    }
+
+    .console-app-group:hover {
+        box-shadow: 0 0 15px rgba(0, 0, 0, .08);
+    }
+
+    /** //应用快捷块样式 */
+
+    /** 小组成员 */
+    .console-user-group {
+        position: relative;
+        padding: 10px 0 10px 60px;
+    }
+
+    .console-user-group .console-user-group-head {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        margin-top: -16px;
+        border-radius: 50%;
+    }
+
+    .console-user-group .layui-badge {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        margin-top: -10px;
+    }
+
+    .console-user-group .console-user-group-name {
+        line-height: 1.2;
+    }
+
+    .console-user-group .console-user-group-desc {
+        color: #8c8c8c;
+        line-height: 1;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    /** 卡片轮播图样式 */
+    .admin-carousel .layui-carousel-ind {
+        position: absolute;
+        top: -41px;
+        text-align: right;
+    }
+
+    .admin-carousel .layui-carousel-ind ul {
+        background: 0 0;
+    }
+
+    .admin-carousel .layui-carousel-ind li {
+        background-color: #e2e2e2;
+    }
+
+    .admin-carousel .layui-carousel-ind li.layui-this {
+        background-color: #999;
+    }
+
+    /** 广告位轮播图 */
+    .admin-news .layui-carousel-ind {
+        height: 45px;
+    }
+
+    .admin-news a {
+        display: block;
+        line-height: 60px;
+        text-align: center;
+    }
+    /**评论**/
+    .commentList .item {
+        list-style: none outside none;
+        margin: 1.6rem 0 0;
+    }
+    .commentList .avatar {
+        border: 1px solid transparent;
+        float: left;
+    }
+    .comment-main {
+        position: relative;
+        margin-left: 64px;
+        border: 1px solid #dedede;
+        border-radius: 2px;
+    }
+    .comment-main:after,
+    .comment-main:before {
+        position: absolute;
+        top: 11px;
+        left: -16px;
+        right: 100%;
+        width: 0;
+        height: 0;
+        display: block;
+        content: " ";
+        border-color: transparent;
+        border-style: solid solid outset;
+        pointer-events: none;
+    }
+    .comment-main:before {
+        border-right-color: #dedede;
+        border-width: 8px;
+    }
+    .comment-main:after {
+        border-width: 7px;
+        border-right-color: #f8f8f8;
+        margin-top: 1px;
+        margin-left: 2px;
+    }
+    .comment-header {
+        padding: 10px 15px;
+        background: #f8f8f8;
+        border-bottom: 1px solid #eee;
+    }
+    .comment-title {
+        margin: 0 0 8px;
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+    .comment-meta {
+        font-size: 13px;
+        color: #999;
+        line-height: 1.2;
+    }
+    .comment-meta a {
+        color: #999;
+    }
+    .comment-author {
+        font-weight: 700;
+        color: #999;
+    }
+    .comment-body {
+        padding: 15px;
+        overflow: hidden;
+    }
+    .comment-body > :last-child {
+        margin-bottom: 0;
+    }
+    .commentList .comment-flip .avatar {
+        float: right;
+    }
+    .comment-flip .comment-main {
+        margin-left: 0;
+        margin-right: 64px;
+    }
+    .comment-flip .comment-main:before {
+        border-left-color: #dedede;
+        border-right-color: transparent;
+    }
+    .comment-flip .comment-main:after,
+    .comment-flip .comment-main:before {
+        left: 100%;
+        position: absolute;
+        right: -16px;
+    }
+    .comment-flip .comment-main:after {
+        border-left-color: #f8f8f8;
+        border-right-color: transparent;
+        margin-left: auto;
+        margin-right: 2px;
+    }
+    .commentlist .alt a.layer {
+        color: #eee;
+        font-size: 55px;
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        background-image: none;
+        font-style: italic;
+        font-weight: initial
+    }
+    .avatar.size-L,
+    .avatar.size-L img {
+        width: 40px;
+        height: 40px;
+    }
+</style>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                总阅读量
+                <span class="icon-text pull-right" lay-tips="统计所有阅读量，包含自定义页面" lay-direction="4" lay-offset="5px,5px"><i class="layui-icon layui-icon-tips"></i></span>
+            </div>
+            <div class="layui-card-body">
+                <p class="lay-big-font text-center"><{$readCount}>
+                    <span class="layui-badge layui-badge-green">遍</span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                文章总数
+                <span class="icon-text pull-right" lay-tips="统计所有文章，包含自定义页面" lay-direction="4" lay-offset="5px,5px"><i class="layui-icon layui-icon-tips"></i></span>
+            </div>
+            <div class="layui-card-body">
+                <p class="lay-big-font text-center"><{$articleCount}>
+                    <span class="layui-badge layui-badge-blue">篇</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                评论总数
+                <span class="icon-text pull-right" lay-tips="统计所有评论数，包含作者回复的评论" lay-direction="4" lay-offset="5px,5px"><i class="layui-icon layui-icon-tips"></i></span>
+            </div>
+            <div class="layui-card-body">
+                <p class="lay-big-font text-center"><{$commentCount}>
+                    <span class="layui-badge layui-badge-red">条</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                分类总数
+                <span class="icon-text pull-right" lay-tips="所有的分类数量" lay-direction="4" lay-offset="5px,5px"><i class="layui-icon layui-icon-tips"></i></span>
+            </div>
+            <div class="layui-card-body">
+                <p class="lay-big-font text-center"><{$sortCount}>
+                    <span class="layui-badge layui-badge-yellow">个</span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 快捷方式 -->
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-sm6" style="padding-bottom: 0;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group" ew-href="<{url c='admin/main' a='page' page='newsEdit'}>" ew-title="添加文章">
+                    <i class="console-app-icon iconfont iconfabu1"
+                       style="font-size: 28px;padding-top: 3px;margin-right: 6px;"></i>
+                    <div class="console-app-name">撰写文章</div>
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group" ew-href="<{url c='admin/main' a='page' page='pageEdit'}>" ew-title="新建页面">
+                    <i class="console-app-icon iconfont icon16" style="color: #95de64;font-size: 28px;"></i>
+                    <div class="console-app-name" >新建页面</div>
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group" ew-href="<{url c='admin/main' a='page' page='commentList'}>" ew-title="评论管理">
+                    <i class="console-app-icon iconfont iconpinglun" style="color: #ff9c6e;font-size: 28px;"></i>
+                    <div class="console-app-name">评论管理</div>
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group" ew-href="<{url c='admin/main' a='page' page='url'}>" ew-title="链接管理">
+                    <i class="console-app-icon iconfont iconchangyongicon-"
+                       style="color: #b37feb;font-size: 30px;"></i>
+                    <div class="console-app-name">链接管理</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-sm6" style="padding-bottom: 0;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group" ew-href="<{url c='admin/main' a='page' page='theme'}>" ew-title="主题管理">
+                    <i class="console-app-icon iconfont iconzhuti"
+                       style="color: #ffd666;font-size: 28px;"></i>
+                    <div class="console-app-name">主题管理</div>
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group">
+                    <i class="console-app-icon iconfont iconchajian1"
+                       style="color: #5cdbd3;font-size: 26px;"></i>
+                    <div class="console-app-name">插件管理</div>
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group">
+                    <i class="console-app-icon iconfont iconrizhi"
+                       style="color: #ff85c0;font-size: 28px;"></i>
+                    <div class="console-app-name">操作日志</div>
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm3">
+                <div class="console-app-group">
+                    <i class="console-app-icon iconfont iconxitongshezhi" style="color: #ffc069;font-size: 28px;"></i>
+                    <div class="console-app-name">系统配置</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-lg8 layui-col-md7">
+        <div class="layui-card">
+            <div class="layui-card-header">最新评论</div>
+            <div class="layui-card-body" style="padding: 17px 15px;">
+                <!--<table id="workplaceHotTable" lay-filter="workplaceHotTable"></table>-->
+                <div class="commentbox">
+                    <{if $comment!==false}>
+                    <ul class="commentList">
+                        <{foreach $comment as $v}>
+
+                        <li class="item cl"><a href="#"><i class="avatar size-L radius"><img alt="" src="https://q2.qlogo.cn/headimg_dl?dst_uin=<{$v.qq}>&spec=100"></i></a>
+                            <div class="comment-main">
+                                <header class="comment-header">
+                                    <div class="comment-meta">
+                                        <{if $v.admin==1}>
+                                        <span class="layui-badge layui-badge-green">博主</span>
+                                        <{/if}>
+                                        <a class="comment-author" href="#"><{$v.yname}></a> 评论于
+                                        <time datetime="<{$v.date}>" title="<{$v.date}>"><{$v.date}></time>
+                                    </div>
+                                </header>
+                                <div class="comment-body">
+                                    <p><{$v.comment}></p>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                    <{else}>
+                    <p>暂无留言</p>
+                    <{/if}>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-lg4 layui-col-md5">
+        <div class="layui-card">
+            <div class="layui-card-header">版本信息</div>
+            <div class="layui-card-body">
+                <table class="layui-table layui-text">
+                    <colgroup>
+                        <col width="90">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>当前版本</td>
+                        <td>Ver <{$ver}> &emsp; <a href="https://doc.dreamn.cn/doc/time" target="_blank">更新日志</a></td>
+                    </tr>
+                    <tr>
+                        <td>基于框架</td>
+                        <td><a href="https://github.com/dreamncn/SpeedPHP" target="_blank">SpeedPHP 4</a></td>
+                    </tr>
+                    <tr>
+                        <td>更新地址</td>
+                        <td><a href="<{$url}>" target="_blank">GitHub</a></td>
+                    </tr>
+                    <tr>
+                        <td>作者</td>
+                        <td><a href="https://dreamn.cn" target="_blank">Dreamn</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">友情链接</div>
+            <div class="layui-card-body">
+                <div class="layui-carousel admin-carousel admin-news" id="workplaceNewsCarousel">
+                    <div carousel-item>
+                        <div>
+                            <a href="https://www.dreamn.cn/" target="_blank"
+                               style="color:#fff;background-color: #009688;background-image: linear-gradient(to right,#009688,#5fb878);">
+                                Dreamn - 一个爱思考的码农</a>
+                        </div>
+                        <div>
+                            <a href="https://iread.dreamn.cn" target="_blank"
+                               style="color:#fff;background-color: #009fde;background-image: linear-gradient(to right,#009fde,#00beff);">
+                                iRead - 一个优秀的阅读网站</a>
+                        </div>
+                        <div>
+                            <a href="https://go.dreamn.cn/" target="_blank"
+                               style="color:#fff;background-color: #34363f;background-image: linear-gradient(to right,#34363f,#676c7c);">
+                                Go导航 - 自制优秀导航站</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--include_start-->
+<script>
+    layui.use(['layer', 'carousel'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var carousel = layui.carousel;
+        var device = layui.device();
+
+        // 渲染轮播
+        carousel.render({
+            elem: '#workplaceNewsCarousel',
+            width: '100%',
+            height: '60px',
+            arrow: 'none',
+            autoplay: true,
+            trigger: device.ios || device.android ? 'click' : 'hover',
+            anim: 'fade'
+        });
+
+    });
+</script>
+<!--include_end-->

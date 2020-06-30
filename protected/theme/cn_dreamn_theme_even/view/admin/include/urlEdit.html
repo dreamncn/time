@@ -1,0 +1,118 @@
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content .layui-card-body {
+        text-align: center;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .content .layui-card-body img {
+        width: 112px;
+        height: 100%;
+    }
+
+    .layui-form-label{
+        height: 36px!important;
+        border-radius: 5px!important;
+    }
+</style>
+<div class="layui-tab page-content-wrap" >
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;" lay-filter="form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">网站名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-filter="sitename" lay-verify="required" name="sitename" placeholder="请输入网站名称"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">网站地址</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-filter="siteurl" lay-verify="required" name="siteurl" placeholder="请输入网站地址" type="text" value="">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">网站描述</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" lay-filter="description" name="description" placeholder="请输入网站描述"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input checked="" lay-filter="hide"  lay-skin="switch" lay-text="显示|隐藏" name="hide"
+                               type="checkbox">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="urlSave" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+    var setData = '<{url c="api/url" a="set" }>';
+</script>
+<!--include_start-->
+<script>
+    var $;
+    layui.use(['form', 'element','admin'], function () {
+        var form = layui.form;
+        $ = layui.jquery;
+        var admin=layui.admin;
+        admin.iframeAuto();
+        var layerData = admin.getLayerData();
+
+
+        //监听信息提交
+        form.on('submit(urlSave)', function (data) {
+            data.field.hide = $("input[lay-filter='hide']").val() === "on" ? '0' : '1';
+            if(layerData!==undefined){
+                data.field.id=layerData.id;
+            }
+            saveChange(setData, data.field, "保存中...",function (data) {
+                if(data.code===-1)
+                    notice.msg('保存失败！'+data.msg, {icon: 2});
+                else{
+                    notice.msg('保存成功！', {icon: 1});
+                    parent.layer.closeAll();
+                }
+
+            });
+            return false;
+        });
+        form.on('switch(hide)', function (data) {
+            var x = data.elem.checked;
+            data.elem.value = x ? 'on' : "off";
+            form.render('checkbox');
+            return false;
+        });
+        if(layerData!==undefined){
+            setForm("form", {
+                "sitename": layerData.sitename
+                , "siteurl": layerData.siteurl
+                , "description": layerData.description
+                , "check hide": layerData.hide
+
+            });
+
+
+            form.render();
+
+        }
+
+
+    });
+</script>
+<!--include_end-->

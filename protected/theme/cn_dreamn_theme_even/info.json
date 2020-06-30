@@ -1,0 +1,25 @@
+{
+  "name":"Even",
+  "appName": "cn_dreamn_theme_even",
+  "version":"2.0.0",
+  "author":"Dreamn",
+  "description": "默认主题，自适应暗黑模式。",
+  "update":null,
+  "date":"2020-02-14 10:38",
+  "sidebar":[
+    {
+      "name": "标签云",
+      "html": "tags"
+    },
+    {
+      "name": "一言",
+      "html": "hitokoto"
+    } ,
+    {
+      "name": "个人信息",
+      "html": "info"
+    }
+  ],
+  "publicKey":"your publicKey",
+  "sign":"your sign"
+}

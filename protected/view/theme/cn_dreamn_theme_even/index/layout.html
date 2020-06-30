@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <link rel="dns-prefetch" href="//cdn.bootcss.com">
+    <link rel="dns-prefetch" href="//secure.gravatar.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title><{$article_title}></title>
+    <meta name="keywords" content="<{$key}>">
+    <meta name="description" content="<{$description}>">
+    <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/xcode.min.css" rel="stylesheet">
+    <link href="<{$i}>/css/style.css" rel="stylesheet">
+    <{$plugin_css nofilter}>
+    <link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="<{$i}>/img/favicon.ico">
+    <script type="text/javascript" src="<{$i}>/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<{$i}>/js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="<{$i}>/js/layer/layer.js"></script>
+    <script>
+        function getScripts(urls) {
+             for(var i=0;i<urls.length;i++){
+                 $.ajax({
+                     url: urls[i],
+                     dataType: "script",
+                     async:false
+                 });
+             }
+             
+        }
+    </script>
+    <style>
+        #baguetteBox-overlay{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--[if lt IE 8]>
+<div class="browsehappy" role="dialog">
+    当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="https://www.google.cn/chrome/" target="_blank">升级你的浏览器</a>。
+</div>
+<![endif]-->
+<header id="header" class="header bg-white animated headroom--top headroom--not-bottom">
+    <div class="navbar-container">
+        <a href="<{$site_url}>" class="navbar-logo" style="font-family: 'Playball', cursive;"><{$blog_name}></a>
+        <div class="navbar-menu">
+            <{foreach $nav as $v}>
+                <{if  $v.lastest == 0}>
+                    <{if $v.stype == 3}>
+                        <a href="<{$v.url}>" target="_blank"><{$v.nname}></a>
+                    <{else}>
+                        <a href="<{$v.url}>"><{$v.nname}></a>
+                    <{/if}>
+
+                <{/if}>
+            <{/foreach}>
+        </div>
+        <div class="navbar-search" onclick="">
+            <span class="icon-search"></span>
+            <form id="search" method="post" onsubmit="return search();">
+                <span class="search-box">
+                    <input type="text" id="input" class="input" name="s" required="true" placeholder="Search..."
+                           maxlength="30" autocomplete="off">
+                </span>
+
+            </form>
+        </div>
+        <div class="navbar-mobile-menu" onclick="">
+            <span class="icon-menu cross"><span class="middle"></span></span>
+            <ul>
+
+                <{foreach $nav as $v}>
+                <{if $v.nexts == "" && $v.lastest == 0}>
+                <{if $v.stype == 3}>
+                <li><a href="<{$v.url}>" target="_blank"><{$v.nname}></a></li>
+                <{else}>
+                <li><a href="<{$v.url}>"><{$v.nname}></a> </li>
+                <{/if}>
+                <{elseif $v.lastest == 0}>
+                <{if $v.stype == 3}>
+                <li><a href="<{$v.url}>" target="_blank"><{$v.nname}></a></li>
+                <{else}>
+                <li><a href="<{$v.url}>"><{$v.nname}></a> </li>
+                <{/if}>
+                <{/if}>
+                <{/foreach}>
+
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="main-content index-page clearfix baguetteBoxOne" id="pjax-content">
+    <{include file=$__template_file}>
+</div>
+<!-- 加载动画 -->
+<div class="pjax_loading_frame" style="display: none;"></div>
+<div class="pjax_loading" style="display: none;"></div>
+
+<footer id="footer" class="footer ">
+    <div class="footer-social">
+        <div class="footer-container clearfix">
+            <div class="social-list">
+                <a class="social" target="blank" href="mailto:<{$mail}>">MAIL</a>
+                <a class="social" target="blank" href="http://wpa.qq.com/msgrd?v=3&uin=<{$qq}>&site=qq&menu=yes">QQ</a>
+                <a class="social" target="blank" href="<{$github}>">GITHUB</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-meta">
+        <div class="footer-container">
+            <div class="meta-item meta-copyright">
+                <div class="meta-copyright-info">
+                    <a  class="info-logo">
+                        <img src="/i/upload/sys/head.jpg" alt="<{$author}>" />
+                    </a>
+                    <div class="info-text">
+                        <p>Powered by <a href="http://www.dreamn.cn" target="_blank" rel="nofollow">Time</a></p>
+                        <p><{$copyright}></p>
+                        <p><a href="http://www.beian.miit.gov.cn/" target="_blank"> <{$icp}></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body>
+<script>
+    $(document).pjax('a[target!=_blank]', '#pjax-content', {fragment:'#pjax-content', timeout:8000});
+    $(document).on('pjax:send', function() {
+        $('.pjax_loading_frame').css('display','block');
+        $('.pjax_loading').css('display','block');
+    });
+    $(document).on('pjax:complete', function() {
+        $('.pjax_loading_frame').css('display','none');
+        $('.pjax_loading').css('display','none');
+    });
+</script>
+<script>
+
+    function search() {
+        if ($('#input').val() !== "")
+            window.location = "<{url m='index' c='main' a='search' search=''}>" + $('#input').val();
+        return false;
+    }
+</script>
+<{$plugin_js nofilter}>
+
+</html>

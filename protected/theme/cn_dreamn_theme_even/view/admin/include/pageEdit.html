@@ -1,0 +1,259 @@
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content .layui-card-body {
+        text-align: center;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .content .layui-card-body img {
+        width: 112px;
+        height: 100%;
+    }
+    .form-group-bottom {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .05);
+        z-index: 99999999;
+    }
+</style>
+<div class="layui-tab layui-steps layui-steps-small  layui-steps layui-steps-readonly" lay-filter="stepEdit">
+    <ul class="layui-tab-title" style="display:none">
+        <li class="layui-this">
+            <i class="layui-icon layui-icon-ok">2</i>
+            <span class="layui-steps-title">编辑文章</span>
+        </li>
+        <li>
+            <i class="layui-icon layui-icon-ok">3</i>
+            <span class="layui-steps-title">后续处理</span>
+        </li>
+        <li>
+            <i class="layui-icon layui-icon-ok">4</i>
+            <span class="layui-steps-title">发布完成</span>
+        </li>
+
+    </ul>
+    <div class="layui-tab-content">
+
+        <div class="layui-tab-item layui-show text-center">
+            <div class="edit"></div>
+            <div class="form-group-bottom text-right">
+                <button class="layui-btn layui-btn-radius" lay-filter="step2" lay-submit>下一步</button>
+            </div>
+        </div>
+        <div class="layui-tab-item ">
+            <div class="action">
+                <form class="layui-form layui-row layui-col-space10" lay-filter="form">
+                    <div class="layui-col-md12 layui-col-xs12">
+                        <blockquote class="layui-elem-quote title"><i class=""></i>文章信息</blockquote>
+                        <div class="layui-form-item ">
+                            <label class="layui-form-label">页面标题</label>
+                            <div class="layui-input-block">
+                                <input class="layui-input newsName" lay-filter="title" name="title" placeholder="请输入页面标题" type="text">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">内容提炼</label>
+                            <div class="layui-input-block">
+                        <textarea class="layui-textarea abstract" lay-filter="info" name="info"
+                                  placeholder="请输入提炼内容（一句话/名言/古诗）"></textarea>
+                            </div>
+                        </div>
+                        <blockquote class="layui-elem-quote title"><i class=""></i>文章属性</blockquote>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">图片转储</label>
+                            <div class="layui-input-block">
+                                <input checked lay-filter="picToMe" lay-skin="switch" lay-text="转储|不转储" name="picToMe" type="checkbox" value="1">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">链接别名</label>
+                            <div class="layui-input-block">
+                                <input class="layui-input" lay-filter="alians" lay-verify="alians" name="alians"
+                                       placeholder="链接别名"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md12 layui-col-xs12">
+
+                       
+
+
+                        <blockquote class="layui-elem-quote title magt10"><i class="layui-icon"></i> 发布</blockquote>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label"><i class="layui-icon"></i> 状　态</label>
+                            <div class="layui-input-block newsStatus">
+                                <select lay-filter="hide" name="hide">
+                                    <option value="0">正式发布</option>
+                                    <option value="1">隐藏文章</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密　码</label>
+                            <div class="layui-input-block">
+                                <input class="layui-input" lay-filter="password" name="password" placeholder="不需要密码留空"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-form-item ">
+                            <label class="layui-form-label">时　间</label>
+                            <div class="layui-input-block">
+                                <input class="layui-input" id="release" lay-filter="date" name='date'
+                                       placeholder="请选择日期和时间"
+                                       readonly type="text"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item ">
+                            <label class="layui-form-label"><i class=""></i> 评　论</label>
+                            <div class="layui-input-block">
+                                <input checked lay-filter="allowremark" lay-skin="switch" lay-text="是|否"
+                                       name="allowremark"
+                                       type="checkbox" value="1">
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </form>
+            </div>
+            <hr class="layui-bg-gray"/>
+            <div class="form-group-bottom text-right">
+                <button data-steps="prev" type="button" class="layui-btn layui-btn-primary layui-btn-radius">上一步
+                </button>
+                <button class="layui-btn layui-btn-radius" lay-filter="step3" lay-submit>发布页面</button>
+            </div>
+        </div>
+        <div class="layui-tab-item text-center" style="margin-top: 50px">
+            <i class="layui-icon layui-icon-ok layui-circle"
+               style="background: #52C41A;color: #fff;font-size:30px;font-weight:bold;padding: 20px;line-height: 80px;"></i>
+            <div style="font-size: 24px;color: #333;margin-top: 30px;">发布成功</div>
+            <div style="font-size: 14px;color: #666;margin-top: 20px;">Tip:如有图片转存任务，将在后台自动转存</div>
+            <div style="text-align: center;margin: 50px 0 25px 0;">
+                <button class="layui-btn" data-steps="next">再发一篇</button>
+                <button class="layui-btn layui-btn-primary" id="look">查看文章</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var getUrl = '<{url c="admin/main" a="edit" type=""}>';
+    var setData = '<{url c="api/page" a="set" }>';
+</script>
+<!--include_start-->
+<script>
+    layui.use(['layer', 'steps', 'form', 'admin',  'laydate'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var steps = layui.steps;
+        var form = layui.form;
+        var admin = layui.admin;
+        var laydate = layui.laydate;
+        var tagInput=  $('#tag');
+        //获取
+        admin.iframeAuto();
+        var layerData = admin.getLayerData();
+        //日期框绑定
+        laydate.render({
+            elem: '#release',
+            type: 'datetime',
+            trigger: "click",
+            value: new Date(),
+        });
+
+        var editType = 'html';
+        var content = '';
+        putEdit();
+        getSort();
+        function putEdit() {
+            admin.showLoading('[lay-filter="stepEdit"]', 1, '.9');
+            $.ajax({
+                url: getUrl + editType,
+                type: 'GET',
+                success: function (data) {
+                    if(content!==''){
+                        data=data.replace(/<\/textarea>/,content+'</textarea>');
+                    }
+                    $('.layui-tab-content .layui-tab-item .edit').html(data);
+
+                    admin.removeLoading('[lay-filter="stepEdit"]', true, true);
+                    scroll(0, 0);
+
+                }
+            });
+        }
+        function getSort() {
+            form.render("select");
+            if(layerData!==null){
+                
+                setForm("form", {
+                    "title": layerData.title
+                    , "info": layerData.info
+                    , "check picToMe": false
+                    , "alians": layerData.alians
+                    , "select hide": layerData.hide
+                    , "password": layerData.password
+                    , "date": layerData.date
+                    , "check allowremark": !!parseInt(layerData.allowremark)
+
+                });
+
+                $('form').append('<input style="display: none" name="gid" value="'+layerData.gid+'">');
+                form.render();
+
+
+                content= layerData.content;
+
+            }
+        }
+        $('#look').click(function () {
+            window.open('/posts/' + $('input[lay-filter=alians]').val(), '_blank');
+        });
+        form.on('submit(step2)', function () {
+            content = tinymce.get('demoEditor').getContent();
+            steps.next('stepEdit');
+            scroll(0, 0);
+        });
+        form.on('submit(step3)', function () {
+            var data = form.val("form");
+            data.content = content;
+
+            data.ismarkdown = 0;
+
+            data.top = $("input[name=top]").val();
+            data.allowremark = $("input[name=allowremark]").val();
+            data.picToMe = $("input[name=picToMe]").val();
+          
+            saveChange(setData, data, '处理中', function (data) {
+                if(data.code===0){
+                      notice.msg(data.msg, {icon: 1});
+                    steps.next('stepEdit');
+                    content='';
+                    scroll(0, 0);
+                }else{
+                    notice.msg(data.msg, {icon: 2})
+                }
+            });
+        });
+
+
+        form.on('switch(picToMe)', function (data) {
+            data.elem.value = data.elem.checked ? '1' : "0";
+            return false;
+        });
+        form.on('switch(allowremark)', function (data) {
+            data.elem.value = data.elem.checked ? '1' : "0";
+            return false;
+        });
+        
+    });
+</script>
+<!--include_end-->

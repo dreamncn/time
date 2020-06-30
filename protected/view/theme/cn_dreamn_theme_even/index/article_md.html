@@ -1,0 +1,80 @@
+<link href="<{$i}>/../edit/editormd/css/editormd.preview.css" rel="stylesheet"/>
+<link href="<{$i}>/css/baguetteBox.min.css" rel="stylesheet">
+<style>
+    .markdown-body > :first-child {
+        margin-top: revert;
+    }
+</style>
+<article class="main-content page-page" itemscope itemtype="http://schema.org/Article">
+    <div class="post-header">
+        <h1 class="post-title" itemprop="name headline"><{$title}></h1>
+        <div class="post-data">
+            <time datetime="<{$date}>" itemprop="datePublished">发布于<{$date}></time> | <a href="<{url  m='index' c='article' a='category' sort=$sort}>"><{$sort}></a> | 阅读<{$views}>次
+            <{if $is_copy}>| 转载自 <a href="<{$copy_url}>"><{$author}></a> <{/if}>
+        </div>
+    </div>
+    <div id="post-content" class="post-content" itemprop="articleBody">
+        <p class="post-tags">
+            <{foreach $tag as $t}>
+            <a href="<{url m='index'  c='article' a='tag' tag=$t}>"><{$t}></a>
+            <{/foreach}>
+        </p>
+        <div id="test-editormd-view2">
+            <textarea id="append-test" style="display:none;"><{$content nofilter}></textarea>
+        </div>
+        <p class="post-info">
+            本文由 <{$author}> 创作，采用 <a href="https://creativecommons.org/licenses/by/4.0/legalcode.zh-Hans" target="_blank" rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名</p>
+    </div>
+</article>
+
+<div id="post-bottom-bar" class="post-bottom-bar">
+    <div class="bottom-bar-inner">
+        <div class="bottom-bar-items social-share left">
+            <span class="bottom-bar-item">Share : </span>
+            <span class="bottom-bar-item bottom-bar-qzone"><a href="javascript:shareTOQQ();" title="<{$title}>" rel="nofollow">Qzone</a></span>
+            <span class="bottom-bar-item bottom-bar-qrcode"><a href="javascript:shareTODB();" title="<{$title}>" rel="nofollow">Weibo</a></span>
+            <span class="bottom-bar-item bottom-bar-weibo"><a href="javascript:shareToTsina();"  title="<{$title}>" rel="nofollow">Douban</a></span>
+            <span class="bottom-bar-item bottom-bar-twitter"><a href="javascript:shareQR();" rel="nofollow">QRcode</a></span>
+        </div>
+        <div class="bottom-bar-items right">
+            <span class="bottom-bar-item"><a href="#footer">↓</a></span>
+            <span class="bottom-bar-item"><a href="#">↑</a></span>
+        </div>
+    </div>
+</div>
+
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<div id="comments"></div>
+<script>
+    getScripts([
+        "<{$i}>/js/baguetteBox.min.js",
+        "<{$i}>/../edit/editormd/lib/marked.min.js",
+        "<{$i}>/../edit/editormd/lib/prettify.min.js",
+        "<{$i}>/../edit/editormd/editormd.js",
+        "<{$i}>/js/headroom.js",
+        "<{$i}>/js/article.js"
+    ]);
+</script>
+<{if $allow_remark}>
+<script>
+    var comment='<{url m="index" c="article" a="Comment"}>';
+    getComment('<{$id}>');
+</script>
+<{/if}>
+<script type="text/javascript">
+
+    $(function () {
+        editormd.markdownToHTML("test-editormd-view2", {
+            htmlDecode: "style,script,iframe",  // you can filter tags decode
+            emoji: true,
+            taskList: true,
+        });
+
+        postDirectoryBuild('test-editormd-view2');
+        getPic('#test-editormd-view2');
+
+        jumpUrl('#test-editormd-view2');
+    });
+</script>

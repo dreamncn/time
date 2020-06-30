@@ -1,0 +1,122 @@
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form">
+            <blockquote class="layui-elem-quote quoteBox">
+                <form class="layui-form">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal addNews_btn" id="add">添加友链</a>
+                    </div>
+
+                </form>
+
+            </blockquote>
+            <table id="Urllist" lay-filter="Urllist"></table>
+            <script id="switchhide" type="text/html">
+                <input type="checkbox" name="hide" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="hide" {{
+                       d.hide== 0 ? 'checked' : '' }}>
+            </script>
+            <!--操作-->
+            <script id="UrllistBar" type="text/html">
+                <a class="layui-btn layui-btn-xs " lay-event="modify">修改</a>
+                <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+            </script>
+        </form>
+    </div>
+</div>
+<script>
+    var geturl=  "<{url c='api/Url' a='get'}>";
+    var delurl=  "<{url c='api/Url' a='del' id=''}>";
+    var setOption=  "<{url c='api/Url' a='SetOption'}>";
+    var editurl=  "<{url c='admin/main' a='page' page='urlEdit'}>";
+</script>
+
+<!--include_start-->
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'table', 'element','admin'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.jquery,
+            element = layui.element,
+            admin = layui.admin;
+        table = layui.table;
+//监听操作
+        form.on('switch(hide)', function (obj) {
+            var data = {id: this.value, opt: this.name, val: obj.elem.checked ? 0 : 1};
+            //向后台setoption
+            saveChange(setOption, data, "隐藏中...",function (data) {
+                if(data.code!==-1){
+                    tableIns.reload();
+                    notice.msg('隐藏成功', {icon: 1});
+                }else{
+                    notice.msg('隐藏失败', {icon: 2});
+                }
+            });
+            //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+        });
+        //用户列表
+        var tableIns = table.render({
+            elem: '#Urllist',
+            url: geturl,
+            cellMinWidth: 95,
+            page: false,
+            height: "full",
+            limit: 1000,
+            cols: [[
+                {field: 'id', title: 'ID', width: 80, align: "center"},
+                {field: 'sitename', title: '网站名称', width: 150, align: "center"},
+                {field: 'siteurl', title: '网站地址', align: "left"},
+                {field: 'description', title: '网站描述', align: "center"},
+                {field: 'hide', title: '状态', width: 90, templet: '#switchhide', fixed: "right"},
+                {title: '操作', width: 135, templet: '#UrllistBar', fixed: "right", align: "center"}
+            ]]
+        });
+
+
+        $("#add").click(function () {
+            var index = layui.layer.open({
+                title: "添加友链",
+                type: 2,
+                content: editurl,
+                end:function () {
+                    tableIns.reload();
+                }
+            });
+            layui.layer.full(index);
+        });
+//监听单元格编辑
+
+        //列表操作
+        table.on('tool(Urllist)', function (obj) {
+            var layEvent = obj.event,
+                data = obj.data;
+            if (layEvent === 'del') { //删除
+                layer.confirm('确定删除该友情链接？', {icon: 3, title: '提示信息'}, function (index) {
+                    $.get(delurl + data.id, function (data) {
+                        if (!data.err) {
+                            notice.msg('删除成功', {icon: 1});
+                            tableIns.reload();
+                        } else
+                            notice.msg('删除失败'+ data.msg, {icon: 2});
+
+                        layer.close(index);
+                    }, "json");
+
+                });
+            }else if(layEvent === 'modify'){
+                var index=admin.open({
+                    title: "修改友链《"+data.sitename+"》",
+                    type: 2,
+                    data:data,
+                    content: editurl,
+                    end:function () {
+                        tableIns.reload();
+                    }
+                });
+                layui.layer.full(index);
+            }
+        });
+    })
+
+
+</script>
+<!--include_end-->

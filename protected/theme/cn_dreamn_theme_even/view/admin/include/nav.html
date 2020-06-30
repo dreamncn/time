@@ -1,0 +1,148 @@
+
+<form class="layui-form">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-normal addNews_btn" id="add">添加导航</a>
+            </div>
+
+        </form>
+
+    </blockquote>
+    <table id="Navlist" lay-filter="Navlist"></table>
+    <script id="switchhide" type="text/html">
+        <input type="checkbox" name="hide" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="hide" {{
+               d.hide== 0 ? 'checked' : '' }}>
+    </script>
+    <!--操作-->
+    <script id="NavlistBar" type="text/html">
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    </script>
+</form>
+
+<script>
+    var editUrl = '<{url c="admin/page" a="navEdit"}>';
+    var getUrl = '<{url c="api/nav" a="get" }>';
+    var delUrl = '<{url c="api/nav" a="del" id="" }>';
+    var setData = '<{url c="api/nav" a="setOption" }>';
+</script>
+<!--include_start-->
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'table'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.jquery,
+        table = layui.table;
+//监听操作
+        form.on('switch(hide)', function (obj) {
+            var data = {id: this.value, opt: this.name, val: obj.elem.checked ? 0 : 1};
+            //向后台setoption
+            saveChange(setData, data, "设置中...",function (data) {
+                    if(data.code!==-1){
+                        notice.msg('设置成功',{icon:1});
+                    }else{
+                        notice.msg('设置失败',{icon:2});
+                    }
+            });
+        });
+        //用户列表
+        var tableIns = table.render({
+            elem: '#Navlist',
+            url: getUrl,
+            cellMinWidth: 95,
+            page: false,
+            height: "full",
+            limit: 1000,
+            cols: [[
+                {field: 'pid', title: '排序', width: 150, align: "center", sort: true, edit: "text"},
+                {field: 'nname', title: '导航名称', width: 150, align: "center", edit: "text"},
+                {field: 'url', title: '路径', align: "left"},
+                {
+                    field: 'lastest', title: '上级导航', align: "center", width: 150, templet: function (d) {
+                        if (parseInt(d.lastest) !== 0) return '<p class="layui-bg-cyan" >' + d.lastName + '</p>';
+                        else return "";
+                    }
+                },
+                {
+                    field: 'stype', title: '类别', width: 85, align: "center", templet: function (d) {
+                        var color, text;
+                        switch (parseInt(d.stype)) {
+                            case 0:
+                                color = "layui-bg-red";
+                                text = "系统";
+                                break;//系统
+                            case 1:
+                                color = "layui-bg-green";
+                                text = "分类";
+                                break;//分类
+                            case 2:
+                                color = "layui-bg-blue";
+                                text = "页面";
+                                break;//页面
+                            case 3:
+                                color = "ayui-bg-orange";
+                                text = "自定义";
+                                break;//自定义
+                        }
+                        return '<p class="' + color + '">' + text + '</p>';
+                    }
+                },
+                {field: 'hide', title: '状态', width: 95, templet: '#switchhide',fixed: "right",  unresize: true},
+                {title: '操作', width:75, templet: '#NavlistBar', fixed: "right", align: "center"}
+            ]]
+        });
+
+
+        function addNav(edit) {
+            var index = layui.layer.open({
+                title: "添加导航",
+                type: 2,
+                content: editUrl,
+
+            });
+            layui.layer.full(index);
+        }
+
+        $("#add").click(function () {
+            addNav();
+        });
+//监听单元格编辑
+        table.on('edit(Navlist)', function (obj) {
+            var value = obj.value //得到修改后的值
+                , data = obj.data //得到所在行所有键值
+                , field = obj.field; //得到字段
+
+            saveChange(setData, {id: data.id, opt: field, val: value}, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+            });
+        });
+
+        //列表操作
+        table.on('tool(Navlist)', function (obj) {
+            var layEvent = obj.event,
+                data = obj.data;
+            if (layEvent === 'del') { //删除
+                layer.confirm('确定删除该导航？', {icon: 3, title: '提示信息'}, function (index) {
+
+                    $.get(delUrl + data.id, function (data) {
+
+                        if (!data.err) {
+                            notice.msg('删除成功',{icon:1});
+                            tableIns.reload();
+                        } else
+                            notice.msg('删除失败!'+ data.msg,{icon:2});
+                        
+                        layer.close(index);
+                    }, "json");
+                });
+            }
+        });
+    })
+
+
+</script>
+<!--include_end-->

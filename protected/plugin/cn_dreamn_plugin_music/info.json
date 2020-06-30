@@ -1,0 +1,12 @@
+{
+  "name":"音乐",
+  "appName": "cn_dreamn_plugin_music",
+  "version":"1.0.0",
+  "author":"Dreamn",
+  "description":"一个拿来听歌的应用",
+  "update":"",
+  "menu":true,
+  "date":"2020-02-14 10:38",
+  "publicKey":"your publicKey",
+  "sign":"your sign"
+}
