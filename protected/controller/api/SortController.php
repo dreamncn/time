@@ -35,7 +35,7 @@ class SortController extends BaseController{
           $opt=["sname"];
           $s=new Sort();
           if(in_array($this->arg['opt'],$opt)&&$this->arg['val']!==""){
-              $s->set($this->arg['id'],$this->arg['val']);
+              $s->setData($this->arg['id'],$this->arg['val']);
               echo json_encode(array("state"=>true));
           }else{
               echo json_encode(array("state"=>false,'msg'=>"未知错误！"));
@@ -51,7 +51,7 @@ class SortController extends BaseController{
                 $id=$con->getIDBySort(arg('id'));
                 if($id){
                     foreach ($id as $v)
-                        $con->setOption($v['gid'],'sid','1');
+                        $con->setOpt($v['gid'],'sid','1');
                 }
                 $s=new Sort();
                 $s->del(arg('id'));

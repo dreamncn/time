@@ -48,14 +48,14 @@ class NavController extends BaseController{
             exit(json_encode(array("state"=>true)));
         $n=$nav->gerById($this->arg["lastest"]);
         if(!$n){
-            $nav->setOption($id,"lastest",0);
+            $nav->setOpt($id,"lastest",0);
             $this->api(-1,null,0,'好像有点问题');
         }
         $array=explode(',', $n['nexts']);
 
         if(!in_array($id,$array))
             $array[]=$id;
-        $nav->setOption($this->arg["lastest"],"nexts",implode(",",$array));
+        $nav->setOpt($this->arg["lastest"],"nexts",implode(",",$array));
         $this->api(0,null,0,'');
 
     }
@@ -64,7 +64,7 @@ class NavController extends BaseController{
           $opt=["hide","pid","nname"];
           $nav=new Native();
           if(in_array($this->arg['opt'],$opt)&&$this->arg['val']!==""){
-              $nav->setOption($this->arg['id'],$this->arg['opt'],$this->arg['val']);
+              $nav->setOpt($this->arg['id'],$this->arg['opt'],$this->arg['val']);
               $this->api(0,null,0,'');
           }else{
               $this->api(-1,null,0,'参数错误');
@@ -83,14 +83,14 @@ class NavController extends BaseController{
                 //删除所有下级依赖
                 $array=explode(',', $d['nexts']);
                 foreach ($array as $v)
-                    $nav->setOption($v,"lastest",0);
+                    $nav->setOpt($v,"lastest",0);
                 //删除所有上级依赖
                 if(intval($d['lastest'])!==0){
                     $dd=$nav->gerById(arg($d['lastest']));
                     if(!$dd){
                         $array=explode(',', $dd['nexts']);
                         $array=array_diff($array,array(arg('id')));
-                        $nav->setOption($d["lastest"],"nexts",substr(implode(",",$array),1));
+                        $nav->setOpt($d["lastest"],"nexts",substr(implode(",",$array),1));
                     }
 
                 }

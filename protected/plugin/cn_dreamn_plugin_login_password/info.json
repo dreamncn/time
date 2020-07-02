@@ -1,0 +1,12 @@
+{
+  "name":"账号密码登录",
+  "appName": "cn_dreamn_plugin_login_password",
+  "version":"1.0.1",
+  "author":"Dreamn",
+  "description":"官方账号密码登录插件，请勿删除",
+  "update":"",
+  "type":"login",
+  "system":true,
+  "menu":true,
+  "date":"2020-06-29 16:38"
+}

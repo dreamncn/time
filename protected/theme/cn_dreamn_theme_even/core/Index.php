@@ -189,5 +189,13 @@ class Index extends Plugin{
         $arr['day']=intval((time()-intval($conf->getData('start_time')))/(60*60*24));
         return $arr;
     }
+    /**
+     * @param $v
+     * @return mixed
+     */
+    public function sidebar_calendar($v){
+        $arr['bar_title']=$v['title'];
+        return $arr;
+    }
 
 }//必须继承Plugin

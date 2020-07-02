@@ -54,7 +54,7 @@ class Admin extends Plugin
         $arr['sortCount']=number_format($sort->getCount());
         $arr['ver']=Blog::version;
         $arr['url']=Blog::site;
-        $arr['comment']= $comment->selectAll(array('hide'=>0),'date DESC','*',array(0,3));
+        $arr['comment']= $comment->select()->where(['hide'=>0])->orderBy('date DESC')->limit(3)->commit();
         return $arr;
     }
     public function include_adminInfo(){
@@ -62,7 +62,7 @@ class Admin extends Plugin
         $arr['mail']=$config->getData('mail');
         $arr['info']=$config->getData('info');
         $web=new Web();
-        $json= $web->get('http://whois.pconline.com.cn/ipJson.jsp?ip='.getIP().'&json=true');
+        $json= $web->get('http://whois.pconline.com.cn/ipJson.jsp?ip='.getClientIP().'&json=true');
         //dump(trim($json),true);
         $result=json_decode(chkCode(trim($json)));
         if($result){

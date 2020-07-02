@@ -36,7 +36,7 @@ class SidebarController extends BaseController{
             $opt=["sort"];
             $sidebar=new SideBar();
             if(in_array($this->arg['opt'],$opt)&&$this->arg['val']!==""){
-                $sidebar->setOption($this->arg['id'],$this->arg['opt'],$this->arg['val']);
+                $sidebar->setOpt($this->arg['id'],$this->arg['opt'],$this->arg['val']);
                 $this->api(0,null,0,'');
             }else{
                 $this->api(-1,null,0,'参数错误');

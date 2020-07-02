@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">选择分类</label>
+                    <label class="layui-form-label">选择模板</label>
                     <div class="layui-input-block">
                         <select id="chooseSort" lay-verify="required" name="html">
                             <option value=""></option>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">选择页面</label>
+                    <label class="layui-form-label">html代码</label>
                     <div class="layui-input-block">
                         <textarea class="layui-textarea" lay-verify="required" name="html"></textarea>
                     </div>
@@ -83,8 +83,8 @@
     </div>
 </div>
 <script>
-    var getDataUrl = '<{url c="api/sidebar" a="getData" }>';
-    var setData = '<{url c="api/sidebar" a="set" }>';
+    var getDataUrl = '<{url  m="api" c="sidebar" a="getData" }>';
+    var setData = '<{url  m="api" c="sidebar" a="set" }>';
 </script>
 <!--include_start-->
 <script>

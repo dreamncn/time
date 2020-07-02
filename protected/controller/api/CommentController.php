@@ -19,11 +19,11 @@ class CommentController extends BaseController{
         $c=new Comment();
         $condition=[];
         if(arg('name','')!==""){
-            $condition['blog_comment.gid']=arg('name','');
+            $condition['gid']=arg('name','');
         }
         if(arg('author','')!==""){
            
-            $condition['blog_comment.admin']=intval(arg('author',''));
+            $condition['admin']=intval(arg('author',''));
         }
         $result=$c->getByPage(arg('page',1),arg('limit',12),$condition,$count);
         $this->api($count!==0,$result,$count,'暂无文章');
@@ -92,7 +92,7 @@ class CommentController extends BaseController{
              exit(json_encode(array("state"=>false,'msg'=>"参数错误！")));
 
           $c=new Comment();
-          $c->setOption($this->arg['id'],$this->arg['opt'],$this->arg['val']);
+          $c->setOpt($this->arg['id'],$this->arg['opt'],$this->arg['val']);
           echo json_encode(array("state"=>true,'msg'=>""));
             }else
                 echo json_encode(array("state"=>false,'msg'=>"参数错误！"));

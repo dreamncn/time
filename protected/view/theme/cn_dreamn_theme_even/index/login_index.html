@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="page-fill">
+<head>
+    <meta charset="UTF-8">
+    <script>if (window !== top) top.location.replace(location.href);</script>
+    <title><{$title}></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="<{$i}>/img/favicon.ico" type="image/x-icon"/>
+    <style>
+        .page-fill {
+            width: 100%;
+            height: 100%;
+            display: block;
+            box-sizing: border-box;
+        }
+        .layui-form-item {
+            margin-bottom: 15px;
+            clear: both;
+            *zoom: 1;
+        }
+        .layui-input, .layui-textarea {
+            display: block;
+            width: 100%;
+            padding-left: 10px;
+        }
+        .layui-input, .layui-select, .layui-textarea {
+            height: 38px;
+            line-height: 1.3;
+            line-height: 38px\9;
+            border-width: 1px;
+            border-style: solid;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+        .layui-badge-rim, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-layedit, .layui-layedit-tool, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-tab-title, .layui-tab-title .layui-this:after, .layui-textarea {
+            border-color: #e6e6e6;
+        }
+        .layui-btn, .layui-input, .layui-select, .layui-textarea, .layui-upload-button {
+            outline: 0;
+            -webkit-appearance: none;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+            box-sizing: border-box;
+        }
+        button, input, optgroup, option, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            font-style: inherit;
+            font-weight: inherit;
+            outline: 0;
+        }
+        blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+        .layui-btn {
+            display: inline-block;
+            height: 38px;
+            line-height: 38px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .layui-btn, .layui-input, .layui-select, .layui-textarea, .layui-upload-button {
+            outline: 0;
+            -webkit-appearance: none;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+            box-sizing: border-box;
+        }
+        .layui-btn, .layui-disabled, .layui-icon, .layui-unselect {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        .layui-btn, .layui-edge, .layui-inline, img {
+            vertical-align: middle;
+        }
+        button, input, optgroup, option, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            font-style: inherit;
+            font-weight: inherit;
+            outline: 0;
+        }
+        blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+        /*登录*/
+        #login .layui-icon{font-size:16px!important}
+        #login .mag0{margin:0!important}
+        #login ::selection{background:#ff5722;color:#fff}
+        #login .layui-red{color:red!important;font-weight:700}
+        #login .layui-blue{color:#01aaed!important}
+        #login .layui-form-item.layui-input-focus input{border-color:#ff6700!important}
+        #login .layui-block{width:100%!important}
+        #login{width:100%;height:100%;background-image:url(<{$i}>/img/bg-login.jpg);position:relative;background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center; }
+        #login form.layui-form{padding:0 20px 20px 20px;width:300px;position:absolute;left:50%;top:50%;margin:-150px 0 0 -150px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;background:#fff;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;box-shadow:0 0 50px #009688}
+        #login .login_face{margin:-55px auto 20px;width:100px;height:100px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;border:5px solid #fff;overflow:hidden;box-shadow:0 0 30px #009688;background:#fff}
+        #login .login_face img{width:100%}
+        #login .layui-form-item{position:relative}
+        #login .layui-form-item label{position:absolute;color:#757575;left:10px;top:9px;line-height:20px;background:0 0;padding:0 5px;font-size:14px;cursor:text}
+        #login #code{padding-right:110px}
+        #login .captcha-box .img{position:absolute;top:1px;bottom:1px;right:1px;cursor:pointer;width:100px;background:#c4e1ce}
+        #login .layui-form-item input{background:#fff!important}
+        #login .layui-form-item input,#login .layui-form-item label{transition:all .3s ease-in-out;-webkit-transition:all .3s ease-in-out}
+        #login .layui-form-item input::placeholder{color:transparent!important}
+        #login .layui-form-item.layui-input-focus input::placeholder{color:#757575!important}
+        #login .layui-form-item.layui-input-active label,#login .layui-form-item.layui-input-focus label{top:-10px;font-size:12px;color:#ff6700;background:#fff!important}
+        #login .login-link{display:block;font-size:12px}
+        #login .login-link a{display:inline-block;margin-right:20px}
+    </style>
+</head>
+<body class="page-fill">
+<div class="page-fill" id="login">
+    <form class="layui-form" id="form" onsubmit="return false;">
+        <div class="login_face"><img src="/i/upload/sys/head.jpg"></div>
+        <{$tpl nofilter}>
+    </form>
+</div>
+<!--js逻辑-->
+
+
+<script type="text/javascript" src="<{$i}>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$i}>/js/layer/layer.js"></script>
+<!-- js部分 -->
+<{$script nofilter}>
+
+</body>
+</html>

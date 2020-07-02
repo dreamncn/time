@@ -12,6 +12,7 @@ use app\model\Comment;
 use app\model\Article;
 use app\model\Config;
 use app\Model\Upload;
+use app\Sync;
 
 class PageController extends BaseController{
     //前台的导航
@@ -80,7 +81,7 @@ class PageController extends BaseController{
             $gid=$this->arg['gid'];
             if($r&&$r['gid']!=$this->arg['gid'])exit(json_encode(array("state"=>false,'msg'=>"别名重复！")));
             foreach ($array as $v=>$k){
-                $c->setOption($this->arg['gid'],$v,$k);
+                $c->setOpt($this->arg['gid'],$v,$k);
             }
         }else{
             if($r)exit(json_encode(array("state"=>false,'msg'=>"别名重复！")));
@@ -90,7 +91,7 @@ class PageController extends BaseController{
         //插件不允许执行耗时任务
         Plugin::hook('setArticle',array('param'=>arg(),'gid'=>$gid));
         //为图片转储做准备
-        syncRequest(url('sync/main','setpic'),'POST',array('gid'=>$gid,'picToMe'=>$this->arg['picToMe']));
+        Sync::request(url('sync','main','setpic'),'POST',['gid'=>$gid,'picToMe'=>$this->arg['picToMe']]);
         //进行图片转储
         echo json_encode(array(
             'code' => 0,
@@ -105,7 +106,7 @@ class PageController extends BaseController{
           $opt=["title","date","comments","views","alians","top","hide","password"];
           $article=new Article();
           if(in_array($this->arg['opt'],$opt)&&($this->arg['val']!==""||$this->arg['opt']==="alians"||$this->arg['opt']==="password")){
-              $re=$article->setOption($this->arg['id'],$this->arg['opt'],$this->arg['val']);
+              $re=$article->setOpt($this->arg['id'],$this->arg['opt'],$this->arg['val']);
 
               if(!$re)echo json_encode(array("state"=>false,'msg'=>($this->arg['opt']==="alians")?"别名错误！":"未知错误！"));
                else echo json_encode(array("state"=>true));

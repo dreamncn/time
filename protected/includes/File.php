@@ -118,4 +118,26 @@ class File {
             return false;
         }
     }
+    /*
+     * 获取目录的MD5
+     * */
+    public  function md5Dir($dir) {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        $filemd5s = array();
+        $d = dir($dir);
+        while (false !== ($entry = $d->read())) {
+            if ($entry != '.' && $entry != '..' && $entry != '.md5'&& $entry != '.used') {
+                if (is_dir($dir.'/'.$entry)) {
+                    $filemd5s[] = $this->md5Dir($dir.'/'.$entry);
+                } else {
+                    $filemd5s[] = md5_file($dir.'/'.$entry);
+                }
+            }
+        }
+        $d->close();
+        return md5(implode('', $filemd5s));
+    }
 }

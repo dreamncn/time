@@ -2,8 +2,9 @@
 
 namespace app\controller\admin;
 
+use app\lib\blog\Plugin;
 use app\lib\blog\Theme;
-use app\model\Admin;
+use app\model\Config;
 
 class BaseController extends Theme
 {
@@ -12,21 +13,10 @@ class BaseController extends Theme
     {
         header("Content-type: text/html; charset=utf-8");
         session_start();
-        //检查登录
-        $arr=array(
-            'allow'=>array(
-                'main'=>array('login'=>'','loginpost'=>'','wechat'=>'','wechatpost'=>'','getkey'=>'')
-            ),
-            'nojump'=>array(
-                'main'=>array('getkey'=>'')
-            )
-        );
-        $user=new Admin();
-        if($user->checkLogin(arg("token"))&&!isset($arr['nojump'][strtolower(arg('c'))][strtolower(arg('a'))])&&isset($arr['allow'][strtolower(arg('c'))][strtolower(arg('a'))])){
-            $this->jump(url('admin/main','index'));
-        }else if(!$user->checkLogin(arg("token"))&&!isset($arr['allow'][strtolower(arg('c'))][strtolower(arg('a'))])){
-            $this->jump(url("admin/main","login"));
-        }
+        $config=new Config();
+        $data['login_type']= $config->getData('login_type');
+        if(!Plugin::hook('isLogin',arg(),true,false,$data['login_type']))
+            $this->jump(url('index','login','index'));
         
     }
 

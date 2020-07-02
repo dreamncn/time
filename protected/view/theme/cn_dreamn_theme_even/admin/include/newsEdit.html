@@ -2,6 +2,9 @@
     body {
         background-color: white;
     }
+    .layui-steps-readonly{
+        height: 100%;
+    }
 
     .content .layui-card-body {
         text-align: center;
@@ -216,10 +219,10 @@
     </div>
 </div>
 <script>
-    var getUrl = '<{url c="admin/main" a="edit" type=""}>';
-    var getTag = '<{url c="api/article" a="tag" }>';
-    var getSortUrl = '<{url c="api/sort" a="get" }>';
-    var setData = '<{url c="api/article" a="set" }>';
+    var getUrl = '<{url  m="admin" c="main" a="edit" type=""}>';
+    var getTag = '<{url  m="api" c="article" a="tag" }>';
+    var getSortUrl = '<{url  m="api" c="sort" a="get" }>';
+    var setData = '<{url  m="api" c="article" a="set" }>';
 </script>
 <!--include_start-->
 <script>
@@ -232,6 +235,7 @@
         var tagsInput = layui.tagsInput;
         var laydate = layui.laydate;
         var tagInput=  $('#tag');
+        var alian="";
         //获取
         admin.iframeAuto();
         var layerData = admin.getLayerData();
@@ -326,7 +330,8 @@
             }, "json");
         }
         $('#look').click(function () {
-            window.open('/posts/' + $('input[lay-filter=alians]').val(), '_blank');
+            if(alian==='')alian= $('input[lay-filter=alians]').val();
+            window.open('/posts/' + alian, '_blank');
         });
         form.on('submit(step2)', function () {
             if (editType === 'html')
@@ -348,6 +353,7 @@
             //console.log(data);
             saveChange(setData, data, '处理中', function (data) {
                 if(data.code===0){
+                    alian=data.data;
                       notice.msg(data.msg, {icon: 1});
                     steps.next('stepEdit');
                     content='';

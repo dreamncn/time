@@ -1,0 +1,11 @@
+<div class="layui-form-item input-item captcha-box">
+    <label for="code">验证码</label>
+    <input type="text" lay-verify="required|captcha" name="code" id="code" placeholder="请输入验证码" autocomplete="off"
+           maxlength="4" class="layui-input">
+    <div class="img ok-none-select">
+        <img style="height: 36px;width: 100px;" onclick="this.src='/index/main/plugin?n=cn_dreamn_plugin_captcha_digital&rand='+Math.random();" src="/i/plugin/cn_dreamn_plugin_captcha_digital/img/captcha.png" >
+    </div>
+</div>
+<div class="layui-form-item">
+    <button class="layui-btn layui-block" lay-filter="login" id="login_button" lay-submit="">登录</button>
+</div>

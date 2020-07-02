@@ -50,7 +50,7 @@ class Model extends Mysql
     public function insertOne($condition){
        $keys=array_keys($condition);
        $values=array_values($condition);
-       $this->insert()->keys($keys)->values([$values])->commit();
+       return $this->insert()->keys($keys)->values([$values])->commit();
     }
 
     public function getCount($condition=null){

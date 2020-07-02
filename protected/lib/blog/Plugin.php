@@ -171,6 +171,11 @@ class Plugin extends Model
     public function uninstall($plugin = null)
     {
         $this->disable($plugin);
+        $noAllow=['cn_dreamn_plugin_login_password'];
+        if(in_array($this->pluginName,$noAllow)){
+            $this->err = '系统核心插件，禁止卸载。';
+            return false;
+        }
         if ($this->isInstall($plugin)) {
             $file = new File();
             $file->del(APP_I . 'plugin/' . $this->pluginName . '/');
@@ -231,11 +236,14 @@ class Plugin extends Model
     public function del($plugin = null)
     {
         $this->resetInfo($plugin);
-        $this->uninstall();
-        $file = new File();
-        $file->del($this->pluginDir);
-        $this->manger('del');
-        return true;
+        if($this->uninstall()){
+            $file = new File();
+            $file->del($this->pluginDir);
+            $this->manger('del');
+            return true;
+        }
+        return false;
+
     }
 
     /*
@@ -248,7 +256,7 @@ class Plugin extends Model
             $this->err = '缓存名称非法！';
             return false;
         }
-        $dir = APP_TMP . $this->pluginName . DS;
+        $dir = APP_CACHE . $this->pluginName . DS;
         if (!is_dir($dir)) {
             mkdir($dir, 666);
         }
@@ -263,7 +271,7 @@ class Plugin extends Model
             $this->err = '缓存名称非法！';
             return false;
         }
-        $file = APP_TMP . $this->pluginName . DS . $fileName . '.cache';
+        $file = APP_CACHE . $this->pluginName . DS . $fileName . '.cache';
         if (file_exists($file)) return file_get_contents($file);
         else {
             $this->err = '缓存文件不存在！';
@@ -273,7 +281,7 @@ class Plugin extends Model
 
     public function clearCache()
     {
-        $dir = APP_TMP . $this->pluginName . DS;
+        $dir = APP_CACHE . $this->pluginName . DS;
         if (is_dir($dir)) {
             $file = new File();
             $file->del($dir);

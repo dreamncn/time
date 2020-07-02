@@ -3,8 +3,10 @@
 namespace app\controller\api;
 
 use app\includes\AES;
+use app\lib\blog\Plugin;
 use app\lib\blog\Theme;
 use app\model\Admin;
+use app\model\Config;
 
 class BaseController extends Theme
 {
@@ -15,12 +17,12 @@ class BaseController extends Theme
     {
         session_start();
         header("Content-type: text/html; charset=utf-8");
-        $user = new Admin();
-        if (!$user->checkLogin(arg("token"))) {
-            //非必要人员访问必须登录
-            $this->jump(url("admin/main", "login"));
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && arg("param") !== null) {
+        $config=new Config();
+        $data['login_type']= $config->getData('login_type');
+        if(!Plugin::hook('isLogin',arg(),true,false,$data['login_type']))
+            $this->jump(url('index','login','index'));
+        
+        if (isPost() && arg("param") !== null) {
             //所有传递的数据在这里解密
             $key = isset($_SESSION['key']) ? $_SESSION['key'] : false;
             $_SESSION['key'] = false;//key重置为错误值

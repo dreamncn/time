@@ -5,13 +5,13 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="<{$i}>/images/favicon.ico" rel="icon">
+    <link href="<{$i}>/img/favicon.ico" rel="icon">
     <title><{$title}></title>
     <link rel="stylesheet" href="<{$i}>/libs/layui/css/layui.css" tppabs="<{$i}>/libs/layui/css/layui.css"/>
     <link rel="stylesheet" href="<{$i}>/module/admin.css" tppabs="<{$i}>/module/admin.css">
     <style>
         body {
-            background-image: url("<{$i}>/images/bg-login.jpg");
+            background-image: url("<{$i}>/img/bg-login.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             min-height: 100vh;
@@ -160,80 +160,15 @@
 <div class="login-wrapper">
     <form class="layui-form">
         <h2>用户登录</h2>
-        <div class="layui-form-item layui-input-icon-group">
-            <i class="layui-icon layui-icon-username"></i>
-            <input class="layui-input" name="user" placeholder="请输入登录账号" autocomplete="off"
-                   lay-verType="tips" lay-verify="required" required/>
-        </div>
-        <div class="layui-form-item layui-input-icon-group">
-            <i class="layui-icon layui-icon-password"></i>
-            <input class="layui-input" name="password" placeholder="请输入登录密码" type="password"
-                   lay-verType="tips" lay-verify="required" required/>
-        </div>
-        <{if $captcha_is_open && $captcha_type}>
-        <div class="layui-form-item layui-input-icon-group login-captcha-group">
-            <i class="layui-icon layui-icon-auz"></i>
-            <input class="layui-input" name="verity" placeholder="请输入验证码" autocomplete="off"
-                   lay-verType="tips" lay-verify="required" required/>
-            <img class="login-captcha" src="<{url('main','Captcha')}>"  alt=""/>
-        </div>
-        <{/if}>
-        <div class="layui-form-item">
-            <button class="layui-btn layui-btn-fluid" lay-filter="loginSubmit" lay-submit>登录</button>
-        </div>
+        <{$tpl nofilter}>
     </form>
 </div>
 <div class="login-copyright">copyright © <{date('Y')}> dreamn.cn all rights reserved.</div>
 
-
+<script type="text/javascript" src="<{$i}>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$i}>/js/layer/layer.js"></script>
 <!-- js部分 -->
-<script type="text/javascript" src="<{$i}>/libs/layui/layui.js" tppabs="<{$i}>/libs/layui/layui.js"></script>
-<script>var i='<{$i}>';</script>
-<script type="text/javascript" src="<{$i}>/js/common.js" tppabs="<{$i}>/js/common.js"></script>
-<script type="text/javascript" src="<{$i}>/js/aes.js" tppabs="<{$i}>/js/common.js"></script>
-<script>
-    layui.use(['layer', 'form'], function () {
-        var $ = layui.jquery;
-        var layer = layui.layer;
-        var form = layui.form;
+<{$script nofilter}>
 
-        /* 表单提交 */
-        form.on('submit(loginSubmit)', function (data) {
-            // console.log(obj.field);
-
-            $.ajax({
-                url: '<{url c="admin/main" a="GetKey"}>',
-                type: 'POST',
-                dataType: "json",
-                success: function (key){
-                    data.field.password=Encrypt(data.field.password,key.key);
-                    $.ajax({
-                        url: '<{url c="admin/main" a="loginpost"}>',
-                        type: 'POST',
-                        data: data.field,
-                        dataType: "json",
-                        success: function (res){
-                            if(res.login){
-                                layer.msg('登录成功', {icon: 1, time: 1500}, function () {
-                                    location.replace('<{url c="admin/main" a="index"}>')
-                                });
-                            } else{
-                                layer.msg(res.msg, {icon: 2, time: 1500});
-                            }
-                        }
-                    });
-                }
-            });
-
-            return false;
-        });
-
-        /* 图形验证码 */
-        $('img.login-captcha').click(function () {
-            this.src = this.src + '?t=' + (new Date).getTime();
-        });
-
-    });
-</script>
 </body>
 </html>

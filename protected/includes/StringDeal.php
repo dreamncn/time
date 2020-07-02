@@ -71,4 +71,7 @@ class StringDeal{
             return false;
         }
     }
+
+
+
 }

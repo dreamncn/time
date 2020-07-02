@@ -3,7 +3,6 @@
 namespace app\controller\admin;
 use app\Error;
 use app\includes\AES;
-use app\includes\Captcha;
 use app\lib\blog\Plugin;
 use app\model\Admin;
 use app\model\Config;
@@ -119,11 +118,11 @@ class MainController extends BaseController
                 'icon'=>'iconziliaoneirongguanli_huaban',
                 "url"=>"javascript:;",
                 'subMenus'=>array(
-                    array("name"=>"所有文章","icon"=>'iconguanli','url'=>url('admin/main','page',array('page'=>'newsList'))),
-                    array("name"=>"评论管理","icon"=>'iconpinglun','url'=>url('admin/main','page',array('page'=>'commentList'))),
-                    array("name"=>"页面管理","icon"=>'iconziliaoneirongguanli_huaban','url'=>url('admin/main','page',array('page'=>'pageList'))),
-                    array("name"=>"分类管理","icon"=>'iconwangzhandaohang','url'=>url('admin/main','page',array('page'=>'sort'))),
-                    array("name"=>"链接管理","icon"=>'iconchangyongicon-','url'=>url('admin/main','page',array('page'=>'url')))
+                    array("name"=>"所有文章","icon"=>'iconguanli','url'=>url('admin','main','page',array('page'=>'newsList'))),
+                    array("name"=>"评论管理","icon"=>'iconpinglun','url'=>url('admin','main','page',array('page'=>'commentList'))),
+                    array("name"=>"页面管理","icon"=>'iconziliaoneirongguanli_huaban','url'=>url('admin','main','page',array('page'=>'pageList'))),
+                    array("name"=>"分类管理","icon"=>'iconwangzhandaohang','url'=>url('admin','main','page',array('page'=>'sort'))),
+                    array("name"=>"链接管理","icon"=>'iconchangyongicon-','url'=>url('admin','main','page',array('page'=>'url')))
                 )
             ),
             array(
@@ -131,13 +130,13 @@ class MainController extends BaseController
                 'icon'=>'iconwangzhan',
                 "url"=>"javascript:;",
                 'subMenus'=>array(
-                    array("name"=>"博主信息","icon"=>'icongeren','url'=>url('admin/main','page',array('page'=>'adminInfo'))),
-                    array("name"=>"侧栏设置","icon"=>'iconcaidan','url'=>url('admin/main','page',array('page'=>'sidebar'))),
-                    array("name"=>"主题设置","icon"=>'icon984caidan_zhuti','url'=>url('admin/main','page',array('page'=>'themes'))),
-                    array("name"=>"插件设置","icon"=>'iconchajian1','url'=>url('admin/main','page',array('page'=>'plugin'))),
-                    array("name"=>"图床设置","icon"=>'icon14','url'=>url('admin/main','page',array('page'=>'pic'))),
-                    array("name"=>"附件设置","icon"=>'iconfujian','url'=>url('admin/main','page',array('page'=>'enclosure'))),
-                    array("name"=>"导航设置","icon"=>'iconxitongguanli','url'=>url('admin/main','page',array('page'=>'nav'))),
+                    array("name"=>"博主信息","icon"=>'icongeren','url'=>url('admin','main','page',array('page'=>'adminInfo'))),
+                    array("name"=>"侧栏设置","icon"=>'iconcaidan','url'=>url('admin','main','page',array('page'=>'sidebar'))),
+                    array("name"=>"主题设置","icon"=>'icon984caidan_zhuti','url'=>url('admin','main','page',array('page'=>'themes'))),
+                    array("name"=>"插件设置","icon"=>'iconchajian1','url'=>url('admin','main','page',array('page'=>'plugin'))),
+                    array("name"=>"图床设置","icon"=>'icon14','url'=>url('admin','main','page',array('page'=>'pic'))),
+                    array("name"=>"附件设置","icon"=>'iconfujian','url'=>url('admin','main','page',array('page'=>'enclosure'))),
+                    array("name"=>"导航设置","icon"=>'iconxitongguanli','url'=>url('admin','main','page',array('page'=>'nav'))),
                 )
             ),
             array(
@@ -145,13 +144,13 @@ class MainController extends BaseController
                 'icon'=>'iconxitongguanli1',
                 "url"=>"javascript:;",
                 'subMenus'=>array(
-                    array("name"=>"系统设置","icon"=>'iconxitongshezhi','url'=>url('admin/main','page',array('page'=>'system'))),
-                    array("name"=>"验证码配置","icon"=>'iconyanzhengma2','url'=>url('admin/main','page',array('page'=>'captcha'))),
-                    array("name"=>"邮件配置","icon"=>'iconyoujian','url'=>url('admin/main','page',array('page'=>'email'))),
-                    array("name"=>"图床设置","icon"=>'icon14','url'=>url('admin/main','page',array('page'=>'pic'))),
-                    array("name"=>"登录设置","icon"=>'iconicon','url'=>url('admin/main','page',array('page'=>'loginSetting'))),
-                    array("name"=>"备份恢复","icon"=>'iconcaogao','url'=>url('admin/main','page',array('page'=>''))),
-                    array("name"=>"操作日志","icon"=>'iconxitongrizhi','url'=>url('admin/main','page',array('page'=>''))),
+                    array("name"=>"系统设置","icon"=>'iconxitongshezhi','url'=>url('admin','main','page',array('page'=>'system'))),
+                    array("name"=>"验证码配置","icon"=>'iconyanzhengma2','url'=>url('admin','main','page',array('page'=>'captcha'))),
+                    array("name"=>"邮件配置","icon"=>'iconyoujian','url'=>url('admin','main','page',array('page'=>'email'))),
+                    array("name"=>"图床设置","icon"=>'icon14','url'=>url('admin','main','page',array('page'=>'pic'))),
+                    array("name"=>"登录设置","icon"=>'iconicon','url'=>url('admin','main','page',array('page'=>'loginSetting'))),
+                    array("name"=>"备份恢复","icon"=>'iconcaogao','url'=>url('admin','main','page',array('page'=>''))),
+                    array("name"=>"操作日志","icon"=>'iconxitongrizhi','url'=>url('admin','main','page',array('page'=>''))),
                 )
             ),
             array(
@@ -159,9 +158,9 @@ class MainController extends BaseController
                 'icon'=>'iconGroup-',
                 "url"=>"javascript:;",
                 'subMenus'=>array(
-                    array("name"=>"使用帮助","icon"=>'iconxinxi','url'=>url('admin/main','page',array('page'=>''))),
-                    array("name"=>"更新日志","icon"=>'iconrizhi','url'=>url('admin/main','page',array('page'=>'log'))),
-                    array("name"=>"在线升级","icon"=>'iconshengji','url'=>url('admin/main','page',array('page'=>''))),
+                    array("name"=>"使用帮助","icon"=>'iconxinxi','url'=>url('admin','main','page',array('page'=>''))),
+                    array("name"=>"更新日志","icon"=>'iconrizhi','url'=>url('admin','main','page',array('page'=>'log'))),
+                    array("name"=>"在线升级","icon"=>'iconshengji','url'=>url('admin','main','page',array('page'=>''))),
                 )
             ),
         );

@@ -45,4 +45,10 @@ class Index extends Plugin{
         $data['script']=$this->display('comment_script');
         return $data;
     }
+    //登录验证码
+    public function hookLoginPassword($data){
+        $data['tpl']=$this->display('login_tpl');
+        $data['script']=$this->display('login_script');
+        return $data;
+    }
 }//必须继承PluginController.

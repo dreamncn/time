@@ -18,6 +18,10 @@
     {
       "name": "个人信息",
       "html": "info"
+    },
+    {
+      "name": "日历",
+      "html": "calendar"
     }
   ],
   "publicKey":"your publicKey",

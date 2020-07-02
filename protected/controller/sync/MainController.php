@@ -16,7 +16,7 @@ class MainController extends BaseController
             $result=$img->savePic();
             if($result){
 
-                $article->setOption(arg('gid'),"content",$result);
+                $article->setOpt(arg('gid'),"content",$result);
                 $upload=new Upload('article');
                 $upload->setBind(arg('gid'));
             }

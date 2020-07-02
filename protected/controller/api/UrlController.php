@@ -33,7 +33,7 @@ class UrlController extends BaseController{
         if(!isset($url['host']))
             $this->api(-1,null,0,'URL错误');
         if(isset($this->arg["id"])){
-            $link->set($this->arg["id"],$this->arg["sitename"],$url['host'],$this->arg["description"],intval($this->arg["hide"]));
+            $link->setData($this->arg["id"],$this->arg["sitename"],$url['host'],$this->arg["description"],intval($this->arg["hide"]));
         } else{
             $link->add($this->arg["sitename"],$url['host'],$this->arg["description"],intval($this->arg["hide"]));
         }
@@ -47,7 +47,7 @@ class UrlController extends BaseController{
           $opt=["hide","sitename","siteurl",'description'];
           $link=new Link();
           if(in_array($this->arg['opt'],$opt)&&$this->arg['val']!==""){
-              $link->setOption($this->arg['id'],$this->arg['opt'],$this->arg['val']);
+              $link->setOpt($this->arg['id'],$this->arg['opt'],$this->arg['val']);
               $this->api(0,null,0,'设置成功');
           }else{
               $this->api(-1,null,0,'未知错误');

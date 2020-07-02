@@ -23,7 +23,7 @@
     <!-- 头部 -->
     <div class="layui-header">
         <div class="layui-logo">
-            <img src="/i/upload/sys/head.jpg"/>
+            <img src="/i/upload/sys/head.jpg" class="headBody"/>
             <cite>&nbsp;Time 后台管理</cite>
         </div>
         <ul class="layui-nav layui-layout-left">
@@ -52,14 +52,14 @@
             </li>
             <li class="layui-nav-item" lay-unselect>
                 <a>
-                    <img src="/i/upload/sys/head.jpg" class="layui-nav-img">
+                    <img src="/i/upload/sys/head.jpg" class="layui-nav-img headBody">
                     <cite><{$name}></cite>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd lay-unselect><a ew-href='<{url c="admin/main" a="page" page="adminInfo"}>'>个人中心</a></dd>
+                    <dd lay-unselect><a ew-href='<{url m="admin" c="main" a="page" page="adminInfo"}>'>个人中心</a></dd>
                     <dd lay-unselect><a ew-event="psw">修改密码</a></dd>
                     <hr>
-                    <dd lay-unselect><a ew-event="logout" data-url='<{url c="admin/main" a="logout"}>'>退出</a></dd>
+                    <dd lay-unselect><a ew-event="logout" data-url='<{url m="admin" c="main" a="logout"}>'>退出</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item" lay-unselect>
@@ -108,11 +108,11 @@
 <script type="text/javascript" src="<{$i}>/libs/layui/layui.js"></script>
 <script>
     var i='<{$i}>';
-    var theme='<{url c="admin/main" a="tpl" tpl="tpl-theme"}>';
-    var note='<{url c="admin/main" a="tpl" tpl="tpl-note"}>';
-    var message='<{url c="admin/main" a="tpl" tpl="tpl-message"}>';
-    var password='<{url c="admin/main" a="tpl" tpl="tpl-password"}>';
-    var screen='<{url c="admin/main" a="tpl" tpl="tpl-lock-screen"}>';
+    var theme='<{url m="admin" c="main" a="tpl" tpl="tpl-theme"}>';
+    var note='<{url m="admin" c="main" a="tpl" tpl="tpl-note"}>';
+    var message='<{url m="admin" c="main" a="tpl" tpl="tpl-message"}>';
+    var password='<{url m="admin" c="main" a="tpl" tpl="tpl-password"}>';
+    var screen='<{url m="admin" c="main" a="tpl" tpl="tpl-lock-screen"}>';
 </script>
 <script type="text/javascript" src="<{$i}>/js/common.js"></script>
 <script>
@@ -122,7 +122,7 @@
 
         // 默认加载主页
         index.loadHome({
-            menuPath: '<{url c="admin/main" a="page" page="console"}>',
+            menuPath: '<{url m="admin" c="main" a="page" page="console"}>',
             menuName: '<i class="layui-icon layui-icon-home"></i>'
         });
 

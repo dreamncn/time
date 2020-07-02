@@ -1,0 +1,27 @@
+<script>
+    $('#login_button').click(function () {
+        $.ajax({
+            url:'/index/main/plugin?n=cn_dreamn_plugin_login_password&type=key',
+            dataType:'json',
+            success:function (data) {
+                var pass=Encrypt($('#password').val(),data.key);
+                var d={'username':$('#username').val(),'password':pass,'code':$('#code').val()};
+                $.ajax({
+                    url:'/index/main/plugin?n=cn_dreamn_plugin_login_password&type=login',
+                    method:"POST",
+                    dataType:'json',
+                    data:d,
+                    success:function (data) {
+                        if(data.code===0){
+                            layer.msg('登录成功！',{icon:6},function () {
+                                location.href='/admin/main/index';
+                            })
+                        }else{
+                            layer.msg('登录失败！'+data.msg,{icon:5})
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

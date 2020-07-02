@@ -92,7 +92,7 @@ class Comment extends Model{
         return $result;
     }
     public function getTitles(){
-        return $this->select("gid,title")->table('blog_comment_view')->commit();
+        return $this->select("distinct gid,title")->table('blog_comment_view')->commit();
     }
 
     public function getByID($id){//根据评论id查找

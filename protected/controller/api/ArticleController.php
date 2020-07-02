@@ -9,7 +9,8 @@ use app\includes\StringDeal;
 use app\lib\blog\Plugin;
 use app\model\Article;
 use app\model\Comment;
-use app\Model\Upload;
+use app\model\Upload;
+use app\Sync;
 
 class ArticleController extends BaseController{
     /**
@@ -92,7 +93,7 @@ class ArticleController extends BaseController{
 
         //先进行文章存储
         $article=new Article();
-
+        $array=[];
         $t=array_merge($allow,$noallow);
         foreach ($t as $v){
             $array[$v]=$this->arg[$v];
@@ -102,7 +103,7 @@ class ArticleController extends BaseController{
             $gid=$this->arg['gid'];
             if($r&&$r['gid']!=$this->arg['gid'])$this->api(false,null,0,'别名重复');;
             foreach ($array as $v=>$k){
-                $article->setOption($this->arg['gid'],$v,$k);
+                $article->setOpt($this->arg['gid'],$v,$k);
             }
         }else{
             if($r)$this->api(false,null,0,'别名重复');
@@ -111,13 +112,13 @@ class ArticleController extends BaseController{
         //插件不允许执行耗时任务
         Plugin::hook('setArticle',array('param'=>arg(),'gid'=>$gid));
         //为图片转储做准备
-        syncRequest(url('sync/main','setpic'),'POST',array('gid'=>$gid,'picToMe'=>$this->arg['picToMe']));
+        Sync::request(url('sync','main','setpic'),'POST',['gid'=>$gid,'picToMe'=>$this->arg['picToMe']]);
         //进行图片转储
         echo json_encode(array(
             'code' => 0,
             'count' => 0,
             'msg' => '保存成功！如有图片转储则在后台自动进行！',
-            'data' => null
+            'data' => $this->arg['alians']
         ));
 
     }
@@ -131,7 +132,7 @@ class ArticleController extends BaseController{
               if($this->arg['opt']==='top')
                   $re=$article->setTop($this->arg['id'],$this->arg['val']);
               else
-                  $re=$article->setOption($this->arg['id'],$this->arg['opt'],$this->arg['val']);
+                  $re=$article->setOpt($this->arg['id'],$this->arg['opt'],$this->arg['val']);
 
               if(!$re)echo json_encode(array("state"=>false,'msg'=>($this->arg['opt']==="alians")?"别名错误！":"未知错误！"));
                else echo json_encode(array("state"=>true));

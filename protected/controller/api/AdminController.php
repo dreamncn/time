@@ -1,6 +1,5 @@
 <?php
 namespace app\controller\api;
-use app\includes\FileUpload;
 use app\model\Config;
 
 class AdminController extends BaseController{

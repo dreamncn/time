@@ -24,7 +24,7 @@ class Article extends Model{
      * @return mixed
      */
     public function add($arg){
-        return $this->insert($arg);
+        return $this->insertOne($arg);
     }
 
     public function setOpt($id,$k,$v){

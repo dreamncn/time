@@ -101,7 +101,7 @@
                 <div class="layui-card-body" style="padding: 25px;">
                     <div class="text-center layui-text">
                         <div class="user-info-head" id="userInfoHead">
-                            <img src="/i/upload/sys/head.jpg" alt=""/>
+                            <img src="/i/upload/sys/head.jpg" alt="" class="headBody"/>
                         </div>
                         <h2 style="padding-top: 20px;"><{$name}></h2>
                         <p style="padding-top: 8px;"><{$info}></p>
@@ -172,9 +172,9 @@
 
 
 <script>
-    var uploads='<{url c="api/admin" a="upload"}>';
-    var getUrl='<{url c="api/admin" a="get"}>';
-    var setUrl='<{url c="api/admin" a="set"}>';
+    var uploads='<{url  m="api" c="admin" a="upload"}>';
+    var getUrl='<{url  m="api" c="admin" a="get"}>';
+    var setUrl='<{url  m="api" c="admin" a="set"}>';
 </script>
 
 <!--include_start-->
@@ -196,6 +196,7 @@
             ,done: function(res){
                if(res.code===0){
                    notice.msg('上传成功',{icon:1});
+                   $(".headBody").attr('src','/i/upload/sys/head.jpg?_t'+(new Date().getTime()));
                }else {
                    notice.msg('上传失败',{icon:2});
                }
