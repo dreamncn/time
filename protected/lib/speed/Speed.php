@@ -38,6 +38,14 @@ class Speed
             $GLOBALS['http_scheme'] = 'http://';
         }
 
+       
+
+        $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+        if (in_array(str_replace($GLOBALS['http_scheme'],'',$origin), $GLOBALS['host'])) {
+            header('Access-Control-Allow-Origin:' . $origin);
+        }
+
+
     }
 
     static public function rewrite()

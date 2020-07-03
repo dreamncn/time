@@ -10,6 +10,7 @@ class Config
             exit('域名绑定错误！');
         }
         $GLOBALS = $conf + Config::route();
+   
 
     }
 
