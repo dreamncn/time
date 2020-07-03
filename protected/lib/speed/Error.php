@@ -69,7 +69,7 @@ class Error
             if (ob_get_contents()) ob_end_clean();
             logs($msg, 'warn');
 
-            if (isDebug()) {
+            if (!isDebug()) {
                 GLOBAL $__module;
                 $__module = '';
                 if(file_exists(APP_VIEW.$GLOBALS['error'])){
