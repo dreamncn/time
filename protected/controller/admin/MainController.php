@@ -80,12 +80,18 @@ class MainController extends BaseController
         $isMatched = preg_match_all('/[a-zA-Z]/', $t_name, $matches);
         if(!$isMatched)Error::err('[Err]No this page "'.$t_name.'"');
         $path=APP_VIEW.'theme'.DS.$this->getTheme()."/admin/include/".$t_name;
-        $arr1=$this->hook('include_'.$t_name);
-        if($arr1==null)$arr1=[];
-        $arr2=Plugin::hook('include_'.$t_name,null,true,[],null,true);
-        if($arr2!==[])$arr2=['data'=>$arr2];
 
-        //dump($arr2,true);
+        $arr1=$this->hook('include_'.$t_name);
+        if($arr1==null)
+            $arr1=[];
+
+        //主题HOOK
+
+        $arr2=Plugin::hook('include_'.$t_name,null,true,[],null,true);
+        if($arr2!==[])
+            $arr2=['data'=>$arr2];
+
+        //插件HOOK
 
         if(is_file($path.'.html')){
             $this->layout='include/layout';
@@ -97,9 +103,17 @@ class MainController extends BaseController
         $isMatched = preg_match_all('/[a-zA-Z]/', $t_name, $matches);
         if(!$isMatched)Error::err('[Err]No this tpl "'.$t_name.'"');
         $path=APP_VIEW.'theme'.DS.$this->getTheme()."/admin/tpl/".$t_name;
-        $arr=$this->hook('tpl_'.$t_name);
+        $arr1=$this->hook('tpl_'.$t_name);
+        if($arr1==null)
+            $arr1=[];
+
+        //主题HOOK
+
+        $arr2=Plugin::hook('tpl_'.$t_name,null,true,[],null,true);
+        if($arr2!==[])
+            $arr2=['data'=>$arr2];
         if(is_file($path.'.html')){
-            $this->display("/tpl/".$t_name,false,$arr);
+            $this->display("/tpl/".$t_name,false,array_merge($arr1,$arr2));
         }
     }
     public function actionEdit(){

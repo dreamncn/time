@@ -14,7 +14,6 @@
     <link href="<{$i}>/css/style.css" rel="stylesheet">
     <link href="<{$i}>/css/dark.css" rel="stylesheet">
     <{$plugin_css nofilter}>
-    <link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="<{$i}>/img/favicon.ico">
     <script type="text/javascript" src="<{$i}>/js/jquery.min.js"></script>
     <script type="text/javascript" src="<{$i}>/js/jquery.pjax.js"></script>
@@ -82,7 +81,7 @@
         </div>
         <div class="navbar-search" onclick="">
             <span class="icon-search"></span>
-            <form id="search" method="post" onsubmit="return search();">
+            <form onsubmit="return false;">
                 <span class="search-box">
                     <input type="text" id="input" class="input" name="s" required="true" placeholder="Search..."
                            maxlength="30" autocomplete="off">
@@ -164,12 +163,26 @@
     });
 </script>
 <script>
+    var input=$("#input");
+    input.keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            //console.log("<{url m='index' c='main' a='search' search=''}>" + input.val());
+            if (input.val() !== "")
+                $.pjax({
+                    url: "<{url m='index' c='main' a='search' search=''}>" + input.val(),
+                    type:"GET",
+                    async:false,
+                    container: '#pjax-content'
+                });
+            else{
+                layer.msg("请输入内容后再搜索。",{icon:7});
+            }
+        }
+    });
 
-    function search() {
-        if ($('#input').val() !== "")
-            window.location = "<{url m='index' c='main' a='search' search=''}>" + $('#input').val();
-        return false;
-    }
+    
+
 </script>
 <{$plugin_js nofilter}>
 
