@@ -19,4 +19,8 @@ class Admin extends Plugin{
         parent::__construct("cn_dreamn_plugin_captcha_digital");
     }
 
+    public function hookCaptchaList($data){
+       $data[]=['title'=>"图片验证码","name"=>'cn_dreamn_plugin_captcha_digital'];
+       return $data;
+    }
 }//必须继承Plugin.

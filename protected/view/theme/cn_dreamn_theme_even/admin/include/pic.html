@@ -1,0 +1,72 @@
+<style>
+    body,html{
+        background-color: white
+    }
+</style>
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title">
+        <li class="layui-this">图床设置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">图床选择</label>
+                    <div class="layui-input-block" id="picbed">
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="picbed" lay-submit="">保存设置</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    var getUrl="<{url m='api' c='pic' a='getlist'}>";
+    var setUrl="<{url m='api' c='pic' a='setlist'}>";
+</script>
+<!--include_start-->
+<script>
+    //Demo
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+
+        var $ = layui.jquery;
+
+        $.ajax({
+            url: getUrl,
+            type: 'GET',
+            dataType:'json',
+            success: function (data) {
+                console.log(data);
+                if (data.state) {
+                    $.each(data.data.data,function (index,val) {
+                        var check=val.picbed===data.data.picbed?'checked':'';
+                        $("#picbed").append('<input '+check+' name="PicBed" title="'+val.title+'" type="radio" value="'+val.picbed+'">')
+                    });
+                    form.render();
+                }
+
+            }
+        });
+        form.on('submit(picbed)', function (data) {
+            //向后台setoption
+            saveChange(setUrl, data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+            });
+            return false;
+        });
+
+    });
+
+</script>
+<!--include_end-->

@@ -69,7 +69,7 @@ class Article extends Model{
      * @return array|mixed
      */
     public function getSortByPage($sort,$page,$size){
-       return $this->select()->table('blog_comment_view')->where(['sname'=>$sort,'hide'=>0,'type'=>'article'])->orderBy('gid DESC')->limit(1,true,$page,$size)->commit();
+       return $this->select()->table('blog_sort_view')->where(['sname'=>$sort,'hide'=>0,'type'=>'article'])->orderBy('gid DESC')->limit(1,true,$page,$size)->commit();
     }
 
     /**

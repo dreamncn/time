@@ -1,0 +1,146 @@
+/**
+适配暗黑模式
+ */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1F242B !important;
+        color: #e4e4e4 !important;
+    }
+    .main-content,.post,.postContent,.content-display,.comment-display,.widget-area{
+        background-color: #1F242B !important;
+    }
+    .post,.widget-area,.postContent,.content-display,.comment-display{
+        box-shadow: 0 1px 2px #eee;
+    }
+    a {
+        color: #fff !important;
+    }
+
+    a:hover {
+        color: #ff6161 !important;
+    }
+
+    .post-tags a:hover, .bottom-bar-item a:hover {
+        background-color: #0a001f30 !important;
+    }
+
+    img {
+        filter: grayscale(30%);
+    }
+
+    .bg-white {
+        background-color: #343840 !important;
+    }
+
+    .post-bottom-bar {
+        background-color: #343840 !important;
+        color: #e4e4e4 !important;
+    }
+
+    .bottom-bar-item {
+        color: aliceblue;
+    }
+
+    .icon-search {
+        color: #94A5A5;
+    }
+
+    input::-webkit-input-placeholder {
+        color: aliceblue;
+    }
+
+    input::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: aliceblue;
+    }
+
+    input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: aliceblue;
+    }
+
+    input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: aliceblue;
+    }
+
+    .input {
+        color: #fff !important;
+        border: 1px solid rgb(253, 253, 255) !important;
+        background-color: #343840 !important;
+    }
+
+    footer, footer p, .v .vbtn, li, .markdown-body {
+        color: #e4e4e4 !important;
+        background-color: #1F242B !important;
+    }
+
+    p {
+        background-color: #1F242B !important;
+    }
+
+    blockquote, pre {
+        color: #e4e4e4 !important;
+        background-color: #343840 !important;
+    }
+
+    /*#real_content p{
+        filter: invert(80%);
+    }*/
+    #real_content p  span, #real_content div {
+        filter: invert(76%) !important;
+    }
+
+    .navbar-mobile-menu li, .navbar-mobile-menu a,.spage-number {
+        color: #e4e4e4 !important;
+        background-color: #343840 !important;
+    }
+
+    .spage-number>span:hover{
+        color: #e4e4e4 !important;
+        background-color: #1F242B !important;
+    }
+
+    h2, h3, h4, h5, h6, .post-data, .v * {
+        color: #e4e4e4 !important;
+    }
+
+    .editormd-preview-container code, .editormd-html-preview code, .vsys {
+        background: #f6f6f680 !important;
+    }
+
+    .icon-menu .middle, .icon-menu::after, .icon-menu::before {
+        background: #e4e4e4 !important;
+    }
+
+    h1 {
+        color: #fff !important;
+    }
+
+    .widget_tags .tag-list-item {
+        color: #e4e4e4 !important;
+        border: 0 !important;
+        background-color: #1F242B !important;
+    }
+    .calendar_month_span,.sign_equal{
+        color: #e4e4e4 !important;
+    }
+    .sign_succ_calendar_title{
+        
+        background-color: #1F242B !important;
+    }
+    .is_admin {
+        background-color: rgba(242, 9, 9, 0.49) !important;
+        color: white !important;
+    }
+
+    .layui-layer-content.layui-layer-padding {
+        color: #343840 !important;
+    }
+    .widget_tags p{
+        color:  #e4e4e4 !important;
+    }
+    .sf-menu li{
+        background-color: #343840 !important;
+    }
+    .sub-menu li{
+        background-color: #4e525a !important;
+    }
+}

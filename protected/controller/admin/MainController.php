@@ -135,7 +135,6 @@ class MainController extends BaseController
                     array("name"=>"主题设置","icon"=>'icon984caidan_zhuti','url'=>url('admin','main','page',array('page'=>'themes'))),
                     array("name"=>"插件设置","icon"=>'iconchajian1','url'=>url('admin','main','page',array('page'=>'plugin'))),
                     array("name"=>"图床设置","icon"=>'icon14','url'=>url('admin','main','page',array('page'=>'pic'))),
-                    array("name"=>"附件设置","icon"=>'iconfujian','url'=>url('admin','main','page',array('page'=>'enclosure'))),
                     array("name"=>"导航设置","icon"=>'iconxitongguanli','url'=>url('admin','main','page',array('page'=>'nav'))),
                 )
             ),
@@ -147,10 +146,9 @@ class MainController extends BaseController
                     array("name"=>"系统设置","icon"=>'iconxitongshezhi','url'=>url('admin','main','page',array('page'=>'system'))),
                     array("name"=>"验证码配置","icon"=>'iconyanzhengma2','url'=>url('admin','main','page',array('page'=>'captcha'))),
                     array("name"=>"邮件配置","icon"=>'iconyoujian','url'=>url('admin','main','page',array('page'=>'email'))),
-                    array("name"=>"图床设置","icon"=>'icon14','url'=>url('admin','main','page',array('page'=>'pic'))),
                     array("name"=>"登录设置","icon"=>'iconicon','url'=>url('admin','main','page',array('page'=>'loginSetting'))),
-                    array("name"=>"备份恢复","icon"=>'iconcaogao','url'=>url('admin','main','page',array('page'=>''))),
-                    array("name"=>"操作日志","icon"=>'iconxitongrizhi','url'=>url('admin','main','page',array('page'=>''))),
+                    /*array("name"=>"备份恢复","icon"=>'iconcaogao','url'=>url('admin','main','page',array('page'=>'backup'))),
+                    array("name"=>"操作日志","icon"=>'iconxitongrizhi','url'=>url('admin','main','page',array('page'=>'log'))),*/
                 )
             ),
             array(
@@ -158,9 +156,9 @@ class MainController extends BaseController
                 'icon'=>'iconGroup-',
                 "url"=>"javascript:;",
                 'subMenus'=>array(
-                    array("name"=>"使用帮助","icon"=>'iconxinxi','url'=>url('admin','main','page',array('page'=>''))),
-                    array("name"=>"更新日志","icon"=>'iconrizhi','url'=>url('admin','main','page',array('page'=>'log'))),
-                    array("name"=>"在线升级","icon"=>'iconshengji','url'=>url('admin','main','page',array('page'=>''))),
+                    array("name"=>"使用帮助","icon"=>'iconxinxi','url'=>"https://doc.dreamn.cn/"),
+                    array("name"=>"更新日志","icon"=>'iconrizhi','url'=>url('admin','main','page',array('page'=>'uplog'))),
+                    /*array("name"=>"在线升级","icon"=>'iconshengji','url'=>url('admin','main','page',array('page'=>'update'))),*/
                 )
             ),
         );

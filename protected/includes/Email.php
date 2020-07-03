@@ -1,6 +1,7 @@
 <?php
 namespace app\includes;
 
+use app\lib\speed\mvc\Controller;
 use app\model\Config;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -15,10 +16,10 @@ class Email{
 
         $c=new Config();
 
-        $this->smtp=$c->getData('MailSmtp');
-        $this->port=$c->getData('MailPort');
-        $this->sendmail=$c->getData('MailSend');
-        $this->password=$c->getData('MailPass');
+        $this->smtp=$c->getData('mail_smtp');
+        $this->port=$c->getData('mail_port');
+        $this->sendmail=$c->getData('mail_send');
+        $this->password=$c->getData('mail_pass');
     }
     public function send($mailto,$subject,$content,$fromname,$debug=0){//发送邮件\
         $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
@@ -33,7 +34,7 @@ class Email{
             $mail->Password = $this->password;             // SMTP 密码  部分邮箱是授权码(例如163邮箱)
             $mail->SMTPSecure = 'ssl';                    // 允许 TLS 或者ssl协议
             $mail->Port = $this->port;                            // 服务器端口 25 或者465 具体要看邮箱服务器支持
-            $mail->setLanguage('zh_cn',APP_LIB.DS.'phpmail'.DS);
+            $mail->setLanguage('zh_cn',APP_LIB.DS.'email'.DS);
             $mail->Timeout=10;
             $mail->setFrom($this->sendmail, $fromname);  //发件人
             $mail->addAddress($mailto);  // 收件人

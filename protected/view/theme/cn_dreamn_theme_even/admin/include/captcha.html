@@ -1,0 +1,127 @@
+<style>
+    body,html{
+        background-color: white
+    }
+</style>
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本配置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--基本配置-->
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">验证码状态</label>
+                    <div class="layui-input-block">
+                        <input lay-filter="switchTest" lay-skin="switch" lay-text="开启|关闭" name="captcha_is_open"
+                               type="checkbox">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">验证方式</label>
+                    <div class="layui-input-block" id="captchaList">
+
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">验证位置</label>
+                    <div class="layui-input-block">
+                        <input lay-filter="Comment" name="need_captcha_comment" title="评论验证码" type="checkbox">
+                        <input lay-filter="Login" name="need_captcha_login" title="登录验证码" type="checkbox">
+                        <input lay-filter="Password" name="need_captcha_passwd" title="密码文章验证码" type="checkbox">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="CaptchaInfo" lay-submit="">保存设置</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+<script>
+    var getUrl="<{url m='api' c='captcha' a='getlist'}>";
+    var setUrl="<{url m='api' c='captcha' a='setlist'}>";
+</script>
+<!--include_start-->
+<script>
+    //Demo
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+
+        var $ = layui.jquery;
+        function CheckBox(obj, v) {
+
+            if (v === "1") {
+                obj.prop('checked', 'checked');
+                obj.val('1');
+            } else {
+                obj.removeAttr('checked');
+                obj.val('0');
+            }
+        }
+        $.ajax({
+            url: getUrl,
+            type: 'GET',
+            dataType:'json',
+            success: function (data) {
+
+                if (data.state) {
+                    data=data.data;
+                    $.each(data.data,function (index,val) {
+                        var check=val.name===data.captcha_type?'checked':'';
+                        $("#captchaList").append('<input '+check+' name="captcha_type" title="'+val.title+'" type="radio" value="'+val.name+'">');
+                    });
+
+                    CheckBox($("input[name='captcha_is_open']"), data.other.captcha_is_open);
+                    CheckBox($("input[name='need_captcha_passwd']"), data.other.need_captcha_passwd);
+                    CheckBox($("input[name='need_captcha_login']"), data.other.need_captcha_login);
+                    CheckBox($("input[name='need_captcha_comment']"), data.other.need_captcha_comment);
+
+                    form.render();
+                }
+
+            }
+        });
+        form.on('submit(CaptchaInfo)', function (data) {
+            //向后台setoption
+
+            data.field.captcha_is_open = $("input[name='captcha_is_open']").val();
+            data.field.need_captcha_passwd = $("input[name='need_captcha_passwd']").val();
+            data.field.need_captcha_login = $("input[name='need_captcha_login']").val();
+            data.field.need_captcha_comment = $("input[name='need_captcha_comment']").val();
+            saveChange(setUrl, data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+            });
+            return false;
+        });
+        form.on('switch(switchTest)', function (data) {
+            data.elem.value = data.elem.checked ? '1' : "0";
+            return false;
+        });
+        form.on('checkbox(Comment)', function (data) {
+            data.elem.value = data.elem.checked ? '1' : "0";
+            return false;
+        });
+        form.on('checkbox(Login)', function (data) {
+            data.elem.value = data.elem.checked ? '1' : "0";
+            return false;
+        });
+        form.on('checkbox(Password)', function (data) {
+            data.elem.value = data.elem.checked ? '1' : "0";
+            return false;
+        });
+
+    });
+
+</script>
+<!--include_end-->

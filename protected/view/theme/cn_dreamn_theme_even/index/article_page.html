@@ -1,12 +1,6 @@
 <link href="<{$i}>/css/baguetteBox.min.css" rel="stylesheet">
-<article class="main-content page-page" itemscope itemtype="http://schema.org/Article">
-    <!--<div class="post-header">
-        <h1 class="post-title" itemprop="name headline"><{$title}></h1>
-        <div class="post-data">
-            <time itemprop="datePublished">发布于<{$date}></time> | 阅读<{$views}>次
-        </div>
-    </div>-->
-    <div id="post-content" class="content" style="margin-top: 10px;">
+<article class="main-content page-page  content-display" >
+    <div id="post-content" class="content " style="margin-top: 10px;">
         <div id="real_content">
             <{$content nofilter}>
         </div>
@@ -32,7 +26,7 @@
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
-<div id="comments"></div>
+<div id="comments" class="comment-display"></div>
 <script>
     getScripts([
         "<{$i}>/js/baguetteBox.min.js",

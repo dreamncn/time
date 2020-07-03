@@ -18,7 +18,6 @@ class Blog{
     public static function defineConst(){
         define('APP_UPLOAD', APP_DIR . DS . 'protected' . DS.'upload'.DS);//定义文件上传位置
         define('APP_UPLOAD_ARTICLE', APP_DIR . DS . 'i' . DS.'upload'.DS.'article'.DS);//定义文件上传位置
-        define('APP_UPLOAD_SETTING', APP_DIR . DS . 'i' . DS.'upload'.DS.'setting'.DS);//定义文件上传位置
         define('APP_UPLOAD_PLUGIN', APP_DIR . DS . 'protected' .DS.'plugin'.DS);//定义文件上传位置
         define('APP_UPLOAD_THEME', APP_DIR . DS . 'protected' . DS.'theme'.DS);//定义文件上传位置
 

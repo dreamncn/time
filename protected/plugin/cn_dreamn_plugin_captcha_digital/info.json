@@ -1,13 +1,11 @@
 {
-  "name":"验证码",
+  "name":"图片验证码",
   "appName": "cn_dreamn_plugin_captcha_digital",
   "version":"1.0.1",
   "author":"Dreamn",
   "description":"简单的验证码插件",
   "update":"",
   "type":"captcha",
-  "menu":true,
-  "date":"2020-06-29 16:38",
-  "publicKey":"your publicKey",
-  "sign":"your sign"
+  "menu":false,
+  "date":"2020-06-29 16:38"
 }

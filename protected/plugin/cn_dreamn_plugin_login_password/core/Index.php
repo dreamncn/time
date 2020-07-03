@@ -46,7 +46,8 @@ class Index extends Plugin{
     }
 
     public function hookisLogin($data){
-
+        $user=new User();
+        return $user->isLogin(arg('token'));
     }
 
     public function hookLogin($data){

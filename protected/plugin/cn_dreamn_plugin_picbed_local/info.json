@@ -1,0 +1,11 @@
+{
+  "name":"本地图床",
+  "appName": "cn_dreamn_plugin_picbed_local",
+  "version":"1.0.0",
+  "author":"Dreamn",
+  "description":"本地图床插件，请勿删除",
+  "update":"",
+  "type":"login",
+  "menu":false,
+  "date":"2020-07-02 17:17"
+}

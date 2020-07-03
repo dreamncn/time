@@ -9,7 +9,8 @@
 .spage-number {
     display: inline-block;
     color: #666;
-    font-size: 14px
+    font-size: 14px;
+    background: #fff;
 }
 
 .spage-number span {

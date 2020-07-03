@@ -1,6 +1,17 @@
 <script>
-    $(document).on('submit', 'form[data-pjax]', function(event) {
-        $.pjax.submit(event, '#pjax-content');
-        return false;
+    $("#submit").click(function () {
+        $.ajax({
+            url:window.location.href,
+            method:"POST",
+            data:{passwd:$("#passwd").val(),code:$("#code").val()},
+            dataType:"json",
+            success:function (d) {
+                if(!d.state){
+                    layer.msg(d.msg,{icon:5});
+                }else{
+                    $("#pjax-content").html(d.data)
+                }
+            }
+        });
     })
 </script>

@@ -91,11 +91,11 @@ class Plugin extends Model
      * 插件hook函数
      * @param $location string hook位置
      * @param $data mixed 传入参数
-     * @param bool $return
-     * @param null $default
+     * @param bool $return 是否需要返回
+     * @param null $default 默认返回
      * @param null|string $plugin 具体插件
      * @param bool $isAdmin 是否后台
-     * @param bool $only 是否独占
+     * @param bool $only 是否独占,当具体插件不为空时为独占模式
      * @return null |null
      */
     public static function hook($location, $data = null, $return = true, $default = null, $plugin = null, $isAdmin = false, $only = false)
@@ -104,8 +104,10 @@ class Plugin extends Model
 
         global $plugin_list;
         $Res = [];
-        if ($plugin !== null)
+        if ($plugin !== null){
             $pluginList = [$plugin];
+            $only=true;
+        }
         else
             $pluginList = $plugin_list;
         foreach ($pluginList as $v) {
@@ -171,7 +173,7 @@ class Plugin extends Model
     public function uninstall($plugin = null)
     {
         $this->disable($plugin);
-        $noAllow=['cn_dreamn_plugin_login_password'];
+        $noAllow=['cn_dreamn_plugin_login_password','cn_dreamn_plugin_picbed_local'];
         if(in_array($this->pluginName,$noAllow)){
             $this->err = '系统核心插件，禁止卸载。';
             return false;

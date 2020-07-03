@@ -6,7 +6,6 @@
   "description":"官方账号密码登录插件，请勿删除",
   "update":"",
   "type":"login",
-  "system":true,
-  "menu":true,
+  "menu":false,
   "date":"2020-06-29 16:38"
 }

@@ -12,7 +12,7 @@
                     dataType:'json',
                     data:d,
                     success:function (data) {
-                        if(data.state){
+                        if(data.code===0){
                             layer.msg('登录成功！',{icon:6},function () {
                                 location.href='/admin/main/index';
                             })

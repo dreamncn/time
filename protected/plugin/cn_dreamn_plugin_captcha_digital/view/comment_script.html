@@ -1,0 +1,9 @@
+<script>
+    $("#submit").click(function () {
+        var data= $('#comment').serializeArray();
+        var cilent= getClientInfo();
+        data.push({name:'browser',value: cilent['browser']+' '+cilent['version']});
+        data.push({name:'os',value: cilent['os']+' '+cilent['osVersion']});
+        sendComment(data);
+    });
+</script>

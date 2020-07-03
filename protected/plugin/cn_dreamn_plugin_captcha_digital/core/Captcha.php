@@ -43,8 +43,8 @@ class Captcha{
      * @return bool
      */
     public function Verity($code){
-       // logs('[Verity]Session:'.$_SESSION['code'],'info','captcha');
-       // logs('[Verity]Code:'.$code,'info','captcha');
+      // logs('[Verity]Session:'.$_SESSION['code'],'info','captcha');
+       //logs('[Verity]Code:'.$code,'info','captcha');
 
         if(isset( $_SESSION['code'])&&isset( $_SESSION['out_time'])&&intval( $_SESSION['out_time'])>intval(time())&& strtolower($_SESSION['code'])===strtolower($code)){
             return true;

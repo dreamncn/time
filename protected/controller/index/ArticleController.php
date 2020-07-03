@@ -44,19 +44,25 @@ class ArticleController extends BaseController
                 $result=Plugin::hook('Verity',arg(),true,[false],$arr['captcha_type']);
                 if(isset($result[0]))$pass=$result[0];
                 //验证码输出参数
+
+
             }
             $arr['tpl']='';
             $arr['script']='';
             //验证码未能通过，获取应该输出的页面信息
             if(!$pass||md5($password)!=md5($res["password"])){
-                if($arr['captcha_is_open']){
-                    $result=Plugin::hook('ArticlePassword',arg(),true,[],$arr['captcha_type']);
-                    if(isset($result['tpl'])&&isset($result['script'])){
-                        $arr['tpl']=$result['tpl'];
-                        $arr['script']=$result['script'];
+                if(isPost()){
+                    echo json_encode(['state'=>false,'msg'=>'验证码或密码错误！']);
+                } else {
+                    if($arr['captcha_is_open']){
+                        $result=Plugin::hook('ArticlePassword',arg(),true,[],$arr['captcha_type']);
+                        if(isset($result['tpl'])&&isset($result['script'])){
+                            $arr['tpl']=$result['tpl'];
+                            $arr['script']=$result['script'];
+                        }
                     }
+                    $this->display('article_passwd',false,$arr);
                 }
-                $this->display('article_passwd',false,$arr);
                 return;
             }
 
@@ -74,13 +80,19 @@ class ArticleController extends BaseController
         //合并数据
         $arr=array_merge($arr,$arr_plugin);
         $article->updateReadCount($res['gid']);
+        if(isPost()){
+            $arr['layout']="";
+        }
         if($res['type']==='article'){
             if(intval($arr['is_markdown']))
-                $this->display('article_md',false,$arr);
+                $echo = $this->display('article_md',true,$arr);
             else
-                $this->display('article_html',false,$arr);
+                $echo =  $this->display('article_html',true,$arr);
         }else
-            $this->display('article_page',false,$arr);
+            $echo = $this->display('article_page',true,$arr);
+        if(isPost()){
+            echo json_encode(['state'=>true,'data'=>$echo]);
+        }else echo $echo;
 
     }
     public function actionComment(){

@@ -1,4 +1,4 @@
-<article class="main-content page-page" itemscope="" itemtype="http://schema.org/Article">
+<article class="main-content page-page  content-display" itemscope="" itemtype="http://schema.org/Article">
     <div class="post-header">
         <h1 class="post-title" itemprop="name headline">
             此内容被密码保护 </h1>
@@ -12,7 +12,7 @@
             </p>
 
             <p>
-                <input type="password" class="text input" name="passwd" placeholder="请输入密码">
+                <input type="password" class="text input" name="passwd" id="passwd" placeholder="请输入密码">
                 <{if !$captcha_is_open}>
                 <button id="submit" class="submit" >提交</button>
                 <{else}>
@@ -26,10 +26,22 @@
 <{if !$captcha_is_open}>
 <script>
 
-    $(document).on('submit', 'form[data-pjax]', function(event) {
-        $.pjax.submit(event, '#pjax-content');
-        return false;
+    $("#submit").click(function () {
+        $.ajax({
+            url:window.location.href,
+            method:"POST",
+            data:{passwd:$("#passwd").val()},
+            dataType:"json",
+            success:function (d) {
+               if(!d.state){
+                   layer.msg(d.msg,{icon:5});
+               }else{
+                   $("#pjax-content").html(d.data)
+               }
+            }
+        });
     })
+
 </script>
 <{else}>
 <{$script nofilter}>

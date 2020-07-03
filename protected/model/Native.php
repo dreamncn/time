@@ -68,7 +68,24 @@ class Native extends Model{
      * @return array|mixed
      */
     public function getNoHide(){
-        return $this->select()->where(['hide=0'])->orderBy('pid ASC')->commit();
+        $result=$this->select()->where(['hide=0'])->orderBy('pid ASC')->commit();
+        $data=[];
+        foreach ($result as $val){
+            if($val['lastest']!=='0')continue;
+            $return=$val;
+             if($val['nexts']!==""){
+                 $next=explode(",",$val['nexts']);
+                 foreach ($next as $val2){
+                     foreach ($result as $val3){
+                          if($val2==$val3['id']){
+                              $return['data'][]=$val3;
+                          }
+                     }
+                 }
+             }
+             $data[]=$return;
+        }
+        return $data;
     }
 
     /**

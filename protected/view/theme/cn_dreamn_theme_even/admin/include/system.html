@@ -1,0 +1,202 @@
+<style>
+    body,html{
+        background-color: white
+    }
+</style>
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title">
+        <li class="layui-this">站点配置</li>
+        <li>SEO配置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--站点配置-->
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">网站状态</label>
+                    <div class="layui-input-block">
+                        <input checked="false" lay-filter="switchTest" lay-skin="switch" lay-text="开启|关闭"
+                               name="blog_open" type="checkbox">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">网站名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="blog_name" placeholder="请输入网站名称"
+                               type="text" value="">
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">底部版权信息</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" lay-verify="required" name="copyright"
+                                  placeholder="请输入底部版权信息"></textarea>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">支持变量：{year} - 显示当前年份</div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">网站备案</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="icp" placeholder="请输入备案号（没有不填）"
+                               type="text">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">底部其他代码</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" name="footer" placeholder="请输入底部其他代码"></textarea>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">支持html，可以用于流量统计</div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="siteInfo" lay-submit="">保存设置</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+        <!--SEO配置-->
+        <div class="layui-tab-item">
+            <form class="layui-form  layui-form-pane" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="seo_key"
+                               placeholder="请输入SEO关键词" type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">网站描述</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" lay-verify="required" name="seo_description"
+                                  placeholder="请输入SEO描述"></textarea>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">这是百度抓取后显示的描述信息</div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="seoInfo" lay-submit="">保存设置</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script charset="utf-8" src="<{$i}>/js/base64.js" type="text/javascript"></script>
+<script>
+    var getUrl="<{url m='api' c='sys' a='get'}>";
+    var setUrl="<{url m='api' c='sys' a='set'}>?type=";
+</script>
+<!--include_start-->
+<script>
+    //Demo
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+
+        var $ = layui.jquery;
+
+        $.ajax({
+            url: getUrl,
+            type: 'GET',
+            dataType:'json',
+            success: function (data) {
+                if (data.state) {
+                    $("input[name='blog_name']").val(data.data.blog_name);
+                    $("input[name='seo_key']").val(data.data.seo_key);
+                    $("textarea[name='seo_description']").val(data.data.seo_description);
+
+
+                    var o = $("input[name='blog_open']");
+
+                    if (data.data.blog_open === "true") {
+                        o.prop('checked', 'checked');
+                        o.val('on');
+                    } else {
+                        o.removeAttr('checked');
+                        o.val('off');
+                    }
+
+
+                    $("textarea[name='copyright']").val(data.data.copyright);
+                    $("input[name='icp']").val(data.data.icp);
+
+                    $("textarea[name='footer']").val(Base64.decode(data.data.footer));
+
+
+                    form.render();
+                }
+
+            }
+        });
+
+       
+
+        form.on('submit(siteInfo)', function (data) {
+            data.field.footer = Base64.encode(data.field.footer);
+            data.field.blog_open = $("input[name='blog_open']").val() === "on" ? 'true' : 'false';
+            //向后台setoption
+            saveChange(setUrl+"0", data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+            });
+            return false;
+        });
+        form.on('submit(seoInfo)', function (data) {
+            //向后台setoption
+            saveChange(setUrl+"1", data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+            });
+            return false;
+        });
+        form.on('switch(switchTest)', function (data) {
+            var x = data.elem.checked;
+            var content = "";
+            if (x)
+                content = "确定开放本站点吗？";
+            else
+                content = "确定关闭本站点吗？（关闭后只有外部页面无法访问，后台可以访问）";
+            layer.open({
+                content: content
+                , btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    data.elem.checked = x;
+                    data.elem.value = x ? 'on' : "off";
+                    form.render();
+                    layer.close(index);
+                    //按钮【按钮一】的回调
+                }
+                , btn2: function (index, layero) {
+                    //按钮【按钮二】的回调
+                    data.elem.checked = !x;
+                    data.elem.value = x ? 'on' : "off";
+                    form.render();
+                    layer.close(index);
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+                    data.elem.value = x ? 'on' : "off";
+                    data.elem.checked = x;
+                    form.render();
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+
+            return false;
+        });
+
+    });
+
+</script>
+<!--include_end-->

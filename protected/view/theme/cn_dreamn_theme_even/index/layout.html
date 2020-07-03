@@ -12,6 +12,7 @@
     <meta name="description" content="<{$description}>">
     <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/xcode.min.css" rel="stylesheet">
     <link href="<{$i}>/css/style.css" rel="stylesheet">
+    <link href="<{$i}>/css/dark.css" rel="stylesheet">
     <{$plugin_css nofilter}>
     <link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="<{$i}>/img/favicon.ico">
@@ -34,6 +35,8 @@
         #baguetteBox-overlay{
             display: none;
         }
+
+
     </style>
 </head>
 <body>
@@ -46,16 +49,36 @@
     <div class="navbar-container">
         <a href="<{$site_url}>" class="navbar-logo" style="font-family: 'Playball', cursive;"><{$blog_name}></a>
         <div class="navbar-menu">
+            <ul class="sf-menu">
             <{foreach $nav as $v}>
-                <{if  $v.lastest == 0}>
+                <{if isset($v.data)}>
+                <li>
                     <{if $v.stype == 3}>
-                        <a href="<{$v.url}>" target="_blank"><{$v.nname}></a>
+                 <a href="<{$v.url}>" target="_blank"><{$v.nname}></a>
                     <{else}>
-                        <a href="<{$v.url}>"><{$v.nname}></a>
+                 <a href="<{$v.url}>"><{$v.nname}></a>
                     <{/if}>
-
+                    <ul class="sub-menu">
+                    <{foreach $v.data as $val}>
+                        <{if $val.stype == 3}>
+                            <li><a href="<{$val.url}>" target="_blank"><{$val.nname}></a></li>
+                        <{else}>
+                            <li><a href="<{$val.url}>"><{$val.nname}></a></li>
+                        <{/if}>
+                    <{/foreach}>
+                    </ul>
+                </li>
+                <{else}>
+                    <{if $v.stype == 3}>
+                <li><a href="<{$v.url}>" target="_blank"><{$v.nname}></a></li>
+                    <{else}>
+                <li><a href="<{$v.url}>"><{$v.nname}></a></li>
+                    <{/if}>
                 <{/if}>
             <{/foreach}>
+            </ul>
+
+
         </div>
         <div class="navbar-search" onclick="">
             <span class="icon-search"></span>

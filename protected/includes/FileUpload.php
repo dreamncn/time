@@ -33,17 +33,19 @@ class FileUpload
         $this->model=$model;
         $this->path=APP_UPLOAD.$model;
         switch ($model){
-            case 'article':$this->path=APP_UPLOAD_ARTICLE;break;
+            case 'article':
+                $c = new Config();
+                $picbed= $c->getData("pic_bed");
+                if(class_exists('app\\plugin\\'.$picbed.'\\core\\Index'))
+                    $this->picBed = $picbed;
+                $this->path=APP_UPLOAD_ARTICLE;break;
             case 'setting':$this->path=APP_UPLOAD_SETTING;break;
             case 'plugin':$this->path=APP_UPLOAD_PLUGIN;break;
             case 'theme':$this->path=APP_UPLOAD_THEME;break;
             default:$this->path=APP_UPLOAD.$model;
         }
-        $c = new Config();
-        $picbed= $c->getData("pic_bed");
-        //class_exists
-        if(class_exists('app\\plugin\\'.$picbed.'\\core\\Index'))
-            $this->picBed = $picbed;
+
+
     }
 
     /**
@@ -135,8 +137,7 @@ class FileUpload
         /**
          * 如果是本地直接返回的是本地访问地址
          */
-        if($this->picBed!==null) return $this->upPath;
-        else return getAddress().str_replace(APP_DIR,'',$this->upPath);
+        return str_replace(APP_DIR,'',$this->upPath);
 
     }
 
@@ -146,11 +147,10 @@ class FileUpload
      */
     public function getFilePath(){
         /**
-         * 如果是github直接返回null
          * 如果是本地直接返回的是物理地址
          */
-        if($this->picBed!==null) return null;
-        else return $this->upPath;
+        if(is_file($this->upPath)) return $this->upPath;
+        else return null;
     }
 
 
@@ -326,11 +326,11 @@ class FileUpload
             $path = rtrim($this->path, '/') . '/';
             $path .= $this->newFileName;
             $this->upPath = $path;
-            if($this->picBed!==null){
+            if($this->picBed!==null){//article才需要
                 try{
-                    $this->upPath = Plugin::hook('Upload',array($this->tmpFileName, $this->newFileName, $this->fileType));
+                    $this->upPath = Plugin::hook('Upload',array("tmpFileName"=>$this->tmpFileName, "newFileName"=>$this->newFileName, "fileType"=>$this->fileType,"upPath"=>$this->upPath),true,[],$this->picBed,true,true);
                     if ($this->upPath) {
-                        $upload=new Upload($this->model);
+                        $upload=new Upload();
                         $upload->add($this->getOriginName(),$this->getFileUrl());
                         return true;
                     } else {
@@ -344,7 +344,7 @@ class FileUpload
             }else{
                 if ((@move_uploaded_file($this->tmpFileName, $this->upPath))||@copy($this->tmpFileName, $this->upPath)) {
 
-                    $upload=new Upload($this->model);
+                    $upload=new Upload();
                     $upload->add($this->getOriginName(),$this->getFilePath());
                     return true;
                 } else{

@@ -18,7 +18,7 @@ class LoginController extends BaseController{
 
         $config=new Config();
         $data['login_type']= $config->getData('login_type');
-        if(!Plugin::hook('isLogin',arg(),true,false,$data['login_type']))
+        if(Plugin::hook('isLogin',arg(),true,false,$data['login_type']))
                 $this->jump(url('admin','main','index'));
 
         

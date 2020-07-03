@@ -9,10 +9,8 @@ use app\lib\speed\mvc\Model;
  * Description  :上传文件控制器，每个上传的文件都做记录
  */
 class Upload extends Model{
-    private $type='';//上传的文件类型
-    public function __construct($type)
+    public function __construct()
     {
-        $this->type=$type;
         parent::__construct('blog_upload');
     }
 
@@ -23,12 +21,10 @@ class Upload extends Model{
      * @param string $passwd
      * @return mixed
      */
-    public function add($name,$path,$passwd=''){
+    public function add($name,$path){
         $arg['file_path']=$path;
         $arg['file_title']=$name;
-        $arg['file_passwd']=$passwd;
         $arg['file_bind_id']='tmp';
-        $arg['file_type']=$this->type;
         return $this->insert($arg);
     }
 
@@ -39,12 +35,12 @@ class Upload extends Model{
      */
     public function delByBindID($id){
 
-        $re=$this->select()->where(['file_bind_id'=>$id,'file_type'=>$this->type])->commit();
+        $re=$this->select()->where(['file_bind_id'=>$id])->commit();
         if(!empty($re)){
             foreach ($re as $val){
                 if(is_file($val['file_path']))unlink($val['file_path']);
             }
-            return $this->delete()->where(['file_bind_id'=>$id,'file_type'=>$this->type])->commit();
+            return $this->delete()->where(['file_bind_id'=>$id])->commit();
         }
         return null;
     }
