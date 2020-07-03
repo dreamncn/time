@@ -48,13 +48,20 @@ class View
 
     /**
      * @param $template_name
+     * @param bool $script
      * @return string
      */
-    public function compile($template_name)
+    public function compile($template_name,$script=false)
     {
         GLOBAL $__module;
-        $template_name = ($__module == '' ? '' : $__module . DS) . $template_name . '.html';
-        $file = $this->template_dir . DS . $template_name;
+        if($script){
+           $template_name = $template_name.'.html';
+            $file = APP_TRASH  . $template_name;
+        }else{
+            $template_name = ($__module == '' ? '' : $__module . DS) . $template_name . '.html';
+            $file = $this->template_dir . DS . $template_name;
+        }
+
         if (!file_exists($file))
             Error::err('Err: "' . $file . '" is not exists!');
         if (!is_writable($this->compile_dir) || !is_readable($this->compile_dir))
@@ -74,7 +81,7 @@ class View
 
         $template_data = $this->_compile_function($template_data);
         $template_data = '<?php use app\lib\speed\mvc; if(!class_exists("app\lib\speed\mvc\View", false)) exit("no direct access allowed");?>' . $template_data;
-        $template_data = $this->_complie_script_get($template_data);
+        $template_data = $this->_complie_script_get($template_data,$template_name);
         $template_data = $this->_complie_script_put($template_data);
         $this->_clear_compliedfile($template_name);
 
@@ -180,12 +187,14 @@ class View
         return '<?php echo ' . $matches[1] . '(' . $params . ');?>';
     }
 
-    public function _complie_script_get($template_data)
+    public function _complie_script_get($template_data,$template_name)
     {
         $isMatched = preg_match_all('/<!--include_start-->([\s\S]*?)<!--include_end-->/', $template_data, $matches);
         if ($isMatched && $isMatched === 1) {
-            $script = $matches[1][0];
-            $template_data = str_replace($matches[0][0], '<?php $template_file_script="' . base64_encode($script) . '";?>', $template_data);
+
+
+            file_put_contents(APP_TRASH. md5($template_name) .'.script.html', $matches[1][0]);
+            $template_data = str_replace($matches[0][0], '<?php $template_file_script="' . md5($template_name) .'.script'. '";?>', $template_data);
         }
         return $template_data;
     }
@@ -193,7 +202,7 @@ class View
     public function _complie_script_put($template_data)
     {
 
-        $template_data = str_replace('<!--template_file_script-->', '<?php echo isset($template_file_script)?base64_decode($template_file_script):"";?>', $template_data);
+        $template_data = str_replace('<!--template_file_script-->', '<?php  if(isset($template_file_script)){include $_view_obj->compile($template_file_script,true);}?>', $template_data);
         return $template_data;
     }
 }

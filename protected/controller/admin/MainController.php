@@ -4,101 +4,9 @@ namespace app\controller\admin;
 use app\Error;
 use app\includes\AES;
 use app\lib\blog\Plugin;
-use app\model\Admin;
-use app\model\Config;
 
 class MainController extends BaseController
 {
-
-    /**
-     * 微信登录接口
-     */
-    public function actionWechat(){
-        $admin=new Admin();
-        if($admin->getLoginType()==="wechat"){
-            echo json_encode(array(
-                'err'=>false,
-                'data'=>$admin->getWechatQr()
-            ));
-        }else{
-            echo json_encode(array(
-                'err'=>true,
-                'msg'=>'登录失败'
-            ));
-        }
-    }
-
-    /**
-     * 登录页面显示
-     */
-    public function actionLogin(){
-        $admin=new Admin();
-        $config=new Config();
-        //是否开启验证码
-        $arr['captcha_is_open']=intval($config->getData("need_captcha_passwd"))&&intval($config->getData("captcha_is_open"));
-        //验证码类型
-        $arr['captcha_type']=intval($config->getData("captcha_type"));//1是图片验证码 0是腾讯验证码
-
-        if($admin->getLoginType()==="wechat"){
-            $arr=$arr+$this->hook('displayLogin',true);
-            $this->display("loginByWechat",false,$arr);
-        }else{
-            $arr=$arr+$this->hook('displayLogin');
-            $this->display("loginByPasswd",false,$arr);
-        }
-    }
-
-
-    /**
-     * 从数据库部分进行验证
-     */
-    public function actionLoginPost(){
-
-        $admin=new Admin();
-        //验证码部分等会再写
-        if($admin->getLoginType()==="wechat"){
-            //data是我自己的微信授权平台
-            if(arg("sk")!==null&&arg("user")!==null){
-                //标识已经获得登录信息了
-                if($admin->loginByWechat(arg("sk"),arg("user"))){
-                    echo json_encode(array("login"=>true,"msg"=>"登陆成功"));
-                }else{
-                    echo json_encode(array("login"=>false,"msg"=>"登录失败"));
-                }
-
-            }else echo json_encode(array("login"=>false,"msg"=>"不是绑定的微信账号"));
-        }else{
-            $config=new Config();
-            $captcha_is_open=intval($config->getData("need_captcha_passwd"))&&intval($config->getData("captcha_is_open"));
-            //验证码类型
-            $captcha_type=intval($config->getData("captcha_type"));//1是图片验证码 0是腾讯验证码
-            $captcha=new Captcha($captcha_type);
-            if($captcha_is_open&&!$captcha->Verity(arg('verity'),arg('randstr')))
-                exit(json_encode(array("login"=>false,"msg"=>"账号或密码错误")));
-            if(arg("user")!==null&&arg("password")!==null){
-
-                $aes=new AES();
-                $passwd=$aes->decrypt(arg("password"),$_SESSION['key']);
-                if($admin->loginByPasswd(arg("user"),$passwd)){
-                    echo json_encode(array("login"=>true));
-                }else echo json_encode(array("login"=>false,"msg"=>"账号或密码错误"));
-            }else echo json_encode(array("login"=>false,"msg"=>"账号或密码错误"));
-        }
-
-    }//此处是验证回调
-
-    public function actionWechatPost(){
-        $admin=new Admin();
-        if($admin->getLoginType()==="wechat"){
-            if(isset($_SESSION['sk'])){
-                //标识已经获得登录信息了
-                if($admin->WechatLogin($_SESSION['sk'])){
-                    echo json_encode(array("err"=>false,"login"=>true));
-                }else echo json_encode(array("err"=>false,"login"=>false,"msg"=>"尚未登录"));
-
-            }else echo json_encode(array("err"=>true,"login"=>false,"msg"=>"不是绑定的微信账号"));
-        }else echo json_encode(array("err"=>true,"msg"=>"微信登录已禁用"));
-    }//此处是请前端验证
 
     /**
      * 获取API通讯加密密钥
@@ -146,7 +54,7 @@ class MainController extends BaseController
                     array("name"=>"系统设置","icon"=>'iconxitongshezhi','url'=>url('admin','main','page',array('page'=>'system'))),
                     array("name"=>"验证码配置","icon"=>'iconyanzhengma2','url'=>url('admin','main','page',array('page'=>'captcha'))),
                     array("name"=>"邮件配置","icon"=>'iconyoujian','url'=>url('admin','main','page',array('page'=>'email'))),
-                    array("name"=>"登录设置","icon"=>'iconicon','url'=>url('admin','main','page',array('page'=>'loginSetting'))),
+                    array("name"=>"登录设置","icon"=>'iconicon','url'=>url('admin','main','page',array('page'=>'login'))),
                     /*array("name"=>"备份恢复","icon"=>'iconcaogao','url'=>url('admin','main','page',array('page'=>'backup'))),
                     array("name"=>"操作日志","icon"=>'iconxitongrizhi','url'=>url('admin','main','page',array('page'=>'log'))),*/
                 )
@@ -172,10 +80,16 @@ class MainController extends BaseController
         $isMatched = preg_match_all('/[a-zA-Z]/', $t_name, $matches);
         if(!$isMatched)Error::err('[Err]No this page "'.$t_name.'"');
         $path=APP_VIEW.'theme'.DS.$this->getTheme()."/admin/include/".$t_name;
-        $arr=$this->hook('include_'.$t_name);
+        $arr1=$this->hook('include_'.$t_name);
+        if($arr1==null)$arr1=[];
+        $arr2=Plugin::hook('include_'.$t_name,null,true,[],null,true);
+        if($arr2!==[])$arr2=['data'=>$arr2];
+
+        //dump($arr2,true);
+
         if(is_file($path.'.html')){
             $this->layout='include/layout';
-            $this->display("/include/".$t_name,false,$arr);
+            $this->display("/include/".$t_name,false,array_merge($arr1,$arr2));
         }
     }
     public function actionTpl(){

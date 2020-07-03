@@ -1,0 +1,92 @@
+<style>
+    body,html{
+        background-color: white
+    }
+</style>
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title" id="loginTitle">
+        <li class="layui-this">登录设置</li>
+        <{if isset($data)}>
+        <{foreach $data as $k}>
+        <li><{$k.title nofilter}></li>
+        <{/foreach}>
+        <{/if}>
+
+    </ul>
+    <div class="layui-tab-content" id="loginBar">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">登录选择</label>
+                    <div class="layui-input-block" id="login">
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="login" lay-submit="">保存设置</button>
+                </div>
+
+            </form>
+        </div>
+        <{if isset($data)}>
+        <{foreach $data as $k}>
+        <div class="layui-tab-item"><{$k.tpl nofilter}></div>
+        <{/foreach}>
+        <{/if}>
+    </div>
+</div>
+<script>
+    var getUrl="<{url m='api' c='login' a='get'}>";
+    var setUrl="<{url m='api' c='login' a='set'}>";
+
+</script>
+
+<!--include_start-->
+<script>
+
+    layui.use(['form', 'element'], function () {
+        var form,$;
+       form = layui.form;
+
+        $ = layui.jquery;
+
+        $.ajax({
+            url: getUrl,
+            type: 'GET',
+            dataType:'json',
+            success: function (data) {
+                console.log(data);
+                if (data.state) {
+                    $.each(data.data.data,function (index,val) {
+                        var check=val.login_type===data.data.login_type?'checked':'';
+                        $("#login").append('<input '+check+' name="login_type" title="'+val.title+'" type="radio" value="'+val.login_type+'">')
+                    });
+                    
+
+                    form.render();
+                }
+
+            }
+        });
+        form.on('submit(login)', function (data) {
+            //向后台setoption
+            saveChange(setUrl, data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+            });
+            return false;
+        });
+
+    });
+
+</script>
+<{if isset($data)}>
+<{foreach $data as $k}>
+<{$k.js nofilter}>
+<{/foreach }>
+<{/if}>
+<!--include_end-->

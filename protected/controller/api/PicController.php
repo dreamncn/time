@@ -9,10 +9,9 @@ class PicController extends BaseController{
     public function actionGetList(){
         //注册成为图床插件
        $data=Plugin::hook('PicList',[],true,[],null,true);  //插件列表
-       $setData=Plugin::hook('PicSet',[],true,[],null,true);  //插件设置列表
-       $config=new Config();
+           $config=new Config();
        $picBed=$config->getData('pic_bed');
-       exit(json_encode(array("state"=>true,"data"=>["data"=>$data,'picbed'=>$picBed,'setData'=>$setData])));
+       exit(json_encode(array("state"=>true,"data"=>["data"=>$data,'picbed'=>$picBed])));
     }
     public function actionSetList(){
         if(!isset($this->arg['PicBed']))

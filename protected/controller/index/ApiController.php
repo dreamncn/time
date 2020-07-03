@@ -6,8 +6,8 @@
  */
 namespace app\controller\index;
 
-use app\includes\Captcha;
 use app\includes\Email;
+use app\includes\StringDeal;
 use app\includes\Web;
 use app\lib\blog\Plugin;
 use app\model\Admin;
@@ -68,11 +68,16 @@ class ApiController extends BaseController
 
         //评论接收的api
         $comment=new Comment();
-        $n=['qq'=>'/\d{5,12}/','name'=>'/.*?/','comment'=>'/.*?/','url'=>'/((http|https):\/\/)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*?/'];
+        $n=['qq'=>'/\d{5,12}/','name'=>null,'comment'=>null,'url'=>null];
         foreach ($n as $k=>$v){
+            if($v==null)continue;
             if(arg($k)==null)exit(json_encode(array('state'=>false,'msg'=>'请将信息填写完整！')));
             $isMatched = preg_match_all($v, arg($k), $matches);
-            if(!$isMatched&&$matches[0][0]===arg($k))exit(json_encode(array('state'=>false,'msg'=>'不符合要求的参数')));
+            if($k=='url'){
+                $s=new StringDeal();
+                if(!$s->isUrl($v))exit(json_encode(array('state'=>false,'msg'=>'不符合要求的参数')));
+            }
+            if(!$isMatched||$matches[0][0]!==arg($k))exit(json_encode(array('state'=>false,'msg'=>'不符合要求的参数')));
         }
         $arg['pid']=intval(arg('cid',0));
         if($arg['pid']!==0&&!$comment->isExist($arg['pid']))
@@ -94,7 +99,7 @@ class ApiController extends BaseController
             $mail=new Email();
 
             $html=$mail->complieNotify(array(
-                'notice1'=>'您的文章有新的留言','notice2'=>'<a href="//'.$_SERVER["HTTP_HOST"].'/posts/'.$result['alians'].'">《'.$result['title'].'》</a>','notice3'=>$arg['comment']
+                'notice1'=>'您的文章有新的留言','notice2'=>'<a href="'. getAddress().'/posts/'.$result['alians'].'">《'.$result['title'].'》</a>','notice3'=>$arg['comment']
             ));
 
             $mail->send($config->getData('mail'),'您的文章有新的留言！',$html,$arg['yname']);

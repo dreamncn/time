@@ -1,0 +1,38 @@
+<div class="layui-tab-item layui-show">
+    <form class="layui-form layui-form-pane" style="width: 90%;padding-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录账号</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="username" placeholder="请输入登录账户"
+                    value="<{$username}>" required type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">旧密码</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="password1" placeholder="请输入密码"
+                       required type="password">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="password2" placeholder="请输入密码"
+                       required type="password">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">重复密码</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="password3" placeholder="请输入密码"
+                       required type="password">
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-normal" lay-filter="adminPassword" lay-submit>立即提交</button>
+            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+        </div>
+    </form>
+</div>

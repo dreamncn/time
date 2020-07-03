@@ -66,7 +66,7 @@ class CommentController extends BaseController{
         $array['qq']=$conf->getData("qq");
         $array['yname']= $conf->getData("author");
         $c->add($array);
-        if($conf->getData('mail_notice_you')==='on') {
+        if($conf->getData('mail_notice_you')==='1') {
             $mail = new Email();
             $content = new Article();
             $result1 = $content->getArticleByID($this->arg['gid']);
@@ -74,7 +74,7 @@ class CommentController extends BaseController{
             if ($result1 && $result) {
 
                 $html = $mail->complieNotify(array(
-                    'notice1' => '您的留言收到了新的回复', 'notice2' => '<a href="//' . $_SERVER["HTTP_HOST"] . '/' . $result1['alians'] . '">《' . $result1['title'] . '》</a>', 'notice3' => $this->arg['comment']
+                    'notice1' => '您的留言收到了新的回复', 'notice2' => '<a href="' . getAddress() . '/posts/' . $result1['alians'] . '">《' . $result1['title'] . '》</a>', 'notice3' => $this->arg['comment']
                 ));
 
                 $mail->send($result['qq'] . '@qq.com', '您的留言有新回复！', $html, $array['yname']);

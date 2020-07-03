@@ -1,0 +1,22 @@
+<script>
+
+    layui.use(['form'], function () {
+        var   form = layui.form;
+
+      var  $ = layui.jquery;
+
+        form.on('submit(adminPassword)', function (data) {
+        //向后台setoption
+        saveChange("<{url m='api' c='main' a='plugin' p='cn_dreamn_plugin_login_password' type='setPass'}>", data.field, "设置中...",function (data) {
+            if(data.code!==-1){
+                notice.msg('修改成功，请重新登录',{icon:1},function () {
+                    location.reload()
+                });
+            }else{
+                notice.msg('修改失败',{icon:2});
+            }
+        });
+        return false;
+    });
+    });
+</script>

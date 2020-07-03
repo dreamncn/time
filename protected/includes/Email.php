@@ -70,6 +70,8 @@ class Email{
         $obj->notice1=$arr['notice1'];
         $obj->notice2=$arr['notice2'];
         $obj->notice3=$arr['notice3'];
+        $config=new Config();
+        $obj->BlogName=$config->getData('blog_name');
         return $obj->display('../mail/notify',true);
     }
 
