@@ -20,14 +20,14 @@ class Admin extends Plugin{
     }
 
     public function hookLoginList($data){
-        $data[]=['title'=>'账号密码登录','login_type'=>'cn_dreamn_plugin_login_password'];
+        $data=['title'=>'账号密码登录','login_type'=>'cn_dreamn_plugin_login_password'];
         return $data;
     }
 
     public function hookinclude_login(){
         $tpl=$this->display('set',['username'=>$this->getItem('username')]);
         $return=['title'=>"账号密码设置",'tpl'=>$tpl,'js'=>$this->display('setScript')];
-        return [$return];
+        return $return;
     }
 
     public function hookDo($data){

@@ -124,7 +124,7 @@ class Plugin extends Model
                 }
             }
             if ($result !== null) {
-                if (is_array($result)) $Res = $Res + $result;
+                if (is_array($result)) $Res[] =  $result;
             }
             if ($only) return $result;
 
