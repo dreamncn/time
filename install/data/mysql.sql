@@ -142,7 +142,7 @@ INSERT INTO `blog_options` VALUES (17, 'author', '');
 INSERT INTO `blog_options` VALUES (18, 'mail_notice_me', '1');
 INSERT INTO `blog_options` VALUES (19, 'mail_notice_you', '1');
 INSERT INTO `blog_options` VALUES (20, 'login_type', 'cn_dreamn_plugin_login_password');
-INSERT INTO `blog_options` VALUES (21, 'start_time', '');
+INSERT INTO `blog_options` VALUES (21, 'start_time', '[year]');
 INSERT INTO `blog_options` VALUES (22, 'picbed', 'cn_dreamn_plugin_picbed_local');
 INSERT INTO `blog_options` VALUES (23, 'blog_open', 'true');
 INSERT INTO `blog_options` VALUES (24, 'mail_smtp', '');

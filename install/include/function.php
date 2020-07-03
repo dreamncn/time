@@ -195,6 +195,7 @@ class mysql{
         if (!isset($sql) || empty($sql)) return;
         // $sql = str_replace("\r", "\n", str_replace('#__', $db_prefix, $sql));
         $sql = str_replace("[user]", $admin, $sql);
+        $sql = str_replace("[year]", time(), $sql);
         //
         $sql = str_replace("[pass]", hash("sha256",$admin.md5($password)), $sql);
         $ret = array();
