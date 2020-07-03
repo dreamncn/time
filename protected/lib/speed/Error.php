@@ -69,11 +69,14 @@ class Error
             if (ob_get_contents()) ob_end_clean();
             logs($msg, 'warn');
 
-            if (!isDebug()) {
-                $obj = new Controller();
+            if (isDebug()) {
                 GLOBAL $__module;
                 $__module = '';
-                $obj->display($GLOBALS['error']);
+                if(file_exists(APP_VIEW.$GLOBALS['error'])){
+                    echo file_get_contents(APP_VIEW.$GLOBALS['error']);
+                }else{
+                    echo "404 NOT FOUND";
+                }
             } else {
 
                 self::display($msg, $traces);
@@ -314,7 +317,8 @@ EOF;
     {
         global $__module, $__controller, $__action;
         $name = "app\\controller\\$__module\\BaseController";
-        logs($msg, 'warn');
+        if(isDebug())
+            logs($msg, 'warn');
 
         if (!method_exists($name, 'err404')) {
             self::err($msg);

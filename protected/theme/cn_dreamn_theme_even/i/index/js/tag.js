@@ -14,9 +14,8 @@ function getTag(page) {
                         AppendTO(result.data);
 
                     } else {
-                        $("#articleList").html("<p style='text-align: center;\n" +
-                            "margin-top: 40px;\n" +
-                            "font-size: 40px;'>暂无文章</p>");
+                        $("#articleList").html("<p class='post' style='text-align: center;\n" +
+                            "font-size: 18px;'>很抱歉，暂无关于该标签的任何文章。</p>");
                     }
                 }
         });

@@ -16,7 +16,7 @@ class Config
     static public function config()
     {
         return array( // 调试配置
-            'host' => array('abc.com','127.0.0.1'),//localhost改成自己的域名
+            'host' => array('abc.com'),//localhost改成自己的域名
             'debug' => 1,//为0不输出调试错误信息
             'mysql' => array(//数据库信息
                 'MYSQL_HOST' => '127.0.0.1',
@@ -26,7 +26,7 @@ class Config
                 'MYSQL_PASS' => 'xDw3HpKze58Pta3i',
                 'MYSQL_CHARSET' => 'utf8',
             ),
-            "error" => 'error'//非调试状态出错显示的信息
+            "error" => 'theme/cn_dreamn_theme_even/error/404.html'//非调试状态出错显示的信息
         );
     }
 

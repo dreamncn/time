@@ -1,0 +1,143 @@
+
+<style>
+    .layui-form-label{
+        height: 36px!important;
+        border-radius: 5px!important;
+    }
+</style>
+<div class="layui-card">
+    <div class="layui-card-body">
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title">
+        <li class="layui-this">主题侧栏</li>
+        <li class="">自定义侧栏</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--主题侧栏-->
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">侧栏名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="请输入侧栏名称"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="sort" placeholder="请输入序号"
+                               type="text" value="0">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择模板</label>
+                    <div class="layui-input-block">
+                        <select id="chooseSort" lay-verify="required" name="html">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="navAssort" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+        <!--自定义侧栏-->
+        <div class="layui-tab-item ">
+            <form class="layui-form  layui-form-pane" onsubmit="return false;" style="width: 90%;padding-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">侧栏名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="请输入侧栏名称"
+                               type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="sort" placeholder="请输入序号"
+                               type="text" value="0">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">html代码</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" lay-verify="required" name="html"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="navPage" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+    </div>
+</div>
+<script>
+    var getDataUrl = '<{url  m="api" c="sidebar" a="getData" }>';
+    var setData = '<{url  m="api" c="sidebar" a="set" }>';
+</script>
+<!--include_start-->
+<script>
+    //Demo
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        getData();
+        form.render();
+        //监听信息提交
+        form.on('submit(navAssort)', function (data) {
+            data.field.type = "1";
+            SubmitData(data);
+            return false;
+        });
+        form.on('submit(navPage)', function (data) {
+            data.field.type = "2";
+            SubmitData(data);
+            return false;
+        });
+
+
+
+        function SubmitData(data) {
+            saveChange(setData, data.field, "设置中...",function (data) {
+                if(data.code!==-1){
+                    notice.msg('设置成功',{icon:1});
+                    parent.layer.closeAll();
+                }else{
+                    notice.msg('设置失败',{icon:2});
+                }
+        })
+        }
+
+        function getData() {
+            $.get(getDataUrl, function (data) {
+                if (data.code!==0) {
+                   notice.msg('数据获取失败',{icon:2});
+                } else {
+
+                    $.each(data.data, function (i, v) {
+                        $("#chooseSort").append('<option value="' + v.html + '">' + v.name + '</option>')
+                    });
+                    form.render('select');
+
+                }
+
+
+            }, 'json');
+        }
+
+
+    });
+
+</script>
+<!--include_end-->

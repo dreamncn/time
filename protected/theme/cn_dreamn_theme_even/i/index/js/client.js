@@ -222,7 +222,7 @@ function sendComment(data) {
          type: 'post',
          success:function (res) {
              if(!res.state){
-                 layer.alert(res.msg, {icon: 5});
+                 layer.alert(res.msg, {icon: 5,title:'发生错误'});
              } else {
                  layer.msg('回复成功！');
                  getComment(gid);
@@ -246,13 +246,7 @@ $("#comment_cancle").click(function () {
     $('#comment_cancle').html('');
     $('#comment_reply').css('display','none');
 });
-$("#submit").click(function () {
-        var data= $('#comment').serializeArray();
-        var cilent= getClientInfo();
-        data.push({name:'browser',value: cilent['browser']+' '+cilent['version']});
-        data.push({name:'os',value: cilent['os']+' '+cilent['osVersion']});
-        sendComment(data);
-});
+
 
 
 $("input[name=qq]").blur(function(){

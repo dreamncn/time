@@ -131,30 +131,56 @@
 </script>
 
 <script>
-    var getUrl='<{url c="api/theme" a="getAll"}>';
-    var enableUrl='<{url c="api/theme" a="enable"}>';
-    var delUrl='<{url c="api/theme" a="del"}>';
-    var uninstallUrl='<{url c="api/theme" a="Uninstall"}>';
-    var installUrl='<{url c="api/theme" a="Install"}>';
-    var uploadUrl='<{url c="api/theme" a="upload"}>';
+    var getUrl='<{url  m="api" c="theme" a="getAll"}>';
+    var enableUrl='<{url  m="api" c="theme" a="enable"}>';
+    var delUrl='<{url  m="api" c="theme" a="del"}>';
+    var uninstallUrl='<{url  m="api" c="theme" a="Uninstall"}>';
+    var installUrl='<{url  m="api" c="theme" a="Install"}>';
+    var uploadUrl='<{url  m="api" c="theme" a="upload"}>';
+    var cacheUrl='<{url  m="api" c="theme" a="cache"}>';
 </script>
 
 <!--include_start-->
 <script>
     var enable,install,uninstall,del;
 
-   layui.use(['layer','dataGrid', 'upload'], function () {
+   layui.use(['layer','dataGrid', 'upload','element'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var upload = layui.upload;
         var dataGrid = layui.dataGrid;
-
+       var element = layui.element;
+       var index;
        upload.render({
            elem: '#upload'
            ,url: uploadUrl //改成您自己的上传接口
            ,accept: 'file' //普通文件
            ,exts:"zip"
+           ,before:function () {
+               index = layer.open({
+                   type: 1,
+                   title: false,
+                   skin: 'layui-layer-molv',
+                   icon: 0,
+                   closeBtn: 0,
+                   shade: [0.8, '#393D49'],
+                   offset: 'auto',
+                   content: ' <div class="layui-layer-dialog layui-layer-border layui-layer-msg"  >\n' +
+                       '        <div id="" class="layui-layer-content">\n' +
+                       '            <i >正在上传中...</i>\n' +
+                       '            <div class="layui-progress" lay-showpercent="true" lay-filter="load">\n' +
+                       '                <div class="layui-progress-bar" lay-percent="0"></div>\n' +
+                       '               </div>\n' +
+                       '        </div>\n' +
+                       '        <span class="layui-layer-setwin"></span></div>'
+               });
+           }
+           ,progress: function(n, elem){
+               var percent = n + '%'; //获取进度百分比
+               element.progress('load', percent); //可配合 layui 进度条元素使用
+           }
            ,done: function(res){
+               layer.close(index);
                if(res.code!==-1){
                    notice.msg('上传成功！请手动安装并启用！',{icon:1});
                    load();
@@ -164,7 +190,16 @@
 
            }
        });
-
+           $('#clear').click(function () {
+               $.get(cacheUrl, function (res) {
+                   res=JSON.parse(res);
+                   if(res.code!==0){
+                       notice.msg(res.msg,{icon:2});
+                   } else{
+                       notice.msg('清理完成！',{icon:1});
+                   }
+               });
+           });
         enable=function(obj){
             saveChange(enableUrl,{t:$(obj).val()},"启用中...",function () {
                 notice.msg('启用成功！',{icon:1});

@@ -5,18 +5,18 @@
         margin-top: revert;
     }
 </style>
-<article class="main-content page-page" itemscope itemtype="http://schema.org/Article">
+<article class="main-content page-page  content-display" itemscope itemtype="http://schema.org/Article">
     <div class="post-header">
         <h1 class="post-title" itemprop="name headline"><{$title}></h1>
         <div class="post-data">
-            <time datetime="<{$date}>" itemprop="datePublished">发布于<{$date}></time> | <a href="<{url  c='article' a='category' sort=$sort}>"><{$sort}></a> | 阅读<{$views}>次
+            <time datetime="<{$date}>" itemprop="datePublished">发布于<{$date}></time> | <a href="<{url  m='index' c='article' a='category' sort=$sort}>"><{$sort}></a> | 阅读<{$views}>次
             <{if $is_copy}>| 转载自 <a href="<{$copy_url}>"><{$author}></a> <{/if}>
         </div>
     </div>
     <div id="post-content" class="post-content" itemprop="articleBody">
         <p class="post-tags">
             <{foreach $tag as $t}>
-            <a href="<{url  c='article' a='tag' tag=$t}>"><{$t}></a>
+            <a href="<{url m='index'  c='article' a='tag' tag=$t}>"><{$t}></a>
             <{/foreach}>
         </p>
         <div id="test-editormd-view2">
@@ -30,11 +30,11 @@
 <div id="post-bottom-bar" class="post-bottom-bar">
     <div class="bottom-bar-inner">
         <div class="bottom-bar-items social-share left">
-            <span class="bottom-bar-item">Share : </span>
-            <span class="bottom-bar-item bottom-bar-qzone"><a href="javascript:shareTOQQ();" title="<{$title}>" rel="nofollow">Qzone</a></span>
-            <span class="bottom-bar-item bottom-bar-qrcode"><a href="javascript:shareTODB();" title="<{$title}>" rel="nofollow">Weibo</a></span>
-            <span class="bottom-bar-item bottom-bar-weibo"><a href="javascript:shareToTsina();"  title="<{$title}>" rel="nofollow">Douban</a></span>
-            <span class="bottom-bar-item bottom-bar-twitter"><a href="javascript:shareQR();" rel="nofollow">QRcode</a></span>
+            <span class="bottom-bar-item">分享 : </span>
+            <span class="bottom-bar-item bottom-bar-qzone"><a href="javascript:shareTOQQ();" title="<{$title}>" rel="nofollow">QQ空间</a></span>
+            <span class="bottom-bar-item bottom-bar-qrcode"><a href="javascript:shareTODB();" title="<{$title}>" rel="nofollow">豆瓣</a></span>
+            <span class="bottom-bar-item bottom-bar-weibo"><a href="javascript:shareToTsina();"  title="<{$title}>" rel="nofollow">微博</a></span>
+            <span class="bottom-bar-item bottom-bar-twitter"><a href="javascript:shareQR();" rel="nofollow">二维码</a></span>
         </div>
         <div class="bottom-bar-items right">
             <span class="bottom-bar-item"><a href="#footer">↓</a></span>
@@ -46,14 +46,17 @@
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
-<div id="comments"></div>
-<script src="<{$i}>/js/baguetteBox.min.js"></script>
-<script src="<{$i}>/../edit/editormd/lib/marked.min.js"></script>
-<script src="<{$i}>/../edit/editormd/lib/prettify.min.js"></script>
-<script src="<{$i}>/../edit/editormd/editormd.js"></script>
-<script src="//cdn.bootcss.com/headroom/0.9.1/headroom.min.js"></script>
-<script src="<{$i}>/js/baguetteBox.min.js"></script>
-<script src="<{$i}>/js/article.js"></script>
+<div id="comments" class="comment-display"></div>
+<script>
+    getScripts([
+        "<{$i}>/js/baguetteBox.min.js",
+        "<{$i}>/../edit/editormd/lib/marked.min.js",
+        "<{$i}>/../edit/editormd/lib/prettify.min.js",
+        "<{$i}>/../edit/editormd/editormd.js",
+        "<{$i}>/js/headroom.js",
+        "<{$i}>/js/article.js"
+    ]);
+</script>
 <{if $allow_remark}>
 <script>
     var comment='<{url m="index" c="article" a="Comment"}>';
@@ -71,7 +74,7 @@
 
         postDirectoryBuild('test-editormd-view2');
         getPic('#test-editormd-view2');
-      
+
         jumpUrl('#test-editormd-view2');
     });
 </script>

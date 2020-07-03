@@ -12,44 +12,76 @@
     <meta name="description" content="<{$description}>">
     <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/xcode.min.css" rel="stylesheet">
     <link href="<{$i}>/css/style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+    <link href="<{$i}>/css/dark.css" rel="stylesheet">
+    <{$plugin_css nofilter}>
     <link rel="shortcut icon" type="image/x-icon" href="<{$i}>/img/favicon.ico">
-    <script type="text/javascript" src="<{$i}>/js/jQuery.min.js"></script>
+    <script type="text/javascript" src="<{$i}>/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<{$i}>/js/jquery.pjax.js"></script>
     <script type="text/javascript" src="<{$i}>/js/layer/layer.js"></script>
-    <!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script>
+        function getScripts(urls) {
+             for(var i=0;i<urls.length;i++){
+                 $.ajax({
+                     url: urls[i],
+                     dataType: "script",
+                     async:false
+                 });
+             }
+             
+        }
+    </script>
+    <style>
+        #baguetteBox-overlay{
+            display: none;
+        }
+
+
+    </style>
 </head>
 <body>
 <!--[if lt IE 8]>
 <div class="browsehappy" role="dialog">
-    当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/" target="_blank">升级你的浏览器</a>。
+    当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="https://www.google.cn/chrome/" target="_blank">升级你的浏览器</a>。
 </div>
 <![endif]-->
 <header id="header" class="header bg-white animated headroom--top headroom--not-bottom">
     <div class="navbar-container">
         <a href="<{$site_url}>" class="navbar-logo" style="font-family: 'Playball', cursive;"><{$blog_name}></a>
         <div class="navbar-menu">
+            <ul class="sf-menu">
             <{foreach $nav as $v}>
-                <{if $v.nexts == "" && $v.lastest == 0}>
+                <{if isset($v.data)}>
+                <li>
                     <{if $v.stype == 3}>
-                        <a href="<{$v.url}>" target="_blank"><{$v.nname}></a>
+                 <a href="<{$v.url}>" target="_blank"><{$v.nname}></a>
                     <{else}>
-                        <a href="<{$v.url}>"><{$v.nname}></a>
+                 <a href="<{$v.url}>"><{$v.nname}></a>
                     <{/if}>
-                <{elseif $v.lastest == 0}>
+                    <ul class="sub-menu">
+                    <{foreach $v.data as $val}>
+                        <{if $val.stype == 3}>
+                            <li><a href="<{$val.url}>" target="_blank"><{$val.nname}></a></li>
+                        <{else}>
+                            <li><a href="<{$val.url}>"><{$val.nname}></a></li>
+                        <{/if}>
+                    <{/foreach}>
+                    </ul>
+                </li>
+                <{else}>
                     <{if $v.stype == 3}>
-                        <a href="<{$v.url}>" target="_blank"><{$v.nname}></a>
+                <li><a href="<{$v.url}>" target="_blank"><{$v.nname}></a></li>
                     <{else}>
-                        <a href="<{$v.url}>"><{$v.nname}></a>
+                <li><a href="<{$v.url}>"><{$v.nname}></a></li>
                     <{/if}>
                 <{/if}>
             <{/foreach}>
+            </ul>
+
+
         </div>
         <div class="navbar-search" onclick="">
-            <span class="icon-search"></span>
-            <form id="search" method="post" onsubmit="return search();">
+            <span class="icon-search"><a href="" id="search"></a></span>
+            <form onsubmit="return false;">
                 <span class="search-box">
                     <input type="text" id="input" class="input" name="s" required="true" placeholder="Search..."
                            maxlength="30" autocomplete="off">
@@ -81,9 +113,12 @@
         </div>
     </div>
 </header>
-<div class="main-content index-page clearfix baguetteBoxOne">
+<div class="main-content index-page clearfix baguetteBoxOne" id="pjax-content">
     <{include file=$__template_file}>
 </div>
+<!-- 加载动画 -->
+<div class="pjax_loading_frame" style="display: none;"></div>
+<div class="pjax_loading" style="display: none;"></div>
 
 <footer id="footer" class="footer ">
     <div class="footer-social">
@@ -114,12 +149,35 @@
 </footer>
 
 
+
 </body>
 <script>
-    function search() {
-        if ($('#input').val() !== "")
-            window.location = "<{url c='main' a='search' search=''}>" + $('#input').val();
-        return false;
-    }
+    $(document).pjax('a[target!=_blank]', '#pjax-content', {fragment:'#pjax-content', timeout:8000});
+    $(document).on('pjax:send', function() {
+        $('.pjax_loading_frame').css('display','block');
+        $('.pjax_loading').css('display','block');
+    });
+    $(document).on('pjax:complete', function() {
+        $('.pjax_loading_frame').css('display','none');
+        $('.pjax_loading').css('display','none');
+    });
 </script>
+<script>
+    var input=$("#input");
+    input.keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            if (input.val() !== "")
+                $("#search").click();
+        }
+    });
+
+    $('#input').bind('input propertychange', function() {
+        $('#search').attr('href',"<{url m='index' c='main' a='search' search=''}>" + $(this).val());
+    });
+
+
+</script>
+<{$plugin_js nofilter}>
+
 </html>

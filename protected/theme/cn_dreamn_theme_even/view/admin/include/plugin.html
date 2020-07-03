@@ -1,0 +1,168 @@
+<style>
+    body,html{
+        background-color: white
+    }
+</style>
+<form class="layui-form" >
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-normal addNews_btn" id="upload">上传插件</a>
+            </div>
+            
+        </form>
+
+    </blockquote>
+    <table id="PluginList"  lay-filter="PluginList"></table>
+    <!--操作-->
+    <script id="Bar" type="text/html">
+        {{# if(d.install){}}
+        {{# if(d.enable){ }}
+        {{# if(d.menu){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="set">设置</a>
+        {{# } }}
+        <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="cache">清理缓存</a>
+        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="disable">禁用</a>
+        {{# }else{ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="enable">启用</a>
+        {{# } }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="uninstall">卸载</a>
+        {{#}else{ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="install">安装</a>
+        {{# } }}
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    </script>
+</form>
+
+
+<script>
+    var getUrl='<{url  m="api" c="plugin" a="get"}>';
+    var setUrl='<{url  m="admin" c="main" a="plugin" p="" }>';
+    var disableUrl='<{url  m="api" c="plugin" a="disable"}>';
+    var enableUrl='<{url  m="api" c="plugin" a="enable"}>';
+    var uninstallUrl='<{url  m="api" c="plugin" a="uninstall"}>';
+    var installUrl='<{url  m="api" c="plugin" a="install"}>';
+    var delUrl='<{url  m="api" c="plugin" a="del"}>';
+    var upUrl='<{url  m="api" c="plugin" a="upload"}>';
+    var cacheUrl='<{url  m="api" c="plugin" a="cache"}>';
+</script>
+<!--include_start-->
+<script type="text/javascript">
+    layui.use([ 'layer', 'table', 'upload', 'element'], function () {
+        var layer = layui.layer,
+            $ = layui.jquery,
+            upload = layui.upload,
+            element = layui.element,
+            table = layui.table;
+
+        //用户列表
+        var tableIns = table.render({
+            elem: '#PluginList',
+            url: getUrl,
+            cellMinWidth: 95,
+            loading: true,
+            cols: [[
+                {field: 'name', title: '主题名称', width: 150, align: "center"},
+                {field: 'version', title: '版本号', width: 80, align: "center"},
+                {field: 'date', title: '更新时间', width: 150, align: 'center'},
+                {field: 'author', title: '作者', width: 100, align: 'center'},
+                {field: 'description', title: '描述', align: "center"},
+                {title: '操作', width: 300, templet: '#Bar', fixed: "right", align: "center"}
+            ]]
+        });
+        var index;
+
+        //添加主题，调用上传
+        upload.render({
+            elem: '#upload'
+            ,url: upUrl //改成您自己的上传接口
+            ,accept: 'file' //普通文件
+            ,exts:"zip"
+            ,before:function () {
+                index = layer.open({
+                    type: 1,
+                    title: false,
+                    skin: 'layui-layer-molv',
+                    icon: 0,
+                    closeBtn: 0,
+                    shade: [0.8, '#393D49'],
+                    offset: 'auto',
+                    content: ' <div class="layui-layer-dialog layui-layer-border layui-layer-msg"  >\n' +
+                        '        <div id="" class="layui-layer-content">\n' +
+                        '            <i >正在上传中...</i>\n' +
+                        '            <div class="layui-progress" lay-showpercent="true" lay-filter="load">\n' +
+                        '                <div class="layui-progress-bar" lay-percent="0"></div>\n' +
+                        '               </div>\n' +
+                        '        </div>\n' +
+                        '        <span class="layui-layer-setwin"></span></div>'
+                });
+            }
+            ,progress: function(n, elem){
+                var percent = n + '%'; //获取进度百分比
+                element.progress('load', percent); //可配合 layui 进度条元素使用
+            }
+            ,done: function(res){
+                layer.close(index);
+                if(res.code!==-1){
+                    notice.msg('上传成功！请手动安装并启用！',{icon:1});
+                    load();
+                }else{
+                    notice.msg('上传失败！'+res.msg,{icon:2});
+                }
+
+            }
+        });
+
+        //列表操作
+        table.on('tool(PluginList)', function (obj) {
+            var layEvent = obj.event,
+                data = obj.data;
+
+           switch (layEvent) {
+               case 'set':
+                   var index = layui.layer.open({
+                       title: "插件设置 - "+data.name,
+                       type: 2,
+                       content: setUrl+data.appName+"&type=menu",
+                   });
+                   layui.layer.full(index);
+                   break;
+               case 'cache':
+                   setPlugin(cacheUrl,{p:data.appName},"清理中...",'清理成功！');
+                   break;
+               case 'disable':
+                   setPlugin(disableUrl,{p:data.appName},"禁用中...",'禁用成功！');
+                   break;
+               case 'enable':
+                   setPlugin(enableUrl,{p:data.appName},"启用中...",'启用成功！');
+                   break;
+               case 'uninstall':
+                   setPlugin(uninstallUrl,{p:data.appName},"卸载中...",'卸载成功！');
+                   break;
+               case 'install':
+                   setPlugin(installUrl,{p:data.appName},"安装中...",'安装成功！');
+               break;
+               case 'del':
+                   setPlugin(delUrl,{p:data.appName},"删除中...",'删除成功！');
+               break;
+
+
+           }
+
+
+        });
+
+        function setPlugin(url,param,msg,succ) {
+            saveChange(url,param,msg,function (data) {
+                if(data.code!==-1){
+                    notice.msg(succ,{icon:1});
+                    tableIns.reload();
+                }else
+                    notice.msg(data.msg,{icon:2});
+            });
+        }
+    })
+
+
+</script>
+<!--include_end-->

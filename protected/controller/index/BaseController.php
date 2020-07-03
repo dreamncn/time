@@ -3,6 +3,7 @@
 namespace app\controller\index;
 use app\lib\blog\Plugin;
 use app\lib\blog\Theme;
+use app\model\Config;
 
 class BaseController extends Theme
 {
@@ -11,6 +12,16 @@ class BaseController extends Theme
     {
         header("Content-type: text/html; charset=utf-8");
         session_start();
+        $conf=new Config();
+        if($conf->getData('blog_open')!='true'){
+           
+            if(!(arg('c')=='login'&&arg('a')=='index')){
+                $this->layout="";
+                $this->display('close');
+                exit;
+            }
+
+        }
     }
 
     /**

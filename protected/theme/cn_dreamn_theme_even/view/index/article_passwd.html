@@ -1,70 +1,48 @@
-<article class="main-content page-page" itemscope="" itemtype="http://schema.org/Article">
+<article class="main-content page-page  content-display" itemscope="" itemtype="http://schema.org/Article">
     <div class="post-header">
         <h1 class="post-title" itemprop="name headline">
             此内容被密码保护 </h1>
     </div>
     <div id="post-content" class="post-content" itemprop="articleBody">
-        <p class="post-tags">
+        <p class="post-tags"> 
         </p>
-        <form class="protected" id="article_content" action="" method="post">
+        <form class="protected" id="article_content" action="<{url m='index' c='article' a='get' alian=$alian}>" method="post" data-pjax="#pjax-content" onsubmit="return false;">
             <p class="word">
                 <span>请输入密码访问</span>
             </p>
 
             <p>
-                <input type="password" class="text input" name="passwd" placeholder="请输入密码">
-                <{if $captcha_is_open && $captcha_type}>
-                <input type="text" class="text input" name="verity" placeholder="请输入验证码">
-                <img  onclick="this.src=this.src+'?rand='+Math.random();" src="<{url('main','Captcha')}>" alt="验证码" style="width: 95px;vertical-align: middle;display: inline;">
-                <{/if}>
+                <input type="password" class="text input" name="passwd" id="passwd" placeholder="请输入密码">
+                <{if !$captcha_is_open}>
                 <button id="submit" class="submit" >提交</button>
+                <{else}>
+                <{$tpl nofilter}>
+                <{/if}>
             </p>
         </form>
     </div>
 </article>
-<script>
-    $.extend({
-        StandardPost: function (url, args) {
-            var body = $(document.body),
-                form = $("<form method='post'></form>"),
-                input;
-            form.attr({"action": url});
-            $.each(args, function (key, value) {
-                input = $("<input type='hidden'>");
-                input.attr({"name": key});
-                input.val(value);
-                form.append(input);
-            });
 
-            form.appendTo(document.body);
-            form.submit();
-            document.body.removeChild(form[0]);
-        }
-    });
-    $.fn.serializeObject = function() {
-        var o = {};
-        var a = this.serializeArray();
-        $.each(a, function() {
-            if (o[this.name] !== undefined) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
+<{if !$captcha_is_open}>
+<script>
+
+    $("#submit").click(function () {
+        $.ajax({
+            url:window.location.href,
+            method:"POST",
+            data:{passwd:$("#passwd").val()},
+            dataType:"json",
+            success:function (d) {
+               if(!d.state){
+                   layer.msg(d.msg,{icon:5});
+               }else{
+                   $("#pjax-content").html(d.data)
+               }
             }
         });
-        return o;
-    };
-    //TODO 还有腾讯验证码部分未处理
-    $('#submit').click(function () {
-
-        var data = $('#article_content').serializeObject();
-        
-       $.StandardPost(window.location.href, data);
-
-        return false;
-    });
-
+    })
 
 </script>
+<{else}>
+<{$script nofilter}>
+<{/if}>

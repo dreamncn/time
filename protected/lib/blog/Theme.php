@@ -28,6 +28,7 @@ class Theme extends Controller{
      */
     public function __construct()
     {
+
         //覆盖重写主题目录
         $config=new Config();
         $this->themeName = $config->getData('theme');
@@ -47,6 +48,7 @@ class Theme extends Controller{
         $GLOBALS['error']='theme'.DS.$this->themeName.DS.$GLOBALS['error'];
         parent::__construct();
     }
+    
 
     /**
      * 获取主题列表

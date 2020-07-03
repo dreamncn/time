@@ -5,7 +5,7 @@
                 <form class="layui-form layui-form-pane" >
 
                     <div class="layui-inline">
-                        <a class="layui-btn layui-btn-normal addNews_btn" id="add" ew-href="<{url c='admin/main' a='page' page='newsEdit'}>" ew-title="添加文章">添加文章</a>
+                        <a class="layui-btn layui-btn-normal addNews_btn" id="add" ew-href="<{url  m='admin' c='main' a='page' page='newsEdit'}>" ew-title="添加文章">添加文章</a>
                     </div>
 
                     <div class="layui-inline">
@@ -38,10 +38,10 @@
     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="look">预览</a>
 </script>
 <script>
-    var geturl=  "<{url c='api/article' a='get'}>";
-    var editurl=  "<{url c='admin/main' a='page' page='newsEdit'}>";
-    var delurl=  "<{url c='api/article' a='del' gid=''}>";
-    var setOption=  "<{url c='api/article' a='SetOption'}>";
+    var geturl=  "<{url  m='api' c='article' a='get'}>";
+    var editurl=  "<{url  m='admin' c='main' a='page' page='newsEdit'}>";
+    var delurl=  "<{url  m='api' c='article' a='del' gid=''}>";
+    var setOption=  "<{url  m='api' c='article' a='SetOption'}>";
 </script>
 <!--include_start-->
 <script>
@@ -150,19 +150,18 @@
 
         });
         function update(edit) {
-            parent.layui.admin.open({
+            var index =  parent.layui.admin.open({
                 type: 2,
-                shade: 0,
-                resize: true,
                 title: '修改文章',
                 content: editurl,
+                area:["100%", '100%'],
                 data: edit,
+                anim: 5,
                 success: function (layero, index) {
-                    parent.layui.layer.full(index);
+                    parent.layer.full(index);
                 }
-
             });
-
+            parent.layer.full(index);
 
 
         }

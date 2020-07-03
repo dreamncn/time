@@ -23,6 +23,9 @@ class ThemeController extends BaseController {
         if($this->isInstall($t)){
             $c=new Config();
             $c->setData("theme",$t);
+            $configData=file_get_contents(APP_DIR.DS.'protected'.DS.'Config.php');
+            $configData=str_replace($GLOBALS['error'],'theme/'.$t.'/error/404.html',$configData);
+            file_put_contents(APP_DIR.DS.'protected'.DS.'Config.php',$configData);
             $sidebar=new SideBar();
             $sidebar->delTheme();
             $this->api(0,null,0,'');

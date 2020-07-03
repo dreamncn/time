@@ -52,7 +52,7 @@
         $.ajax({
             async: false,
             type: "POST",
-            url:"<{url c='admin/main' a='plugin' p='cn_dreamn_plugin_music' type='set'}>",
+            url:"<{url m='admin' c='main' a='plugin' p='cn_dreamn_plugin_music' type='set'}>",
             dataType : "json",
             data:$("#music").serialize(),
             success: function (json) {
@@ -60,7 +60,7 @@
 
                 if(json.state){
 
-                    window.location.href="<{url c='admin/main' a='plugin' p='cn_dreamn_plugin_music' type='menu' isset='true'}>";
+                    window.location.href="<{url m='admin' c='main' a='plugin' p='cn_dreamn_plugin_music' type='menu' isset='true'}>";
                 }
 
             },

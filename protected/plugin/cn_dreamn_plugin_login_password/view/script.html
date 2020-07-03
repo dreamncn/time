@@ -1,0 +1,62 @@
+<script src="/i/plugin/cn_dreamn_plugin_login_password/js/aes.js"></script>
+<script>
+    /**
+     * 表单input组件单击时
+     */
+    $("#login .input-item .layui-input").click(function (e) {
+        e.stopPropagation();
+        $(this).addClass("layui-input-focus").find(".layui-input").focus();
+    });
+
+    /**
+     * 表单input组件获取焦点时
+     */
+    $("#login .layui-form-item .layui-input").focus(function () {
+        $(this).parent().addClass("layui-input-focus");
+    });
+
+    /**
+     * 表单input组件失去焦点时
+     */
+    $("#login .layui-form-item .layui-input").blur(function () {
+        $(this).parent().removeClass("layui-input-focus");
+        if ($(this).val() != "") {
+            $(this).parent().addClass("layui-input-active");
+        } else {
+            $(this).parent().removeClass("layui-input-active");
+        }
+    });
+
+</script>
+
+<{if !$captcha_is_open}>
+<script>
+    $('#login_button').click(function () {
+        $.ajax({
+            url:'/index/main/plugin?n=cn_dreamn_plugin_login_password&type=key',
+            dataType:'json',
+            success:function (data) {
+               var pass=Encrypt($('#password').val(),data.key);
+               var d={'username':$('#username').val(),'password':pass};
+                $.ajax({
+                    url:'/index/main/plugin?n=cn_dreamn_plugin_login_password&type=login',
+                    method:"POST",
+                    dataType:'json',
+                    data:d,
+                    success:function (data) {
+                        if(data.state){
+                            layer.msg('登录成功！',{icon:6},function () {
+                                 location.href='/admin/main/index';
+                            })
+                        }else{
+                            layer.msg('登录失败！'+data.msg,{icon:5})
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<{else}>
+<{$script nofilter}>
+<{/if}>

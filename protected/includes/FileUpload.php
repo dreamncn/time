@@ -343,9 +343,9 @@ class FileUpload
                 }
             }else{
                 if ((@move_uploaded_file($this->tmpFileName, $this->upPath))||@copy($this->tmpFileName, $this->upPath)) {
-
+/*
                     $upload=new Upload();
-                    $upload->add($this->getOriginName(),$this->getFilePath());
+                    $upload->add($this->getOriginName(),$this->getFilePath());*/
                     return true;
                 } else{
                     $this->setOption('errorNum', -3);

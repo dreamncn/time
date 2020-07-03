@@ -1,16 +1,16 @@
 <link href="<{$i}>/css/baguetteBox.min.css" rel="stylesheet">
-<article class="main-content page-page" itemscope itemtype="http://schema.org/Article">
+<article class="main-content page-page content-display" itemscope itemtype="http://schema.org/Article">
 <div class="post-header">
     <h1 class="post-title" itemprop="name headline"><{$title}></h1>
     <div class="post-data">
-        <time datetime="2018-11-02T21:13:00+08:00" itemprop="datePublished">发布于<{$date}></time> | <a href="<{url  c='article' a='category' sort=$sort}>"><{$sort}></a> | 阅读<{$views}>次
+        <time datetime="2018-11-02T21:13:00+08:00" itemprop="datePublished">发布于<{$date}></time> | <a href="<{url m='index'  c='article' a='category' sort=$sort}>"><{$sort}></a> | 阅读<{$views}>次
         <{if $is_copy}>| 转载自 <a href="<{$copy_url}>"><{$author}></a> <{/if}>
     </div>
 </div>
 <div id="post-content" class="post-content" itemprop="articleBody">
     <p class="post-tags">
         <{foreach $tag as $t}>
-        <a href="<{url  c='article' a='tag' tag=$t}>"><{$t}></a>
+        <a href="<{url m='index'  c='article' a='tag' tag=$t}>"><{$t}></a>
         <{/foreach}>
      </p>
     <div id="real_content">
@@ -40,10 +40,14 @@
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
-<div id="comments"></div>
-<script src="//cdn.bootcss.com/headroom/0.9.1/headroom.min.js"></script>
-<script src="<{$i}>/js/baguetteBox.min.js"></script>
-<script src="<{$i}>/js/article.js"></script>
+<div id="comments" class="comment-display"></div>
+<script>
+    getScripts([
+        "<{$i}>/js/baguetteBox.min.js",
+        "<{$i}>/js/headroom.js",
+        "<{$i}>/js/article.js"
+    ]);
+</script>
 <{if $allow_remark}>
 <script>
     var comment='<{url m="index" c="article" a="Comment"}>';

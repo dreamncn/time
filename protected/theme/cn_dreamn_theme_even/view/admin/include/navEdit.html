@@ -5,6 +5,8 @@
         border-radius: 5px!important;
     }
 </style>
+<div class="layui-card">
+    <div class="layui-card-body">
 <div class="layui-tab page-content-wrap">
     <ul class="layui-tab-title">
         <li class="layui-this">分类导航</li>
@@ -158,10 +160,12 @@
     </div>
 
 </div>
+    </div>
+</div>
 <script>
-    var getDataUrl = '<{url c="api/nav" a="getData" }>';
+    var getDataUrl = '<{url  m="api" c="nav" a="getData" }>';
     var SortUrl = '/category/';
-    var setData = '<{url c="api/nav" a="set" }>';
+    var setData = '<{url  m="api" c="nav" a="set" }>';
 </script>
 <!--include_start-->
 <script>

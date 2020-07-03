@@ -14,4 +14,8 @@
 <script>
     var getArticleUrl='<{url m="index" c="api" a="GetArticleList"}>';
 </script>
-<script src="<{$i}>/js/index.js"></script>
+<script>
+    getScripts([
+        "<{$i}>/js/index.js"
+    ]);
+</script>

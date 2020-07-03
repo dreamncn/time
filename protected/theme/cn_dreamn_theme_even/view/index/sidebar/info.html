@@ -1,0 +1,68 @@
+<style>
+    .user .avatar {
+        width: 72px;
+        height: 72px;
+        display: block;
+        margin: 0 auto 10px;
+        transition: .4s;
+    }
+
+    .rounded-circle {
+        border-radius: 50%!important;
+    }
+
+    .p-2{
+        text-align: center;
+    }
+    .p-2 p{
+        margin: 0;
+    }
+    .border-top{
+        border-top: 1px solid #ddd;
+        
+    }
+    .border-right{
+        border-right: 1px solid #ddd;
+    }
+    .info {
+        width: 33.33%;
+        text-align: center;
+        font-size: 14px;
+    }
+    .float-left {
+        float: left;
+    }
+    .info .quantity {
+        font-size: 20px;
+        margin: 0;
+    }
+    .website{
+        margin-bottom: 60px;
+    }
+    .desc{
+        margin: 0;
+    }
+</style>
+<section class="widget-area widget_tags" >
+    <div class="user">
+        <img src="/i/upload/sys/head.jpg" alt="头像" class="rounded-circle avatar">
+        <div class="p-2">
+            <a class="user-name " target="_blank" href="<{$url}>"><{$name}></a>
+            <p class="introduction mt-1"><{$info}></p>
+        </div>
+    </div>
+    <div class="website border-top">
+        <div class="info float-left border-right">
+            <p class="quantity"><{$article}></p>
+            <p class="desc">文章数</p>
+        </div>
+        <div class="info float-left border-right">
+            <p class="quantity"><{$comment}></p>
+            <p class="desc">评论数</p>
+        </div>
+        <div class="info float-left">
+            <p class="quantity"><{$day}></p>
+            <p class="desc">运行天数</p>
+        </div>
+    </div>
+</section>

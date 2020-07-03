@@ -13,18 +13,16 @@
             <textarea id="veditor" name="comment" class="veditor vinput" placeholder="Say something ..."></textarea>
         </div>
         <div class="vcontrol">
-            <div class="col" id="verity" style="width: 60%">
-                <{if $captcha_is_open && $captcha_type}>
-                <img  onclick="this.src=this.src+'?rand='+Math.random();" src="<{url('main','Captcha')}>" alt="验证码" style="width: 125px;vertical-align: middle;">
-                <input name="verity" style="width: 30%;min-width: 125px;" placeholder="请填写验证码" class="vnick vinput" type="text">
-                <{/if}>
-            </div>
-            <input name="cid"  type="text" style="display: none" value="0">
+            <input name="cid"  type="text" style=" display: none" value="0">
             <input name="name"  type="text" style="display: none" value="">
             <input name="gid"  type="text" style="display: none" value="<{$id}>">
+            <{if $captcha_is_open}>
+                <{$tpl nofilter}>
+            <{else}>
             <div class="col text-right" style="width: 40%">
                 <button type="button" id="submit" title="Cmd|Ctrl+Enter" class="vsubmit vbtn">回复</button>
             </div>
+            <{/if}>
         </div>
         </form>
         <div style="display:none;" class="vmark"></div>
@@ -40,7 +38,7 @@
             <img class="vimg" src="https://q2.qlogo.cn/headimg_dl?dst_uin=<{$val.qq}>&spec=100">
             <div class="vh" >
                 <div class="vhead">
-                    <span class="vnick"><a href="<{url c='main' a='jump' url=''}><{base64_encode($val.url)}>" target="_blank"><{$val.yname}></a></span>
+                    <span class="vnick"><a href="<{url m='index' c='main' a='jump' url=''}><{base64_encode($val.url)}>" target="_blank"><{$val.yname}></a></span>
                     <{if $val.admin}> <span class="vsys is_admin" >站长</span><{/if}>
                     <span class="vsys"><{$val.browser}></span>
                     <span class="vsys"><{$val.opsystem}></span>
@@ -52,7 +50,7 @@
                 <div class="vcontent">
                     <{if $val.blockquote!==''}>
                     <blockquote>
-                        <a href="<{url c='main' a='jump' url=''}><{base64_encode($val.blockquote.url)}>"  target="_blank" style="color: #2d98e6">@<{$val.blockquote.yname}></a><br>
+                        <a href="<{url m='index' c='main' a='jump' url=''}><{base64_encode($val.blockquote.url)}>"  target="_blank" style="color: #2d98e6">@<{$val.blockquote.yname}></a><br>
                         <{$val.blockquote.comment}>
                     </blockquote>
                     <{$val.comment}>
@@ -67,13 +65,23 @@
 </div>
 
 
-<{*引入lib*}>
-<{if $captcha_is_open && !$captcha_type}>
-<script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-<{/if}>
+
 <script>
     var commentUrl='<{url m="index" c="api" a="RecevieComment"}>';
     var qq='<{url m="index" c="api" a="getinfo"}>';
     var gid='<{$id}>';
+    $.getScript("<{$i}>/js/client.js");
 </script>
-<script src="<{$i}>/js/client.js"></script>
+<{if !$captcha_is_open}>
+<script>
+    $("#submit").click(function () {
+        var data= $('#comment').serializeArray();
+        var cilent= getClientInfo();
+        data.push({name:'browser',value: cilent['browser']+' '+cilent['version']});
+        data.push({name:'os',value: cilent['os']+' '+cilent['osVersion']});
+        sendComment(data);
+    });
+</script>
+<{else}>
+<{$script nofilter}>
+<{/if}>
