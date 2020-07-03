@@ -185,7 +185,7 @@ class Article extends Model{
 
     }
     public function getPages(){
-        $this->select()->where(['type="page" and hide<>2'])->orderBy("gid DESC")->commit();
+       return $this->select()->where(['type="page" and hide<>2'])->orderBy("gid DESC")->commit();
 
     }
     /*
