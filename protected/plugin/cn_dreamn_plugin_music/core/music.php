@@ -10,7 +10,7 @@ use app\includes\Web;
 
 class music{
     private $data=null;
-
+    private   $site="https://music.liuzhijin.cn/";
     public function analysis($urls){//对传入的url列表进行分析，这个分析要丢到后台去
         $datas["name"]="";
         $datas["id"]="";$u="";
@@ -42,7 +42,7 @@ class music{
     public function musicDownload($songUrl)
     {
 
-        $url = "https://music.liuzhijin.cn/?url=" . urlencode($songUrl);
+        $url = $this->site."?url=" . urlencode($songUrl);
         $web = new Web();
 
 
@@ -56,7 +56,7 @@ class music{
             'X-Requested-With:XMLHttpRequest',
             'Referer:' . $url
         ];
-        $res = $web->post("https://music.liuzhijin.cn/", $data, $header);
+        $res = $web->post($this->site, $data, $header);
 
         $json = json_decode($res);
 

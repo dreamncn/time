@@ -96,7 +96,7 @@ class Index extends Plugin{
                 if($data->lrc==="")
                     $data->lrc="[00:00:00]暂无歌词，请您欣赏";
                 $this->setCache($arg["id"],$data->lrc);
-                return [$xy . '({"location":"' . $data->url . '","album_cover":"' . $data->pic. '","album_name":"","artist_name":"' . $data->author . '","song_name":"' . $data->title . '","song_id":"' . $id . '"}) '];
+                return [$xy . '({"location":"' . str_replace('https','http',$data->url) . '","album_cover":"' . $data->pic. '","album_name":"","artist_name":"' . $data->author . '","song_name":"' . $data->title . '","song_id":"' . $id . '"}) '];
 
                 break;
             case 'lyric':
