@@ -1,7 +1,8 @@
 <script>
 
-    layui.use(['admin'], function () {
+    layui.use(['admin','jquery'], function () {
         var admin=layui.admin;
+        var $=layui.$;
         admin.iframeAuto();
         var layerData = admin.getLayerData();
         if(layerData!==null){
