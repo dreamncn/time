@@ -32,33 +32,22 @@ class Index extends Plugin{
 
     /**
      * 前端css处添加（位于index\layout.html文件）
-     * @param null $data
-     * @return array|null
+     * @return false|string
      */
 
-    public function hookLayoutHead($data=null){
-        $data[]=$this->css('style/player.css');
-        $data[]=$this->css('style/font-awesome.min.css');
+    public function hookLayoutHead(){
         $arr['Welcome']=$this->getItem("tips","欢迎来到Dreamn博客");//读取存储的欢迎信息
-        $data[]=$this->display("script",$arr);//取得渲染结果
+        //取得渲染结果
 
-        return $data;
+        return $this->display("script",$arr);
     }
 
     /**
-     * @param null $data
-     * @return array|null
+     * @return false|string
      */
-    public function hookLayoutFooter($data=null){
-        $result=$this->display("index",null);//取得渲染结果
-        //调用内置的函数，用以输出到layout页面
-        $data[]=$result;//也可以直接将result替换成对应的html文本
-        //加载js
-        $data[]=$this->js("js/mousewheel.js");//此处调用内置文件包含模块进行包含，可以进行多次调用，禁止自行输出任何资源文件
-        //可以指定目录，则加载目录下所有文件
-        $data[]= $this->js("js/scrollbar.js");
-        $data[]=$this->js("js/player.js");
-        return $data;
+    public function hookLayoutFooter(){
+        //取得渲染结果
+        return $this->display("index");
         //使用模板渲染
     }//直接作用于layout模板的Footer部分
 

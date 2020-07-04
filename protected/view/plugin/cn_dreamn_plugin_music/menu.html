@@ -1,0 +1,72 @@
+<link href="/i/plugin/cn_dreamn_plugin_music/style/style.css" rel="stylesheet">
+<div class="content">
+    <div class="com-hd">
+        <b>播放器设置</b>
+        <{if $isset}>
+        <span class='actived'>设置保存成功! </span>
+        <{else}>
+        <span class='warning'>点击保存后请耐心等候,完成解析将自动跳转! </span>
+        <{/if}>
+    </div>
+    <form id="music">
+        <table class="tb-set">
+            <tr>
+                <td align="right" width="40%"><b>自定义专辑名字（前半段）：</b><br /></td>
+                <td><input type="text" class="txt" name="albumname" value="<{$albumname}>" /></td>
+            </tr>
+            <tr>
+                <td align="right" width="40%"><b>自定义专辑名字（后半段）：</b><br /></td>
+                <td><input type="text" class="txt" name="albumname1" value="<{$albumname1}>" /></td>
+            </tr>
+            <tr>
+                <td align="right" width="25%"><b>音乐专辑：</b><br />（用"|"隔开）</td>
+                <td>
+                    <textarea type="text" class="txt" name="songurl"><{$songurl}></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" width="40%"><b>欢迎提示语：</b><br />(进入站点后的提示语)</td>
+                <td><input type="text" class="txt" name="tips" value="<{$tips}>" /></td>
+            </tr>
+            <tr>
+                <td align="right"><b>提示：</b><br />(点击保存解析获取歌曲ID和歌名<br />耐心等候，会自动跳转回来)</td>
+                <td align="left"><button class="btn" type="submit">点击保存</button></td>
+            </tr>
+            <tr>
+                <td align="right"><b>歌曲列表：</b><br /></td>
+                <td align="left"><{$songnameList}></td>
+            </tr>
+
+        </table>
+        <div>
+            <p> - 目前仅支持专辑添加</p>
+            <p> - 网易专辑栗子：https://music.163.com/#/playlist?id=817767324</p>
+            <p> - QQ音乐专辑栗子：https://y.qq.com/n/yqq/playlist/1619132816.html</p>
+        </div>
+    </form>
+</div>
+<script src="/i/plugin/cn_dreamn_plugin_music/js/jQuery.min.js"></script>
+<script>
+    $("#music").submit(function () {
+        alert("解析中...请耐心等候,完成解析将自动跳转!");
+        $.ajax({
+            async: false,
+            type: "POST",
+            url:"<{url m='admin' c='main' a='plugin' p='cn_dreamn_plugin_music' type='set'}>",
+            dataType : "json",
+            data:$("#music").serialize(),
+            success: function (json) {
+                alert(json.msg);
+
+                if(json.state){
+
+                    window.location.href="<{url m='admin' c='main' a='plugin' p='cn_dreamn_plugin_music' type='menu' isset='true'}>";
+                }
+
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+</script>

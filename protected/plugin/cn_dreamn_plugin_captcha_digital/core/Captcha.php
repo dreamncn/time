@@ -1,6 +1,8 @@
 <?php
 namespace app\plugin\cn_dreamn_plugin_captcha_digital\core;
-use app\lib\captcha\CaptchaBuilder;
+
+
+use app\plugin\cn_dreamn_plugin_captcha_digital\core\captcha\CaptchaBuilder;
 
 /**
  * Class Captcha

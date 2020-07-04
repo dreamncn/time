@@ -124,7 +124,8 @@ class Plugin extends Model
                 }
             }
             if ($result !== null) {
-                if (is_array($result)) $Res[] =  $result;
+
+                $Res[] =  $result;
             }
             if ($only) return $result;
 
@@ -311,24 +312,12 @@ class Plugin extends Model
         $result = $this->find(['index' => $this->pluginName . '_' . $opt]);
         return isset($result['value']) ? $result['value'] : $default;//鉴于php7.4效率不及7.3故此不使用7.4特性
     }
-
-    public function css($url)
-    {
-        return '<link rel="stylesheet" href="' . $this->iDir . $url . '"/>';
-    }
-
-    public function js($url)
-    {
-        $dir=$this->iDir;
-        if(substr($url,0,4)=='http'){
-            $dir='';
-        }
-        return '<script src="' . $dir . $url . '"></script>';
-    }
+    
 
     public function display($tpl_name, $arr = null)
     {
         $obj = new Theme();
+        $arr['iDir']=$this->iDir;
         return $obj->display('../../../plugin/' . $this->pluginName . '/' . $tpl_name, true, $arr);
     }
 
