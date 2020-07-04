@@ -35,11 +35,10 @@ class FileUpload
         switch ($model){
             case 'article':
                 $c = new Config();
-                $picbed= $c->getData("pic_bed");
+                $picbed= $c->getData("picbed");
                 if(class_exists('app\\plugin\\'.$picbed.'\\core\\Index'))
                     $this->picBed = $picbed;
                 $this->path=APP_UPLOAD_ARTICLE;break;
-            case 'setting':$this->path=APP_UPLOAD_SETTING;break;
             case 'plugin':$this->path=APP_UPLOAD_PLUGIN;break;
             case 'theme':$this->path=APP_UPLOAD_THEME;break;
             default:$this->path=APP_UPLOAD.$model;
@@ -328,7 +327,7 @@ class FileUpload
             $this->upPath = $path;
             if($this->picBed!==null){//article才需要
                 try{
-                    $this->upPath = Plugin::hook('Upload',array("tmpFileName"=>$this->tmpFileName, "newFileName"=>$this->newFileName, "fileType"=>$this->fileType,"upPath"=>$this->upPath),true,[],$this->picBed,true,true);
+                    $this->upPath = Plugin::hook('Upload',array("tmpFileName"=>$this->tmpFileName, "newFileName"=>$this->newFileName, "fileType"=>$this->fileType,"upPath"=>$this->upPath),true,false,$this->picBed,true,true);
                     if ($this->upPath) {
                         $upload=new Upload();
                         $upload->add($this->getOriginName(),$this->getFileUrl());

@@ -21,9 +21,9 @@ class Install extends Plugin{
      * 插件安装是进行的操作，如创建修改数据表等操作
      */
    public function hookInstall(){
-       $this->setItem('accessKey','key');
-       $this->setItem('secretKey','key');
-       $this->setItem('bucket','key');
+       $this->setItem('accessKey','');
+       $this->setItem('secretKey','');
+       $this->setItem('bucket','');
    }
    /*
     * 插件卸载时的操作，清理残余数据等...一般拿来善后，清理数据表等...
