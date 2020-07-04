@@ -388,4 +388,9 @@
         });
     });
 </script>
+<{if isset($data)}>
+<{foreach $data as $k}>
+<{$k.js nofilter}>
+<{/foreach}>
+<{/if}>
 <!--include_end-->
