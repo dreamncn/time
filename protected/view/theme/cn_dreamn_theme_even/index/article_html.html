@@ -16,6 +16,11 @@
     <div id="real_content">
         <{$content nofilter}>
     </div>
+    <{if isset($data)}>
+    <{foreach $data as $k}>
+    <{$k.tpl nofilter}>
+    <{/foreach}>
+    <{/if}>
     <p class="post-info">
     本文由 <{$author}> 创作，采用 <a href="https://creativecommons.org/licenses/by/4.0/legalcode.zh-Hans" target="_blank" rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名</p>
 </div>

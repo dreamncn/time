@@ -253,7 +253,7 @@ class Mysql
         $value='('.rtrim($value, ",").')';
         $this->opt['key']=$value;
         foreach ($colums as $k) {
-            $update[] = "`{$k}`" . " = VALUES(" . $k.')';
+            $update[] = "`{$k}`" . " = VALUES(`" . $k.'`)';
         }
         if($colums!==[])
             $this->opt['colums']=implode(', ', $update);

@@ -74,9 +74,9 @@ class ArticleController extends BaseController
         //交给主题进行处理
         $arr = array_merge($arr, Theme::hook('displayArticle',array('arg'=>arg(),'article'=>$res)));
         //交给插件进行处理，插件未定义则不处理
-        $arr_plugin = Plugin::hook('displayArticle',array('arg'=>arg(),'article'=>$res),true,false);
-        //插件返回数组表示继续执行，插件返回false不继续执行，插件中可以自行输出
-        if(!$arr_plugin)return;
+        $arr_plugin = Plugin::hook('displayArticle',array('arg'=>arg(),'article'=>$res),true,[]);
+        if(!empty($arr_plugin))
+            $arr_plugin=['data'=>$arr_plugin];
         //合并数据
         $arr=array_merge($arr,$arr_plugin);
         $article->updateReadCount($res['gid']);

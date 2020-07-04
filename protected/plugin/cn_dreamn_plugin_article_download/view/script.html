@@ -1,0 +1,24 @@
+<script>
+
+    layui.use(['admin'], function () {
+        var admin=layui.admin;
+        admin.iframeAuto();
+        var layerData = admin.getLayerData();
+        if(layerData!==null){
+            $.ajax({
+                url:"<{url m='admin' c='main' a='plugin' p='cn_dreamn_plugin_article_download' type='get' gid=''}>"+layerData.gid,
+                dataType:'json',
+                success:function (d) {
+                     if(d.state){
+                         setForm("form", {
+                             "download_url": d.data.url
+                             , "download_passwd": d.data.passwd
+                             , "download_title": d.data.title
+                             , "download_desc": d.data.desc
+                         });
+                     }
+                }
+            });
+        }
+    });
+</script>

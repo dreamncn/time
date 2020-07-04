@@ -1,0 +1,11 @@
+{
+  "name":"下载",
+  "appName": "cn_dreamn_plugin_article_download",
+  "version":"1.0.0",
+  "author":"Dreamn",
+  "description":"文章内添加下载附件的链接",
+  "update":"",
+  "type":"article",
+  "menu":false,
+  "date":"2020-07-04 11:17"
+}

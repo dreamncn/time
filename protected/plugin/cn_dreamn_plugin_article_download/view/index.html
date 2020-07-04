@@ -1,0 +1,147 @@
+<div class="newdown">
+    <style>
+        .paydown {
+            margin-top: 20px;
+            width: auto;
+            border: 1px solid #eee;
+            background: #f8f8f8;
+            overflow: hidden
+        }
+
+        .paydown p {
+            margin: 3px;
+            padding: 3px 15px;
+            border-bottom: 1px solid #f8f8f8;
+            text-indent: 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 180%;
+        }
+
+        .paydown p span {
+            color: #e14d43
+        }
+
+        .paydown .down-title {
+            float: left;
+            width: 9%;
+            color: #666;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px
+        }
+
+        .paydown .down-detail {
+            float: right;
+            min-height: 140px;
+            width: 90%;
+            border-left: 1px solid #eee;
+        }
+
+        .paydown p.down-ordinary {
+            color: #09b1b9
+        }
+
+        .paydown p.down-vip {
+            color: #e14d43
+        }
+
+        .paydown p a {
+            margin-left: 10px;
+            font-weight: 700;
+            border-bottom: 0
+        }
+
+        .paydown p.down-tip {
+            border-bottom: 0
+        }
+
+        .downbtn {
+            background: none repeat scroll 0 0 #1BA1E2;
+            border: 0 none;
+            border-radius: 2px;
+            color: #FFFFFF !important;
+            font-family: "Open Sans", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, Verdana, Tahoma, sans-serif;
+            font-size: 14px;
+            padding: 6px 5%;
+            text-decoration: none !important
+        }
+
+
+
+        .downbtn:hover, .yanshibtn:hover {
+            background: none repeat scroll 0 0 #9B59B6;
+            border: 0 none;
+            border-radius: 2px;
+            color: #FFFFFF !important;
+            font-family: "Open Sans", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, Verdana, Tahoma, sans-serif;
+            font-size: 14px;
+            padding: 6px 5%;
+            text-decoration: none !important;
+        }
+
+        .downbtn a:hover {
+            background: none repeat scroll 0 0 #9B59B6;
+            border: 0 none;
+            border-radius: 2px;
+            color: #FFFFFF;
+            font-family: "Open Sans", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, Verdana, Tahoma, sans-serif;
+            font-size: 14px;
+            padding: 6px 5%;
+            text-decoration: none !important;
+        }
+
+        .down-tip strong {
+            background: transparent;
+        }
+
+
+
+        .down-p a {
+            background-color: #FF5E52;
+            float: left;
+            border-bottom: 0
+        }
+
+        .down-p a:nth-child(2) {
+            background-color: #4a9cf8;
+            float: right;
+            border-bottom: 0
+        }
+
+
+
+        .down-f i {
+            color: #F57D59
+        }
+        .paydown{
+            position: relative;
+        }
+        .down-title{
+            position: absolute;
+            word-wrap: break-word;/*英文的时候需要加上这句，自动换行*/
+            /*自测了这句话没啥用*/
+            writing-mode: vertical-rl;/*从左向右 从右向左是 writing-mode: vertical-rl;*/
+            writing-mode: tb-rl;/*IE浏览器的从左向右 从右向左是 writing-mode: tb-rl；*/
+            text-align: center;
+            padding:0;
+            display:flex;
+            -webkit-display:flex;
+            flex-direction:column;
+            /* align-content: center; */
+            /* vertical-align: middle; */
+            justify-content:center;
+            height: 100%;
+           
+        }
+    </style>
+    <div class="paydown" id="paydown">
+        <div class="down-title">附 件 下 载</div>
+        <div class="down-detail"><p class="down-source"><i
+                class="fa fa-file-code-o"></i>&nbsp;&nbsp;文件名称：<span><{$title}></span></p>
+            <p class="down-uptime"><i class="fa fa-calendar"></i>&nbsp;&nbsp;提取码：<span><{$passwd}></span></p>
+            <p class="down-fileinfo"><i class="fa fa-bullhorn"></i>&nbsp;&nbsp;文件说明：<span><{$desc}></span></p>
+            <p class="down-tip" id="down-tipid"><strong><a class="downbtn" href="<{url m='index' c='main' a='jump' url=''}><{base64_encode($url)}>" target="_blank"><i
+                    class="fa fa-cloud-upload"></i> 立即下载</a></strong></p></div>
+    </div>
+</div>

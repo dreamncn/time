@@ -4,6 +4,11 @@
         <div id="real_content">
             <{$content nofilter}>
         </div>
+        <{if isset($data)}>
+        <{foreach $data as $k}>
+        <{$k.tpl nofilter}>
+        <{/foreach}>
+        <{/if}>
     </div>
 </article>
 

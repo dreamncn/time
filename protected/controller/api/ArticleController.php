@@ -117,8 +117,8 @@ class ArticleController extends BaseController{
             if($r)$this->api(false,null,0,'别名重复');
             $gid=$article->add($array);
         }
-        //插件不允许执行耗时任务
-        Plugin::hook('setArticle',array('param'=>arg(),'gid'=>$gid));
+        //插件不允许执行耗时任务,如需耗时任务请使用后台模式
+        Plugin::hook('setArticle',array('param'=>$this->arg,'gid'=>$gid),false,null,null,true,false);
         //为图片转储做准备
         Sync::request(url('sync','main','setpic'),'POST',['gid'=>$gid,'picToMe'=>$this->arg['picToMe']]);
         //进行图片转储
