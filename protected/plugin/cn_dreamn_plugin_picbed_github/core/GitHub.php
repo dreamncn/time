@@ -1,6 +1,7 @@
 <?php
-namespace app\includes;
-use app\model\Config;
+namespace app\plugin\cn_dreamn_plugin_picbed_github\core;
+
+use app\includes\Web;
 
 /**
  * Created by dreamn.
@@ -15,11 +16,10 @@ class GitHub {
     private $path;
     private $name;
     private $data;
-    public function __construct()
+    public function __construct($ownerRepo,$key)
     {
-        $c=new Config();
-        $this->ownerRepo=$c->getData('git_owner_repo');
-        $this->key=$c->getData('git_key');
+        $this->ownerRepo=$ownerRepo;
+        $this->key=$key;
     }
 
     /**

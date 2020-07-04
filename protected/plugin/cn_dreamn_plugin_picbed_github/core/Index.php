@@ -1,5 +1,5 @@
 <?php
-namespace app\plugin\cn_dreamn_plugin_picbed_qiniu\core;
+namespace app\plugin\cn_dreamn_plugin_picbed_github\core;
 use app\lib\blog\Plugin;
 
 /**
@@ -17,7 +17,7 @@ class Index extends Plugin{
      */
     public function __construct()
     {
-        parent::__construct("cn_dreamn_plugin_picbed_qiniu");
+        parent::__construct("cn_dreamn_plugin_picbed_github");
     }
 
 

@@ -1,5 +1,5 @@
 <?php
-namespace app\plugin\cn_dreamn_plugin_picbed_qiniu\core;
+namespace app\plugin\cn_dreamn_plugin_picbed_github\core;
 use app\lib\blog\Plugin;
 
 /**
@@ -14,16 +14,15 @@ class Install extends Plugin{
      */
     public function __construct()
     {
-        parent::__construct("cn_dreamn_plugin_picbed_local");
+        parent::__construct("cn_dreamn_plugin_picbed_github");
     }
 
     /**
      * 插件安装是进行的操作，如创建修改数据表等操作
      */
    public function hookInstall(){
-       $this->setItem('accessKey','');
-       $this->setItem('secretKey','');
-       $this->setItem('bucket','');
+       $this->setItem('ownerRepo','');
+       $this->setItem('key','');
    }
    /*
     * 插件卸载时的操作，清理残余数据等...一般拿来善后，清理数据表等...

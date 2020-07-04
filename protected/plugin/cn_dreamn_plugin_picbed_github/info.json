@@ -1,11 +1,11 @@
 {
-  "name":"七牛云图床",
-  "appName": "cn_dreamn_plugin_picbed_qiniu",
+  "name":"Github图床",
+  "appName": "cn_dreamn_plugin_picbed_github",
   "version":"1.0.0",
   "author":"Dreamn",
-  "description":"七牛云图床，七牛云免费提供10G对象存储服务。",
+  "description":"Github图床，已配置CDN加速，但有时会挂掉",
   "update":"",
   "type":"picbed",
   "menu":false,
-  "date":"2020-07-04 07:17"
+  "date":"2020-07-04 09:54"
 }
