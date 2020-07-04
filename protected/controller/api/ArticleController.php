@@ -9,6 +9,7 @@ use app\includes\StringDeal;
 use app\lib\blog\Plugin;
 use app\model\Article;
 use app\model\Comment;
+use app\model\Sort;
 use app\model\Upload;
 use app\Sync;
 
@@ -27,6 +28,9 @@ class ArticleController extends BaseController{
         if(arg('type','')!==''){
             $condition["hide"]=arg('type','');
         }
+        if(arg('sid','')!==''){
+            $condition["sid"]=arg('sid','');
+        }
         $result=$article->getByPageAdmin(arg('page',1),arg('limit',12),$count,$condition);
 
         if(!$result||empty($result)){
@@ -36,6 +40,10 @@ class ArticleController extends BaseController{
         }
     }
 
+    public function actionSort(){
+        $sort=new Sort();
+        $this->api(true,$sort->get(),0,'');
+    }
     /**
      * 获取标签列表
      */
@@ -149,7 +157,7 @@ class ArticleController extends BaseController{
                 $article->del(arg('gid'));
                 $articleComment=new Comment();
                 $articleComment->delByGid(arg('gid'));
-                $upload=new Upload('article');
+                $upload=new Upload();
                 $upload->delByBindID(arg('gid'));
                 $this->api(0,null,0,'');
         }else

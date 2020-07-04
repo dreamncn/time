@@ -1,0 +1,38 @@
+<div class="layui-tab-item layui-show">
+    <form class="layui-form layui-form-pane" style="width: 90%;padding-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">accessKey</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="accessKey" placeholder="请输入accessKey"
+                    value="<{$accessKey}>" required type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">secretKey</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="secretKey" placeholder="请输入secretKey"
+                       value="<{$secretKey}>"   required type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">空间名称</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="bucket" placeholder="请输入空间名称"
+                       value="<{$bucket}>"   required type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">空间域名</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="domain" placeholder="请输入空间域名"
+                       value="<{$domain}>"   required type="text">
+            </div>
+        </div>
+       
+
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-normal" lay-filter="qiniuSub" lay-submit>立即提交</button>
+            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+        </div>
+    </form>
+</div>
