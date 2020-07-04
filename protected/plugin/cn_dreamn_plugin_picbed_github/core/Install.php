@@ -14,7 +14,7 @@ class Install extends Plugin{
      */
     public function __construct()
     {
-        parent::__construct("cn_dreamn_plugin_picbed_qiniu");
+        parent::__construct("cn_dreamn_plugin_picbed_local");
     }
 
     /**
@@ -24,7 +24,6 @@ class Install extends Plugin{
        $this->setItem('accessKey','');
        $this->setItem('secretKey','');
        $this->setItem('bucket','');
-       $this->setItem('domain','');
    }
    /*
     * 插件卸载时的操作，清理残余数据等...一般拿来善后，清理数据表等...

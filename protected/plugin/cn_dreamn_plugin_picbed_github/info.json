@@ -1,0 +1,11 @@
+{
+  "name":"七牛云图床",
+  "appName": "cn_dreamn_plugin_picbed_qiniu",
+  "version":"1.0.0",
+  "author":"Dreamn",
+  "description":"七牛云图床，七牛云免费提供10G对象存储服务。",
+  "update":"",
+  "type":"picbed",
+  "menu":false,
+  "date":"2020-07-04 07:17"
+}
