@@ -38,7 +38,7 @@ class Admin extends Plugin{
 
     public function hooksetArticle($data){
       
-        if(!isset($data['gid'])||!isset($data["param"]['download_url'])||!isset($data["param"]['download_passwd'])||!isset($data["param"]['download_title'])||!isset($data["param"]['download_desc']))return ;
+        if(!isset($data['gid'])||!isset($data["param"]['download_url'])||!isset($data["param"]['download_passwd'])||!isset($data["param"]['download_title'])||!isset($data["param"]['download_desc'])||!$data["param"]['download_url']==''||!$data["param"]['download_title']=='')return ;
         $download=new Download();
         $download->add($data['gid'],$data["param"]['download_url'],$data["param"]['download_passwd'],$data["param"]['download_title'],$data["param"]['download_desc']);
     }
