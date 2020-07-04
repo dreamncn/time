@@ -54,3 +54,6 @@ function AppendTO(result) {
 }
 
 getArticle(1);
+
+console.log('%c Time Blog ','color:white;font-size:30px;background:green;')
+console.log('%c Author:Dreamn ','color:white;font-size:30px;background:#1796d6;')

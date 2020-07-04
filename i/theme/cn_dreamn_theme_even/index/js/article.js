@@ -53,11 +53,10 @@ var jumpUrl=function(dom){
             if(flg===undefined)return;
             var flgclass = tem.attr('class');
             if(flgclass!==undefined)return;
-            index=flg.indexOf(window.location.host);
+            var  index=flg.indexOf(window.location.host);
 
             if (index === -1) {
-                var href=window.location.protocol+"//"+window.location.host+'/jump/'+window.btoa(flg);
-                console.log(window.location.protocol+"//"+window.location.host+'/jump/'+window.btoa(flg));
+                var href=window.location.protocol+"//"+window.location.host+'/jump/'+Base64.encode(flg);
                 tem.attr('href',href);
                 tem.attr("target",'_blank');
             }

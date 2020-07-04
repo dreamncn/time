@@ -72,7 +72,7 @@ class Speed
                         $rule = $GLOBALS['http_scheme'] . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') . '/' . $rule;
                     $rule = '/' . str_ireplace(
                             array('\\\\', $GLOBALS['http_scheme'], '/', '<', '>', '.'),
-                            array('', '', '\/', '(?P<', '>[\x{4e00}-\x{9fa5}a-zA-Z0-9_-]+)', '\.'), $rule) . '/u';
+                            array('', '', '\/', '(?P<', '>[\x{4e00}-\x{9fa5}\w\+\=-]+)', '\.'), $rule) . '/u';
                     $rule = str_replace('\/\/', '\/', $rule);
 
                     if (preg_match($rule, ($GLOBALS['http_scheme'] . $_SERVER['HTTP_HOST'] . urldecode($_SERVER['REQUEST_URI'])), $matchs)) {
