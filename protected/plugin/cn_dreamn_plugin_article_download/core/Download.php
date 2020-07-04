@@ -26,4 +26,9 @@ class Download extends Plugin{
         }
         return $result[0];
     }
+
+    public function delByGid($gid)
+    {
+        return $this->delete()->where(['gid'=>$gid])->commit();
+    }
 }
