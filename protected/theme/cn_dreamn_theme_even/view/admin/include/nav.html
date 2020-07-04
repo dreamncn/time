@@ -98,6 +98,9 @@
                 title: "添加导航",
                 type: 2,
                 content: editUrl,
+                end:function () {
+                    tableIns.reload();
+                }
 
             });
             layui.layer.full(index);

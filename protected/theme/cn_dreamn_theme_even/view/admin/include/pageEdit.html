@@ -163,11 +163,14 @@
         admin.iframeAuto();
         var layerData = admin.getLayerData();
         //日期框绑定
+        if(layerData!==null)
+            date= layerData.date;
+        else date=new Date();
         laydate.render({
             elem: '#release',
             type: 'datetime',
             trigger: "click",
-            value: new Date(),
+            value: date,
         });
 
         var editType = 'html';

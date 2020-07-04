@@ -74,22 +74,25 @@ class NavController extends BaseController{
           $this->api(-1,null,0,'参数错误');
     }//设置单个选项，排序，隐藏
     public function actionDel(){
-        if(arg('id')!==null){
+        $id=arg('id');
+        if($id!==null){
+
             $nav=new Native();
-            $d=$nav->gerById(arg('id'));
+            $d=$nav->gerById($id);
+            dump($d);
             if(!$d) $this->api(-1,null,0,'参数错误');
             if(intval($d['stype'])!==0){
-                $nav->del(arg('id'));
+                $nav->del($id);
                 //删除所有下级依赖
                 $array=explode(',', $d['nexts']);
                 foreach ($array as $v)
                     $nav->setOpt($v,"lastest",0);
                 //删除所有上级依赖
                 if(intval($d['lastest'])!==0){
-                    $dd=$nav->gerById(arg($d['lastest']));
-                    if(!$dd){
+                    $dd=$nav->gerById($d['lastest']);
+                    if($dd){
                         $array=explode(',', $dd['nexts']);
-                        $array=array_diff($array,array(arg('id')));
+                        $array=array_diff($array,[$id]);
                         $nav->setOpt($d["lastest"],"nexts",substr(implode(",",$array),1));
                     }
 

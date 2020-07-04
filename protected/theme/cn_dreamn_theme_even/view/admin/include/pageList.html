@@ -1,3 +1,8 @@
+<style>
+    .layui-layer-iframe {
+        display: none  !important;
+    }
+</style>
 <div class="layui-card">
     <div class="layui-card-body">
         <!-- 表格工具栏 -->
@@ -133,6 +138,7 @@
 
         });
         function update(edit) {
+
             var index =  parent.layui.admin.open({
                 type: 2,
                 title: '页面修改',
@@ -141,10 +147,22 @@
                 data: edit,
                 anim: 5,
                 success: function (layero, index) {
-                    parent.layer.full(index);
+                    var i=0;
+                    var int=setInterval(function () {
+                        i++;
+                        parent.layer.full(index);
+                        if(i>5)clearInterval(int);
+                    },100);
+                },end:function () {
+                    insTb.reload({
+                        where:{
+                            type:$("#artice_type").val(),
+                            key:$("#key").val()
+                        }
+                    });
                 }
             });
-            parent.layer.full(index);
+          
 
 
         }

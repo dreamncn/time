@@ -33,17 +33,6 @@ class Admin extends Plugin
         return $arr;
     }
 
-    public function displayLogin($wechat = false)
-    {
-        if ($wechat) {
-            $arr['title'] = '微信登录 - 请扫描二维码登录';
-        }
-        else {
-            $arr['title'] = '后台登录';
-
-        }
-        return $arr;
-    }
     public function include_console(){
         $article=new Article();
         $arr['readCount']=number_format($article->getCountView());
