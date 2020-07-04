@@ -29,6 +29,6 @@ class Download extends Plugin{
 
     public function delByGid($gid)
     {
-        return $this->delete()->where(['gid'=>$gid])->commit();
+        return $this->delete()->table('blog_download')->where(['gid'=>$gid])->commit();
     }
 }
