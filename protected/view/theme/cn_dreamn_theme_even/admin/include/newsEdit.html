@@ -245,11 +245,15 @@
         admin.iframeAuto();
         var layerData = admin.getLayerData();
         //日期框绑定
+        var date;
+        if(layerData!==null)
+            date= layerData.date;
+        else date=new Date();
         laydate.render({
             elem: '#release',
             type: 'datetime',
             trigger: "click",
-            value: new Date(),
+            value: date,
         });
         tagInput.tagsInput({
             removeWithBackspace: true,
