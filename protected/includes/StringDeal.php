@@ -17,7 +17,7 @@ class StringDeal{
      * @return mixed
      */
     public function getTranslate($txt){
-        if (!preg_match("/([\x81-\xfe][\x40-\xfe])/", $str, $match)) {
+        if (!preg_match("/([\x81-\xfe][\x40-\xfe])/", $txt, $match)) {
            return $txt;
         }
         $web=new Web();
