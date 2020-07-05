@@ -168,8 +168,10 @@
     input.keypress(function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode == '13'){
-            if (input.val() !== "")
-                $("#search").click();
+            if (input.val() !== ""){
+                $("#search")[0].click();
+            }
+
         }
     });
 
