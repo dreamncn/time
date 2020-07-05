@@ -38,7 +38,7 @@ class Index extends Plugin{
         $arr['key']=$config->getData('seo_key');
         $arr['copyright']=str_replace(array('{year}'),array(date('Y')),$config->getData('copyright'));
         $arr['icp']=$config->getData('icp');
-        $arr['footer']=$config->getData('footer');
+        $arr['footer']=base64_decode($config->getData('footer'));
         $arr['qq']=$config->getData('qq');
         $arr['mail']=$config->getData('mail');
         $arr['github']=$config->getData('github');
