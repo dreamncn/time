@@ -17,7 +17,9 @@ class StringDeal{
      * @return mixed
      */
     public function getTranslate($txt){
-        //http://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=
+        if (!preg_match("/([\x81-\xfe][\x40-\xfe])/", $str, $match)) {
+           return $txt;
+        }
         $web=new Web();
         $result=$web->get('http://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i='.urlencode($txt));
         $json=json_decode($result);
