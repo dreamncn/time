@@ -79,7 +79,7 @@ class NavController extends BaseController{
 
             $nav=new Native();
             $d=$nav->gerById($id);
-            dump($d);
+           
             if(!$d) $this->api(-1,null,0,'参数错误');
             if(intval($d['stype'])!==0){
                 $nav->del($id);
